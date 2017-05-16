@@ -7,7 +7,7 @@ class Course extends Component {
     render() {
         return (
             <div>
-                <FilterHeader> </FilterHeader>
+                <FilterHeader knowledgeTree={this.props.knowledgeTree}> </FilterHeader>
             </div>
         )
     }
@@ -15,7 +15,8 @@ class Course extends Component {
 
 function mapStateToProps(state) {
     return {
-        courseList: state.courseList
+        courseList: state.courseList,
+        knowledgeTree: state.loginReducer && state.loginReducer.knowledgeTree
     }
 }
 export default connect(mapStateToProps)(Course)

@@ -3,18 +3,41 @@ import {Row, Input, Select} from 'antd'
 import '../App.css'
 
 const Search = Input.Search;
-const Option = Select.Option;
+const Option  = Select.Option;
 
 class FilterHeader extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            subjects: [],
+            selectedSubject: "",
+            ...this.knowledgeToMap()
+        };
     }
+
+    knowledgeToMap() {
+        const result ={};
+        if (this.props.knowledgeTree) {
+            this.props.knowledgeTree.forEach(item => {
+                result[item.id] = item;
+            });
+            return {grades:this.props.knowledgeTree, gradMap: result}
+        }
+        return {grades:[], gradMap: result}
+    }
+
 
     onGradeChange(value) {
         console.log(`grade selected: ${value}`);
+        this.selectedSubject = '';
+        this.setState({
+            subjects: this.state.gradMap[value].children || [],
+            selectedSubject: ""
+        });
     }
 
     onSubjectChange(value) {
+        this.setState({selectedSubject: value});
         console.log(`subject selected: ${value}`);
     }
 
@@ -26,15 +49,16 @@ class FilterHeader extends Component {
         console.log(`check status change to: ${value}`)
     }
 
-    handleSearch(value) {
-        if (value === '') {
-            this.setState({dataSource: this.dataSource });
-        } else {
-            const matched = this.dataSource.filter(item => {
-                return item.indexOf(value) !== -1;
-            });
-            this.setState({dataSource: matched});
-        }
+    getGradeOptions() {
+        return this.state.grades.map(
+            (item, index) => (<Option key={item.id}>{item.display}</Option>)
+        )
+    }
+
+    getSubjectOptions() {
+        return this.state.subjects.map(
+            (item, index) => (<Option key={item.id}>{item.display}</Option>)
+        )
     }
 
     render() {
@@ -55,29 +79,24 @@ class FilterHeader extends Component {
                 <div className="item-warp">
                     <label>{gradeLabel}</label>
                     <Select showSearch style={{marginLeft: 15, width: 100}}
-                            optionFilterProp="children"
                             onChange={this.onGradeChange.bind(this)}>
-                        <Option value="jack">Jack</Option>
-                        <Option value="lucy">Lucy</Option>
-                        <Option value="tom">Tom</Option>
+                        {this.getGradeOptions()}
                     </Select>
                 </div>
 
                 <div className="item-warp">
                     <label>{subjectLabel}</label>
                     <Select showSearch style={{marginLeft: 15, width: 100 }}
-                            optionFilterProp="children"
+                            value={this.state.selectedSubject}
                             onChange={this.onSubjectChange.bind(this)}>
-                        <Option value="jack">Jack</Option>
-                        <Option value="lucy">Lucy</Option>
-                        <Option value="tom">Tom</Option>
+                        {this.getSubjectOptions()}
                     </Select>
                 </div>
 
                 <div className="item-warp">
                     <label>审核状态:</label>
                     <Select showSearch style={{marginLeft: 15, width: 100 }}
-                            optionFilterProp="children"
+                            defaultValue="2"
                             onChange={this.onCheckStatusChange.bind(this)}>
                         <Option value="2">不限 </Option>
                         <Option value="0">未审核</Option>
