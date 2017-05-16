@@ -33,7 +33,7 @@ const switchRoute = (path) => {
     }
 };
 
-export function fetchLogin(data) {
+export function fetchLogin(data, successFunc, failedFuc) {
     return dispatch => {
         dispatch(login(data));
 
@@ -42,7 +42,8 @@ export function fetchLogin(data) {
                 dispatch(loginSuccess(response));
                 dispatch(switchRoute('/management'))
             } else {
-                dispatch(loginFailed(response))
+                dispatch(loginFailed(response));
+                failedFuc(response.message);
             }
         };
         return userLogin(data, callback);

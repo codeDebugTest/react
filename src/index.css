@@ -3,9 +3,21 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
-#components-form-demo-normal-login .login-form {
+
+.login-wrap {
+  position:absolute;
+  top:0;
+  left: 0;
+  right:0;
+  bottom:0;
+  margin:auto;
+  width:300px;
+  height:200px;
+}
+
+.login-wrap .login-form {
   max-width: 300px;
 }
-#components-form-demo-normal-login .login-form-button {
+.login-wrap .login-form-button {
   width: 100%;
 }
