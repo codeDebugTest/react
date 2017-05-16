@@ -35,8 +35,10 @@ class App extends Component {
                         </Menu>
                     </Sider>
                     <Layout>
-                        <Content style={{margin: '20px 15px', overflow: 'initial'}}>
-                            {this.props.children}
+                        <Content className="main-container">
+                            <div className="main-wrapper">
+                                {this.props.children}
+                            </div>
                         </Content>
                     </Layout>
                 </Layout>

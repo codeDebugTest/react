@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import FilterHeader from '../components/filterHeader'
 
 class Course extends Component {
 
     render() {
         return (
             <div>
-                课程 页面
+                <FilterHeader> </FilterHeader>
             </div>
         )
     }
