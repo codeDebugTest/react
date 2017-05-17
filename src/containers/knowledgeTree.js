@@ -1,13 +1,32 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {message, Spin} from 'antd'
+import Tree from '../components/tree'
+import {doFetchKnowledgeTree} from '../actions/knowledge'
 
 class KnowledgeTree extends Component {
+    deleteTreeNode(node) {
+        console.log('delete tree node: ' + node);
+    }
+
+    addTreeNode(node) {
+        console.log('add tree node: ' + node);
+    }
+
+    componentDidMount() {
+        const { dispatch } = this.props;
+        doFetchKnowledgeTree(this.props.userInfo.regionId, null, (msg)=> {message.error(msg)})(dispatch)
+    }
 
     render() {
-        const {userName} = this.props
         return (
             <div>
-                { userName + '知识树 页面'}
+                {
+                    this.props.loading ? (<Spin tip="Loading..."/>) :
+                        (<Tree tree={this.props.knowledgeTree}
+                               addTreeNode={this.addTreeNode.bind(this)}
+                               deleteTreeNode={this.deleteTreeNode.bind(this)}/>)
+                        }
             </div>
         )
     }
@@ -15,7 +34,9 @@ class KnowledgeTree extends Component {
 
 function mapStateToProps(state) {
     return {
-        userName: state.loginReducer.userInfo && state.loginReducer.userInfo.userName
+        userInfo: state.loginReducer && state.loginReducer.userInfo,
+        knowledgeTree: state.knowledgeTreeReducer && state.knowledgeTreeReducer.knowledgeTree,
+        loading: state.knowledgeTreeReducer && state.knowledgeTreeReducer.loading
     }
 }
 export default connect(mapStateToProps)(KnowledgeTree)

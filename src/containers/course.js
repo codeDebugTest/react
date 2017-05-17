@@ -16,7 +16,8 @@ class Course extends Component {
 function mapStateToProps(state) {
     return {
         courseList: state.courseList,
-        knowledgeTree: state.loginReducer && state.loginReducer.knowledgeTree
+        userInfo: state.loginReducer && state.loginReducer.userInfo,
+        knowledgeTree: state.knowledgeTreeReducer && state.knowledgeTreeReducer.knowledgeTree
     }
 }
 export default connect(mapStateToProps)(Course)

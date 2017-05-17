@@ -2,6 +2,7 @@ import { Form, Icon, Input, Button } from 'antd';
 import { message } from 'antd';
 import React, {Component } from 'react'
 import {connect} from 'react-redux'
+import {browserHistory} from 'react-router'
 import {fetchLogin}from '../actions/login'
 import '../index.css'
 const FormItem = Form.Item;
@@ -14,6 +15,9 @@ message.config({
 
 class LoginForm extends Component {
 
+    loginSuccessFunc() {
+        browserHistory.push({pathname: '/management'});
+    }
     loginFailedFuc(msg){
         message.error(msg);
     }
@@ -25,7 +29,7 @@ class LoginForm extends Component {
             if (!err) {
                 console.log('Received values of form: ', values);
             }
-            fetchLogin(values, null, this.loginFailedFuc)(dispatch)
+            fetchLogin(values, this.loginSuccessFunc, this.loginFailedFuc)(dispatch)
         });
     };
 

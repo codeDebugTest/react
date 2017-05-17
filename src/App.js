@@ -1,9 +1,13 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router'
-import {Layout, Menu, Icon} from 'antd';
+import {Layout, Menu, Icon, message} from 'antd';
 import './App.css';
 
 const {Content, Sider} = Layout;
+message.config({
+    top: 200,
+    duration: 3,
+});
 
 class App extends Component {
     render() {

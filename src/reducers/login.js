@@ -1,5 +1,4 @@
-import {LOGIN, LOGIN_SUCCESS, LOGIN_FAILED, SWITCH_HOME_ROUTE, FETCH_KNOWLEDGE_TREE} from '../actions/login'
-import {browserHistory} from 'react-router'
+import {LOGIN, LOGIN_SUCCESS, LOGIN_FAILED, } from '../actions/login'
 
 export function loginReducer(state = {}, action){
     switch (action.type) {
@@ -11,11 +10,6 @@ export function loginReducer(state = {}, action){
         case LOGIN_FAILED:
             // action.failedFuc(action.response.message);
             return Object.assign({}, state, {message: action.response.message, userHasLogin: false });
-        case SWITCH_HOME_ROUTE:
-            browserHistory.push({pathname:action.path});
-            return state;
-        case FETCH_KNOWLEDGE_TREE:
-            return Object.assign({}, state, {knowledgeTree: action.response});
         default:
             return state;
     }
