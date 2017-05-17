@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Icon, Popconfirm} from 'antd'
-import {isArray} from '../utils/util'
+import {isArray, isObject} from '../utils/util'
 
 
 const isLeafNode = (node) => {
@@ -62,10 +62,30 @@ class Tree extends Component{
         super(props)
     }
 
-    render
+    renderTree = (node) => {
+        return (
+            <TreeNode node={node}/>
+        )
+    };
 
     render() {
-        return
+        if (isArray(this.props.tree)) {
+            // tree list [tree1, tree2]
+            return (
+                <ul>
+                    {this.props.tree.map((root, index) => {
+                        return (<TreeNode node={root} key={index}/>)
+                    })}
+                </ul>
+            )
+
+        } else if (isObject(this.props.tree)) {
+            return (
+                <ul>
+                    { this.renderTree(this.props.tree)}
+                </ul>
+            )
+        }
     }
 }
 
