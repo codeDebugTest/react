@@ -25,11 +25,22 @@
   line-height: 28px;
   float: left;
 }
+.main-wrapper .ant-row .search-style{
+  margin-left: 15px;
+  width: 150px
+}
+
 .main-wrapper .ant-row .item-warp {
    display: inline-block;
    margin-left: 30px;
    float: left;
  }
+
+.main-wrapper .ant-row .item-warp .select-style{
+  margin-left: 15px;
+  width: 100px
+}
+
 .main-wrapper .ant-row >:first-child {
   display: inline-block;
   float: left;

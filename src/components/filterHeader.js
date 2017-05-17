@@ -70,15 +70,15 @@ class FilterHeader extends Component {
             <Row>
                 <div>
                     <label>{searchLabel}</label>
-                    <Search placeholder="input search text"
-                        style={{marginLeft: 15, width: 200 }}
+                    <Search style={{marginLeft: 15, width: 200}}
+                            placeholder="input search text"
                         onSearch={this.onSearchSelect.bind(this)}
                     />
                 </div>
 
                 <div className="item-warp">
                     <label>{gradeLabel}</label>
-                    <Select showSearch style={{marginLeft: 15, width: 100}}
+                    <Select className="select-style" showSearch
                             onChange={this.onGradeChange.bind(this)}>
                         {this.getGradeOptions()}
                     </Select>
@@ -86,8 +86,7 @@ class FilterHeader extends Component {
 
                 <div className="item-warp">
                     <label>{subjectLabel}</label>
-                    <Select showSearch style={{marginLeft: 15, width: 100 }}
-                            value={this.state.selectedSubject}
+                    <Select className="select-style" showSearch value={this.state.selectedSubject}
                             onChange={this.onSubjectChange.bind(this)}>
                         {this.getSubjectOptions()}
                     </Select>
@@ -95,8 +94,7 @@ class FilterHeader extends Component {
 
                 <div className="item-warp">
                     <label>审核状态:</label>
-                    <Select showSearch style={{marginLeft: 15, width: 100 }}
-                            defaultValue="2"
+                    <Select className="select-style" showSearch defaultValue="2"
                             onChange={this.onCheckStatusChange.bind(this)}>
                         <Option value="2">不限 </Option>
                         <Option value="0">未审核</Option>
