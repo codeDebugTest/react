@@ -10,8 +10,16 @@ const isLeafNode = (node) => {
 
 class TreeNode extends Component {
     constructor(props) {
-        super(props)
+        super(props);
+
+        this.state = {
+            visible: true,
+        };
     }
+
+    toggleVisible() {
+        this.setState({visible: !this.state.visible});
+    };
 
     onDeleteNode() {
         this.props.deleteHandler(this.props.node);
@@ -38,9 +46,13 @@ class TreeNode extends Component {
         const addMsg = 'Are you sure add a new node in this node: ' + this.props.node.display + '?';
         const childrenNodes = isLeafNode(this.props.node)? null : this.getChildrenNodes();
 
+        const style = !this.state.visible ?
+            style = {display: "none"};
+        }
+
         return (
             <li>
-                <label>{this.props.node.display}</label>
+                <label onClick={this.toggleVisible.bind(this)}>{this.props.node.display}</label>
 
                 <Popconfirm placement="topRight" title={addMsg} okText="Yes" cancelText="No" onConfirm={this.onAddNode.bind(this)}>
                     <span><Icon type="plus-circle-o"/></span>
@@ -80,6 +92,7 @@ class Tree extends Component{
             )
 
         } else if (isObject(this.props.tree)) {
+            // one tree
             return (
                 <ul>
                     { this.renderTree(this.props.tree)}
