@@ -20,13 +20,18 @@ class KnowledgeTree extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{position: 'relative'}}>
                 {
-                    this.props.loading ? (<Spin tip="Loading..."/>) :
-                        (<Tree tree={this.props.knowledgeTree}
+                    this.props.loading ? (
+                        <div className="center-point">
+                            <Spin tip="Loading..."/>
+                        </div>
+                    ) : (
+                        <Tree tree={this.props.knowledgeTree}
                                addTreeNode={this.addTreeNode.bind(this)}
-                               deleteTreeNode={this.deleteTreeNode.bind(this)}/>)
-                        }
+                               deleteTreeNode={this.deleteTreeNode.bind(this)}/>
+                    )
+                }
             </div>
         )
     }

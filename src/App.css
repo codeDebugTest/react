@@ -2,6 +2,14 @@
 .App {
   text-align: center;
 }
+.center-point {
+  position:absolute;
+  top:0;
+  left: 0;
+  right:0;
+  bottom:0;
+  margin:auto;
+}
 .nave-label{
   color: #fff;
 }
@@ -44,4 +52,66 @@
 .main-wrapper .ant-row >:first-child {
   display: inline-block;
   float: left;
+}
+.tree-ul {
+  padding: 20px 20px 0;
+  display: block;
+}
+.tree-ul li {
+  padding: 10px 6px 0;
+}
+
+.tree-ul li .un-togglable::before,
+.tree-ul .togglable-down::before,
+.tree-ul .togglable-up::before {
+  font-size: 12px;
+  margin-left: 0.5em;
+  padding-right: 5px;
+}
+.tree-ul li .un-togglable::before {
+  content: ".";
+}
+
+.tree-ul .togglable-down::before {
+  content: "▼";
+}
+.tree-ul .togglable-up::before {
+  content: "▶";
+}
+.tree-ul li > label {
+  color: #070708;
+  float: left;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.tree-ul li > label:hover {
+  color: blue;
+  font-size: 14px;
+}
+
+.tree-ul li > .null-label {
+  margin-left: 21px;
+}
+
+.tree-ul li > .add-icon{
+  float: left;
+  margin-left: 15px;
+  font-size: 14px;
+  color: #0c06f3;
+  cursor: pointer;
+}
+.tree-ul li > .delete-icon{
+  float: left;
+  margin-left: 15px;
+  font-size: 14px;
+  color: red;
+  cursor: pointer;
+}
+.clearfixed:after{
+  display: block;
+  content: '.';
+  visibility: hidden;
+  height: 0;
+  clear:both
 }

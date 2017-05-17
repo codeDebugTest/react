@@ -7,20 +7,27 @@ const isLeafNode = (node) => {
     return !( node.hasOwnProperty('children') && node.children && isArray(node.children) )
 };
 
-
 class TreeNode extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             visible: true,
+            isTreeNode: !isLeafNode(this.props.node)
         };
     }
 
     toggleVisible() {
-        this.setState({visible: !this.state.visible});
+        if (this.state.isTreeNode) {
+            this.setState({visible: !this.state.visible});
+        }
     };
 
+    getLiStyleClass () {
+        if (!this.state.isTreeNode) {
+            return 'null-label';
+        }
+        return this.state.visible ? 'togglable-down' : 'togglable-up';
+    }
     onDeleteNode() {
         this.props.deleteNodeHandler(this.props.node);
     }
@@ -31,7 +38,7 @@ class TreeNode extends Component {
 
     getChildrenNodes() {
         return (
-            <ul>{
+            <ul className="tree-ul">{
                 this.props.node.children.map((child, index) => {
                     return (<TreeNode node={child} key={index}
                                       addNodeHandler={this.props.addNodeHandler}
@@ -45,25 +52,27 @@ class TreeNode extends Component {
     render() {
         const deleteMsg = 'Are you sure delete this node: ' + this.props.node.display + ' ?';
         const addMsg = 'Are you sure add a new node in this node: ' + this.props.node.display + '?';
-
-        const childrenNodes = isLeafNode(this.props.node)? null : this.getChildrenNodes();
+        const childrenNodes = this.state.isTreeNode ? this.getChildrenNodes() : null;
         const style = this.state.visible ? null: {display: "none"};
+        const labelClass = this.getLiStyleClass();
         return (
-            <li style={style}>
-                <label onClick={this.toggleVisible.bind(this)}>{this.props.node.display}</label>
+            <li className="clearfixed">
+                <label className={labelClass} onClick={this.toggleVisible.bind(this)}>{this.props.node.display}</label>
 
                 <Popconfirm placement="topRight" title={addMsg} okText="Yes" cancelText="No"
                             onConfirm={this.onAddNode.bind(this)}>
-                    <span><Icon type="plus-circle-o"/></span>
+                    <span className="add-icon"><Icon type="plus-circle-o"/></span>
                 </Popconfirm>
 
 
                 <Popconfirm placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
                             onConfirm={this.onDeleteNode.bind(this)} >
-                    <span><Icon type="delete" /></span>
+                    <span className="delete-icon"><Icon type="delete" /></span>
                 </Popconfirm>
 
-                {childrenNodes}
+                <div style={style}>
+                    {childrenNodes}
+                </div>
             </li>
         )
     }
@@ -74,7 +83,7 @@ class Tree extends Component{
         if (isArray(this.props.tree)) {
             // tree list [tree1, tree2]
             return (
-                <ul>
+                <ul className="tree-ul" style={{padding:0}}>
                     {this.props.tree.map((root, index) => {
                         return (
                             <TreeNode node={root} key={index}
@@ -88,7 +97,7 @@ class Tree extends Component{
         } else if (isObject(this.props.tree)) {
             // one tree
             return (
-                <ul>
+                <ul className="tree-ul">
                     <TreeNode node={this.props.tree}
                               addNodeHandler={this.props.addTreeNode}
                               deleteNodeHandler={this.props.deleteTreeNode}
