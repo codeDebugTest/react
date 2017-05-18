@@ -15,33 +15,34 @@ class KnowledgeTree extends Component {
 
     componentDidMount() {
         const { dispatch } = this.props;
-        doFetchDictionary(this.props.userInfo.regionId, null, (msg)=> {message.error(msg)})(dispatch)
+        const { userInfo } = this.props.userState;
+
+        doFetchDictionary(userInfo.regionId, null, (msg)=> {message.error(msg)})(dispatch)
     }
 
     render() {
+        const {dictionary, loading} = this.props.dictionary;
+        const knowledgeTree = dictionary && dictionary.knowledgeTree;
         return (
-            <div style={{position: 'relative'}}>
-                {
-                    this.props.loading ? (
-                        <div className="center-point">
-                            <Spin tip="Loading..."/>
-                        </div>
-                    ) : (
-                        <Tree tree={this.props.knowledgeTree}
-                               addTreeNode={this.addTreeNode.bind(this)}
-                               deleteTreeNode={this.deleteTreeNode.bind(this)}/>
-                    )
-                }
-            </div>
+            <div style={{position: 'relative'}}>{
+                loading ? (
+                    <div className="center-point">
+                        <Spin tip="Loading..."/>
+                    </div>
+                ) : (
+                    <Tree tree={knowledgeTree}
+                           addTreeNode={this.addTreeNode.bind(this)}
+                           deleteTreeNode={this.deleteTreeNode.bind(this)}/>
+                )
+            }</div>
         )
     }
 }
 
 function mapStateToProps(state) {
     return {
-        userInfo: state.loginReducer && state.loginReducer.userInfo,
-        knowledgeTree: state.knowledgeTreeReducer && state.knowledgeTreeReducer.dictionary && state.knowledgeTreeReducer.dictionary.knowledgeTree,
-        loading: state.knowledgeTreeReducer && state.knowledgeTreeReducer.loading
+        userState: state.login,
+        dictionary: state.dictionary,
     }
 }
 export default connect(mapStateToProps)(KnowledgeTree)
