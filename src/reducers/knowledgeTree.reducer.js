@@ -1,4 +1,4 @@
-import {FETCH_DICTIONARY, FETCH_SUCCESS, FETCH_FAILED} from '../actions/knowledge'
+import {FETCH_DICTIONARY, FETCH_SUCCESS, FETCH_FAILED} from '../actions/knowledge.ation'
 
 export function knowledgeTreeReducer(state = {}, action){
     switch (action.type) {

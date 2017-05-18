@@ -1,4 +1,4 @@
-import {FETCH_COURSE_LIST, FETCH_COURSE_SUCCESS, FETCH_COURSE_FAILED} from '../actions/course'
+import {FETCH_COURSE_LIST, FETCH_COURSE_SUCCESS, FETCH_COURSE_FAILED} from '../actions/course.action'
 
 export function courseReducer(state = {}, action){
     switch (action.type) {

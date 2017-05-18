@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux'
-import {loginReducer} from './login'
-import {knowledgeTreeReducer} from  './knowledgeTree'
-import {courseReducer} from  './course'
+import {loginReducer} from './login.reducer'
+import {knowledgeTreeReducer} from  './knowledgeTree.reducer'
+import {courseReducer} from  './course.reducer'
 
 const appReducer = combineReducers({
     login: loginReducer,

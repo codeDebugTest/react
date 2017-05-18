@@ -1,26 +1,28 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import FilterHeader from '../components/filterHeader'
-import {doFetchCourseList} from '../actions/course'
+import {doFetchCourseList} from '../actions/course.action'
 import {Table, Popconfirm, message, Icon, Spin} from 'antd'
 import '../App.css'
 
 class Course extends Component {
     constructor(props) {
         super(props);
+        this.offset= 0;
+        this.limit= 30;
         this.columns = [
             {
                 title: '名称',
                 dataIndex: 'courseTitle',
             }, {
                 title: '年级',
-                width: '100',
+                width: 100,
                 render: (text, record, index) => {
 
                 }
             }, {
                 title: '科目',
-                width: '100',
+                width: 100,
                 render: (text, record) => {
 
                 }
@@ -31,7 +33,7 @@ class Course extends Component {
                 }
             }, {
                 title: 'Action',
-                width: '150',
+                width: 150,
                 render: (text, record) => {
                     const deleteMsg = 'Are you sure delete this record';
                     return (
@@ -56,13 +58,13 @@ class Course extends Component {
         console.log('delete course record: ' + record);
     }
     componentWillMount() {
-        const {dispatch, userState, offset, limit} = this.props;
+        const {dispatch, userState} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo.userToken,
             'knowledgeTreeId': -1,
             'regionId': userState.userInfo.regionId,
-            'offset': offset,
-            'limit': limit
+            'offset': this.offset,
+            'limit': this.limit
         };
         doFetchCourseList(requestInfo,  null, (msg)=> {message.error(msg)})(dispatch);
     }
@@ -94,8 +96,6 @@ function mapStateToProps(state) {
         course: state.course,
         userState: state.login,
         dictionary: state.dictionary,
-        offset: 0,
-        limit: 30
     }
 }
 export default connect(mapStateToProps)(Course)

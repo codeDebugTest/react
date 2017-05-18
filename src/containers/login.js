@@ -3,7 +3,7 @@ import { message } from 'antd';
 import React, {Component } from 'react'
 import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
-import {fetchLogin}from '../actions/login'
+import {fetchLogin}from '../actions/login.action'
 import '../index.css'
 const FormItem = Form.Item;
 

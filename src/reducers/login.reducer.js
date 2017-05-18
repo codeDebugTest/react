@@ -1,4 +1,4 @@
-import {LOGIN, LOGIN_SUCCESS, LOGIN_FAILED, } from '../actions/login'
+import {LOGIN, LOGIN_SUCCESS, LOGIN_FAILED, } from '../actions/login.action'
 
 export function loginReducer(state = {}, action){
     switch (action.type) {

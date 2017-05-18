@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {message, Spin} from 'antd'
 import Tree from '../components/tree'
-import {doFetchDictionary} from '../actions/knowledge'
+import {doFetchDictionary} from '../actions/knowledge.ation'
 
 class KnowledgeTree extends Component {
     deleteTreeNode(node) {
