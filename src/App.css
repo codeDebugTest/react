@@ -27,6 +27,8 @@
   margin: 15px;
   padding: 10px;
   background-color: #fff;
+  border-radius: 4px;
+  overflow-y: auto;
 }
 .ant-row label {
   font-size: 12px;

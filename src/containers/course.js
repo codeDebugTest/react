@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import FilterHeader from '../components/filterHeader'
+import {Table} from 'antd'
 
 class Course extends Component {
 
