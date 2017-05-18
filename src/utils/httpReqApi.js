@@ -3,12 +3,12 @@ import {ajaxGet, ajaxPost} from './ajaxMethod'
 
 
 const loginUrl = config.realHost +  '/login/do/user_login';
-const knowledgeUrl = config.realHost +  '/app/knowledge_tree';
+const dictionaryUrl = config.realHost +  '/app/dictionary';
 
 export function userLogin (data, callback){
     return ajaxPost(loginUrl, {}, data, callback)
 }
 
-export function fetchKnowledgeTree(regionId, callback) {
-    return ajaxPost(knowledgeUrl, {}, {regionId}, callback)
+export function fetchDictionary(regionId, callback) {
+    return ajaxPost(dictionaryUrl, {}, {regionId}, callback)
 }

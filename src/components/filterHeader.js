@@ -67,7 +67,7 @@ class FilterHeader extends Component {
         const subjectLabel ='科目:';
 
         return (
-            <Row>
+            <Row className="filter-header">
                 <div>
                     <label>{searchLabel}</label>
                     <Search style={{marginLeft: 15, width: 200}}

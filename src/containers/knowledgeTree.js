@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {message, Spin} from 'antd'
 import Tree from '../components/tree'
-import {doFetchKnowledgeTree} from '../actions/knowledge'
+import {doDictionary} from '../actions/knowledge'
 
 class KnowledgeTree extends Component {
     deleteTreeNode(node) {
@@ -15,7 +15,7 @@ class KnowledgeTree extends Component {
 
     componentDidMount() {
         const { dispatch } = this.props;
-        doFetchKnowledgeTree(this.props.userInfo.regionId, null, (msg)=> {message.error(msg)})(dispatch)
+        doDictionary(this.props.userInfo.regionId, null, (msg)=> {message.error(msg)})(dispatch)
     }
 
     render() {
@@ -40,7 +40,7 @@ class KnowledgeTree extends Component {
 function mapStateToProps(state) {
     return {
         userInfo: state.loginReducer && state.loginReducer.userInfo,
-        knowledgeTree: state.knowledgeTreeReducer && state.knowledgeTreeReducer.knowledgeTree,
+        knowledgeTree: state.knowledgeTreeReducer && state.knowledgeTreeReducer.dictionary && state.knowledgeTreeReducer.dictionary.knowledgeTree,
         loading: state.knowledgeTreeReducer && state.knowledgeTreeReducer.loading
     }
 }

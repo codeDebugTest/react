@@ -1,12 +1,12 @@
-import {fetchKnowledgeTree} from '../utils/httpReqApi'
+import {fetchDictionary} from '../utils/httpReqApi'
 
-export const FETCH_KNOWLEDGE_TREE = 'fetch_knowledge_tree';
+export const FETCH_DICTIONARY = 'fetch_dictionary';
 export const FETCH_SUCCESS = 'fetch_success';
 export const FETCH_FAILED = 'fetch_failed';
 
 const doFetch = () => {
     return {
-        type: FETCH_KNOWLEDGE_TREE,
+        type: FETCH_DICTIONARY,
     }
 };
 const doSuccess = (response) => {
@@ -23,11 +23,11 @@ const doFailed = (response) => {
     }
 };
 
-export function doFetchKnowledgeTree (regionId, successFunc, failedFuc){
+export function doDictionary (regionId, successFunc, failedFuc){
     return dispatch => {
         dispatch(doFetch());
 
-        return fetchKnowledgeTree(regionId).then(
+        return fetchDictionary(regionId).then(
             response => {
                 if (response.code === undefined) {
                     alert(`No code in result of post: fetchKnowledgeTree`);
