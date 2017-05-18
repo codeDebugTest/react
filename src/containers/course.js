@@ -13,6 +13,11 @@ const columns = [{
 
     }
 }, {
+    title: '科目',
+    render: (text, record, index) => {
+        record
+    }
+}, {
     title: 'Address',
     dataIndex: 'address',
 }, {

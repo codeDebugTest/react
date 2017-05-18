@@ -23,7 +23,7 @@ const doFailed = (response) => {
     }
 };
 
-export function doDictionary (regionId, successFunc, failedFuc){
+export function doFetchDictionary (regionId, successFunc, failedFuc){
     return dispatch => {
         dispatch(doFetch());
 
