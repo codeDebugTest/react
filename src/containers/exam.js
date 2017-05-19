@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import FilterHeader from '../components/filterHeader'
-import {doFetchExamList} from '../actions/exam.action'
+import {doFetchExamList, doDeleteExam} from '../actions/exam.action'
 import {Table, message, Spin} from 'antd'
 import '../App.css'
 import {getExamColumns} from '../utils/tableColumnsDef'
@@ -13,11 +13,14 @@ class Exam extends Component {
         this.limit= 30;
     }
 
-    editRecord(record) {
-        console.log('edit exam record: ' + record)
+    editRecord(index) {
+        console.log('edit exam record: ' + index)
     }
-    deleteRecord(record) {
-        console.log('delete exam record: ' + record);
+    deleteRecord(index) {
+        const { dispatch } = this.props;
+        console.log('delete course record: ' + index);
+        const successFunc = () => message.success('delete course record success');
+        doDeleteExam(index, successFunc, null)(dispatch);
     }
     componentWillMount() {
         const {dispatch, userState} = this.props;

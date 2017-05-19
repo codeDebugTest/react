@@ -13,8 +13,8 @@ class Course extends Component {
         this.limit= 30;
     }
 
-    editRecord(record) {
-        console.log('edit course record: ' + record)
+    editRecord(index) {
+        console.log('edit course record: ' + index)
     }
 
     deleteRecord(index) {

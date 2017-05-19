@@ -40,7 +40,7 @@ const getCourseColumns = (knowledgeTree, editRecord, deleteRecord) => {
                 const deleteMsg = 'Are you sure delete this record';
                 return (
                     <div>
-                        <span className="add-icon" onClick={()=>editRecord(record)}><Icon type="edit"/></span>
+                        <span className="add-icon" onClick={()=>editRecord(index)}><Icon type="edit"/></span>
 
                         <Popconfirm  placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
                                      onConfirm={()=>deleteRecord(index)}>
@@ -91,7 +91,7 @@ const getExamColumns = (knowledgeTree, editRecord, deleteRecord) => {
                 const deleteMsg = 'Are you sure delete this record';
                 return (
                     <div>
-                        <span className="add-icon" onClick={()=>editRecord(record)}><Icon type="edit"/></span>
+                        <span className="add-icon" onClick={()=>editRecord(index)}><Icon type="edit"/></span>
 
                         <Popconfirm  placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
                                      onConfirm={()=>deleteRecord(index)}>
@@ -137,7 +137,7 @@ const getTeacherColumns = (knowledgeTree, editRecord, deleteRecord) => {
             const deleteMsg = 'Are you sure delete this record';
             return (
                 <div>
-                    <span className="add-icon" onClick={()=>editRecord(record)}><Icon type="edit"/></span>
+                    <span className="add-icon" onClick={()=>editRecord(index)}><Icon type="edit"/></span>
 
                     <Popconfirm  placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
                                  onConfirm={()=>deleteRecord(index)}>
@@ -183,7 +183,7 @@ const getLiveColumns = (knowledgeTree, editRecord, deleteRecord) => {
                 const deleteMsg = 'Are you sure delete this record';
                 return (
                     <div>
-                        <span className="add-icon" onClick={()=>editRecord(record)}><Icon type="edit"/></span>
+                        <span className="add-icon" onClick={()=>editRecord(index)}><Icon type="edit"/></span>
 
                         <Popconfirm  placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
                                      onConfirm={()=>deleteRecord(index)}>
@@ -218,7 +218,7 @@ const getSchoolColumns = (editRecord, deleteRecord) => {
                 const deleteMsg = 'Are you sure delete this record';
                 return (
                     <div>
-                        <span className="add-icon" onClick={()=>editRecord(record)}><Icon type="edit"/></span>
+                        <span className="add-icon" onClick={()=>editRecord(index)}><Icon type="edit"/></span>
 
                         <Popconfirm  placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
                                      onConfirm={()=>deleteRecord(index)}>

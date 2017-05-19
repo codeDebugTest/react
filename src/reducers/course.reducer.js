@@ -11,7 +11,7 @@ export function courseReducer(state = {}, action){
             return Object.assign({}, state, {loading: false, courseList: []});
         case DELETE_COURSE_SUCCESS:
             state.courseList.splice(action.index, 1);
-            return Object.assign({}, state)
+            return Object.assign({}, state);
         default:
             return state;
     }
