@@ -32,6 +32,15 @@ class Course extends Component {
 
                 }
             }, {
+                title: '审核状态',
+                render: (text, record) => {
+                    if(record.checkStatus) {
+                        return '已审核';
+                    } else {
+                        return '未审核';
+                    }
+                }
+            },{
                 title: 'Action',
                 width: 150,
                 render: (text, record) => {

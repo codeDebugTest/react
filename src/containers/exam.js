@@ -13,7 +13,7 @@ class Exam extends Component {
         this.columns = [
             {
                 title: '名称',
-                dataIndex: 'courseTitle',
+                dataIndex: 'examName',
             }, {
                 title: '年级',
                 width: 100,
@@ -30,6 +30,15 @@ class Exam extends Component {
                 title: '知识树',
                 render: (text, record) => {
 
+                }
+            }, {
+                title: '审核状态',
+                render: (text, record) => {
+                    if(record.checkStatus) {
+                        return '已审核';
+                    } else {
+                        return '未审核';
+                    }
                 }
             }, {
                 title: 'Action',
@@ -81,7 +90,7 @@ class Exam extends Component {
                         <Spin tip="Loading..."/>
                     ) : (
                         <Table columns={this.columns} dataSource={examList}
-                               rowKey={record => record.courseId}/>
+                               rowKey={record => record.examId}/>
                     )
                 }</div>
             </div>

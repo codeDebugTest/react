@@ -29,9 +29,9 @@ ReactDOM.render(
                     <Route path="knowledge_tree" component={KnowledgeTree}/>
                     <Route path="course" component={Course}/>
                     <Route path="exam" component={Exam}/>
+                    <Route path="teacher" component={Teacher}/>
                     <Route path="live" component={Live}/>
                     <Route path="school" component={School}/>
-                    <Route path="teacher" component={Teacher}/>
                 </Route>
             </Route>
         </Router>

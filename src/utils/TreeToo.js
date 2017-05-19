@@ -77,7 +77,7 @@ const getPathNameById = (id, node, currentPathName) => {
         return newPathName;
     } else {
         let childNodes = node.children;
-        if (childNodes != null) {
+        if (childNodes !== null) {
             for (let i = 0; i < childNodes.length; i++) {
                 let cNode = childNodes[i];
                 let name = getPathNameById(id, cNode, newPathName);
