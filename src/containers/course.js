@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import FilterHeader from '../components/filterHeader'
-import {doFetchCourseList} from '../actions/course.action'
+import {doFetchCourseList, doDeleteCourse} from '../actions/course.action'
 import {Table, message, Spin} from 'antd'
 import '../App.css'
 import {getCourseColumns} from '../utils/tableColumnsDef'
@@ -16,10 +16,15 @@ class Course extends Component {
     editRecord(record) {
         console.log('edit course record: ' + record)
     }
-    deleteRecord(record) {
-        console.log('delete course record: ' + record);
+
+    deleteRecord(index) {
+        const { dispatch } = this.props;
+        console.log('delete course record: ' + index);
+        const successFunc = () => message.success('delete course record success');
+        doDeleteCourse(index, successFunc, null)(dispatch);
     }
-    componentWillMount() {
+
+    componentDidMount() {
         const {dispatch, userState} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo && userState.userInfo.userToken,

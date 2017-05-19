@@ -23,7 +23,7 @@ class Exam extends Component {
         const {dispatch, userState} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo && userState.userInfo.userToken,
-            'knowledgeTreeId': -1,
+            'knowledgeTreeId': '3-2',
             'regionId': userState.userInfo && userState.userInfo.regionId,
             'offset': this.offset,
             'limit': this.limit
