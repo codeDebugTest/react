@@ -74,13 +74,11 @@ class Course extends Component {
         const {courseList, loading} = this.props.course;
 
         return (
-            <div>
+            <div className="content-wrapper">
                 <FilterHeader knowledgeTree={dictionary.knowledgeTree}> </FilterHeader>
                 <div className="table-style">{
                     loading ? (
-                        <div className="center-point">
-                            <Spin tip="Loading..."/>
-                        </div>
+                        <Spin tip="Loading..."/>
                     ) : (
                         <Table columns={this.columns} dataSource={courseList}
                                rowKey={record => record.courseId}/>

@@ -2,11 +2,13 @@ import {combineReducers} from 'redux'
 import {loginReducer} from './login.reducer'
 import {knowledgeTreeReducer} from  './knowledgeTree.reducer'
 import {courseReducer} from  './course.reducer'
+import {examReducer} from  './exam.reducer'
 
 const appReducer = combineReducers({
     login: loginReducer,
     dictionary: knowledgeTreeReducer,
-    course: courseReducer
+    course: courseReducer,
+    exam: examReducer
 });
 
 export default appReducer
