@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import SearchBox from '../components/SearchBox'
 import {doFetchSchoolList} from '../actions/school.action'
-import {Table, Popconfirm, message, Icon, Spin, Row} from 'antd'
+import {Table, Popconfirm, message, Icon, Spin, Row, Select} from 'antd'
 import '../App.css'
 
 class School extends Component {

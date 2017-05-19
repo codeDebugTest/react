@@ -39,4 +39,8 @@ const keyNotEmpty = (obj, key) => {
     return varNotEmpty(obj[key]);
 };
 
-export {isArray, isObject, varEmpty, keyNotEmpty, varNotEmpty}
+const keyEmpty = (obj, key) => {
+    return !varNotEmpty(obj[key]);
+}
+
+export {isArray, isObject, varEmpty, keyNotEmpty, varNotEmpty, keyEmpty}

@@ -4,6 +4,7 @@ import FilterHeader from '../components/filterHeader'
 import {doFetchCourseList} from '../actions/course.action'
 import {Table, Popconfirm, message, Icon, Spin} from 'antd'
 import '../App.css'
+import {getRecordTreeGrad, getRecordTreeNames, getRecordTreeSubject} from '../utils/TreeToo'
 
 class Course extends Component {
     constructor(props) {
@@ -18,18 +19,21 @@ class Course extends Component {
                 title: '年级',
                 width: 100,
                 render: (text, record, index) => {
-
+                    const {dictionary} = this.props.dictionary;
+                    return getRecordTreeGrad(dictionary.knowledgeTree, record);
                 }
             }, {
                 title: '科目',
                 width: 100,
                 render: (text, record) => {
-
+                    const {dictionary} = this.props.dictionary;
+                    return getRecordTreeSubject(dictionary.knowledgeTree, record);
                 }
             }, {
                 title: '知识树',
                 render: (text, record) => {
-
+                    const {dictionary} = this.props.dictionary;
+                    return getRecordTreeNames(dictionary.knowledgeTree, record);
                 }
             }, {
                 title: '审核状态',
@@ -40,7 +44,7 @@ class Course extends Component {
                         return '未审核';
                     }
                 }
-            },{
+            }, {
                 title: 'Action',
                 width: 150,
                 render: (text, record) => {
@@ -69,9 +73,9 @@ class Course extends Component {
     componentWillMount() {
         const {dispatch, userState} = this.props;
         const requestInfo = {
-            'userToken': userState.userInfo.userToken,
+            'userToken': userState.userInfo && userState.userInfo.userToken,
             'knowledgeTreeId': -1,
-            'regionId': userState.userInfo.regionId,
+            'regionId':  userState.userInfo && userState.userInfo.regionId,
             'offset': this.offset,
             'limit': this.limit
         };

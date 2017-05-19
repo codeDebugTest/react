@@ -69,9 +69,9 @@ class Exam extends Component {
     componentWillMount() {
         const {dispatch, userState} = this.props;
         const requestInfo = {
-            'userToken': userState.userInfo.userToken,
+            'userToken': userState.userInfo && userState.userInfo.userToken,
             'knowledgeTreeId': -1,
-            'regionId': userState.userInfo.regionId,
+            'regionId': userState.userInfo && userState.userInfo.regionId,
             'offset': this.offset,
             'limit': this.limit
         };
