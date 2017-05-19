@@ -66,7 +66,7 @@
   display: block;
 }
 .tree-ul li {
-  padding: 10px 6px 0;
+  padding: 15px 7px 0;
 }
 .tree-ul li .un-togglable::before,
 .tree-ul .togglable-down::before,
@@ -87,31 +87,42 @@
 .tree-ul li > label {
   color: #070708;
   float: left;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: bold;
   cursor: pointer;
 }
 .tree-ul li > label:hover {
   color: blue;
-  font-size: 14px;
 }
 .tree-ul li > .null-label {
   margin-left: 21px;
 }
+.tree-ul li > label:disabled,
+.tree-ul li > .null-label:disabled {
+  color: #dfe2cf;
+}
 
-.add-icon{
+.add-icon,
+.delete-icon,
+.close-icon{
   float: left;
-  margin-left: 15px;
-  font-size: 14px;
-  color: #0c06f3;
+  margin-left: 16px;
+  font-size: 15px;
   cursor: pointer;
 }
+.add-icon:disabled,
+.delete-icon:disabled,
+.close-icon:disabled {
+  color: #dfe2cf;
+}
+.add-icon {
+  color: #0c06f3;
+}
 .delete-icon{
-  float: left;
-  margin-left: 15px;
-  font-size: 14px;
   color: red;
-  cursor: pointer;
+}
+.close-icon{
+  color: #88a00b;
 }
 
 .clearfixed:after{

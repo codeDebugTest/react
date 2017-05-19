@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Icon, Popconfirm} from 'antd'
+import {Icon, Popconfirm, Popover} from 'antd'
 import {isArray, isObject} from '../utils/util'
 
 
@@ -36,6 +36,10 @@ class TreeNode extends Component {
         this.props.addNodeHandler(this.props.node);
     }
 
+    onCloseNode() {
+        this.props.closeNodeHandler(this.props.node);
+    }
+
     getChildrenNodes() {
         return (
             <ul className="tree-ul">{
@@ -52,6 +56,8 @@ class TreeNode extends Component {
     render() {
         const deleteMsg = 'Are you sure delete this node: ' + this.props.node.display + ' ?';
         const addMsg = 'Are you sure add a new node in this node: ' + this.props.node.display + '?';
+        const closeMsg = 'Are you sure disable this node: ' + this.props.node.display + '?';
+
         const childrenNodes = this.state.isTreeNode ? this.getChildrenNodes() : null;
         const style = this.state.visible ? null: {display: "none"};
         const labelClass = this.getLiStyleClass();
@@ -61,13 +67,24 @@ class TreeNode extends Component {
 
                 <Popconfirm placement="topRight" title={addMsg} okText="Yes" cancelText="No"
                             onConfirm={this.onAddNode.bind(this)}>
-                    <span className="add-icon"><Icon type="plus-circle-o"/></span>
+                    <Popover content="添加节点" trigger="hover" placement="right">
+                        <span className="add-icon"><Icon type="plus-circle-o"/></span>
+                    </Popover>
                 </Popconfirm>
 
 
                 <Popconfirm placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
                             onConfirm={this.onDeleteNode.bind(this)} >
-                    <span className="delete-icon"><Icon type="delete" /></span>
+                    <Popover content="删除节点" trigger="hover" placement="right">
+                        <span className="delete-icon"><Icon type="delete" /></span>
+                    </Popover>
+                </Popconfirm>
+
+                <Popconfirm placement="topRight" title={closeMsg} okText="Yes" cancelText="No"
+                            onConfirm={this.onCloseNode.bind(this)} >
+                    <Popover content="禁用节点" trigger="hover" placement="right">
+                        <span className="close-icon"><Icon type="close-circle-o" /></span>
+                    </Popover>
                 </Popconfirm>
 
                 <div style={style}>
