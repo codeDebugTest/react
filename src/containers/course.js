@@ -2,66 +2,15 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import FilterHeader from '../components/filterHeader'
 import {doFetchCourseList} from '../actions/course.action'
-import {Table, Popconfirm, message, Icon, Spin} from 'antd'
+import {Table, message, Spin} from 'antd'
 import '../App.css'
-import {getRecordTreeGrad, getRecordTreeNames, getRecordTreeSubject} from '../utils/TreeToo'
+import {getCourseColumns} from '../utils/tableColumnsDef'
 
 class Course extends Component {
     constructor(props) {
         super(props);
         this.offset= 0;
         this.limit= 30;
-        this.columns = [
-            {
-                title: '名称',
-                dataIndex: 'courseTitle',
-            }, {
-                title: '年级',
-                width: 100,
-                render: (text, record, index) => {
-                    const {dictionary} = this.props.dictionary;
-                    return getRecordTreeGrad(dictionary.knowledgeTree, record);
-                }
-            }, {
-                title: '科目',
-                width: 100,
-                render: (text, record) => {
-                    const {dictionary} = this.props.dictionary;
-                    return getRecordTreeSubject(dictionary.knowledgeTree, record);
-                }
-            }, {
-                title: '知识树',
-                render: (text, record) => {
-                    const {dictionary} = this.props.dictionary;
-                    return getRecordTreeNames(dictionary.knowledgeTree, record);
-                }
-            }, {
-                title: '审核状态',
-                render: (text, record) => {
-                    if(record.checkStatus) {
-                        return '已审核';
-                    } else {
-                        return '未审核';
-                    }
-                }
-            }, {
-                title: 'Action',
-                width: 150,
-                render: (text, record) => {
-                    const deleteMsg = 'Are you sure delete this record';
-                    return (
-                        <div>
-                            <span className="add-icon" onClick={()=>this.editRecord(record)}><Icon type="edit"/></span>
-
-                            <Popconfirm  placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
-                                         onConfirm={()=>this.deleteRecord(record)}>
-                                <span className="delete-icon"><Icon type="delete" /></span>
-                            </Popconfirm>
-                        </div>
-                    )
-                }
-            }
-        ];
     }
 
     editRecord(record) {
@@ -93,8 +42,8 @@ class Course extends Component {
                     loading ? (
                         <Spin tip="Loading..."/>
                     ) : (
-                        <Table columns={this.columns} dataSource={courseList}
-                               rowKey={record => record.courseId}/>
+                        <Table dataSource={courseList} rowKey={record => record.courseId}
+                            columns={getCourseColumns(dictionary.knowledgeTree, this.editRecord.bind(this), this.deleteRecord.bind(this))}/>
                     )
                 }</div>
             </div>

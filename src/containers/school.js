@@ -1,46 +1,15 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import SearchBox from '../components/SearchBox'
-import {doFetchSchoolList} from '../actions/school.action'
-import {Table, Popconfirm, message, Icon, Spin, Row, Select} from 'antd'
+import {Table, message, Spin, Row, Select} from 'antd'
 import '../App.css'
+import {getSchoolColumns} from '../utils/tableColumnsDef'
 
 class School extends Component {
     constructor(props) {
         super(props);
         this.offset= 0;
         this.limit= 30;
-        this.columns = [
-            {
-                title: '名称',
-                dataIndex: 'courseTitle',
-            }, {
-                title: '审核状态',
-                render: (text, record) => {
-                    if(record.checkStatus) {
-                        return '已审核';
-                    } else {
-                        return '未审核';
-                    }
-                }
-            }, {
-                title: 'Action',
-                width: 150,
-                render: (text, record) => {
-                    const deleteMsg = 'Are you sure delete this record';
-                    return (
-                        <div>
-                            <span className="add-icon" onClick={()=>this.editRecord(record)}><Icon type="edit"/></span>
-
-                            <Popconfirm  placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
-                                         onConfirm={()=>this.deleteRecord(record)}>
-                                <span className="delete-icon"><Icon type="delete" /></span>
-                            </Popconfirm>
-                        </div>
-                    )
-                }
-            }
-        ];
     }
 
     editRecord(record) {
@@ -95,8 +64,8 @@ class School extends Component {
                             <Spin tip="Loading..."/>
                         </div>
                     ) : (
-                        <Table columns={this.columns} dataSource={schoolList}
-                               rowKey={record => record.courseId}/>
+                        <Table dataSource={[]} rowKey={record => record.schoolId}
+                               columns={getSchoolColumns(this.editRecord.bind(this), this.deleteRecord.bind(this))}/>
                     )
                 }</div>
             </div>

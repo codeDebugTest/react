@@ -2,57 +2,15 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import FilterHeader from '../components/filterHeader'
 import {doFetchTeacherList} from '../actions/teacher.action'
-import {Table, Popconfirm, message, Icon, Spin} from 'antd'
+import {Table, message, Spin} from 'antd'
 import '../App.css'
+import {getTeacherColumns} from  '../utils/tableColumnsDef'
 
 class Teacher extends Component {
     constructor(props) {
         super(props);
         this.offset= 0;
         this.limit= 30;
-        this.columns = [
-            {
-                title: '姓名',
-                dataIndex: 'userName',
-            }, {
-                title: '年级',
-                width: 100,
-                render: (text, record, index) => {
-
-                }
-            }, {
-                title: '科目',
-                width: 100,
-                render: (text, record) => {
-
-                }
-            }, {
-                title: '审核状态',
-                render: (text, record) => {
-                    if(record.checkStatus) {
-                        return '已审核';
-                    } else {
-                        return '未审核';
-                    }
-                }
-            }, {
-                title: 'Action',
-                width: 150,
-                render: (text, record) => {
-                    const deleteMsg = 'Are you sure delete this record';
-                    return (
-                        <div>
-                            <span className="add-icon" onClick={()=>this.editRecord(record)}><Icon type="edit"/></span>
-
-                            <Popconfirm  placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
-                                         onConfirm={()=>this.deleteRecord(record)}>
-                                <span className="delete-icon"><Icon type="delete" /></span>
-                            </Popconfirm>
-                        </div>
-                    )
-                }
-            }
-        ];
     }
 
     editRecord(record) {
@@ -86,8 +44,8 @@ class Teacher extends Component {
                     loading ? (
                         <Spin tip="Loading..."/>
                     ) : (
-                        <Table columns={this.columns} dataSource={teacherList}
-                               rowKey={record => record.userId}/>
+                        <Table dataSource={teacherList} rowKey={record => record.userId}
+                               columns={getTeacherColumns(dictionary.knowledgeTree, this.editRecord.bind(this), this.deleteRecord.bind(this))}/>
                     )
                 }</div>
             </div>
