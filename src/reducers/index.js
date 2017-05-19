@@ -4,13 +4,15 @@ import {knowledgeTreeReducer} from  './knowledgeTree.reducer'
 import {courseReducer} from  './course.reducer'
 import {examReducer} from  './exam.reducer'
 import {teacherReducer} from  './teacher.reducer'
+import {liveReducer} from  './live.reducer'
 
 const appReducer = combineReducers({
     login: loginReducer,
     dictionary: knowledgeTreeReducer,
     course: courseReducer,
     exam: examReducer,
-    teacher: teacherReducer
+    teacher: teacherReducer,
+    live: liveReducer
 });
 
 export default appReducer

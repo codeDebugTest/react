@@ -56,10 +56,10 @@ class Teacher extends Component {
     }
 
     editRecord(record) {
-        console.log('edit course record: ' + record)
+        console.log('edit teacher record: ' + record)
     }
     deleteRecord(record) {
-        console.log('delete course record: ' + record);
+        console.log('delete teacher record: ' + record);
     }
 
     componentWillMount() {

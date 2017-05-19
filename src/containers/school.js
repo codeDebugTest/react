@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import FilterHeader from '../components/filterHeader'
-import {doFetchCourseList} from '../actions/course.action'
-import {Table, Popconfirm, message, Icon, Spin} from 'antd'
+import SearchBox from '../components/SearchBox'
+import {doFetchSchoolList} from '../actions/school.action'
+import {Table, Popconfirm, message, Icon, Spin, Row} from 'antd'
 import '../App.css'
 
 class School extends Component {
@@ -15,21 +15,13 @@ class School extends Component {
                 title: '名称',
                 dataIndex: 'courseTitle',
             }, {
-                title: '年级',
-                width: 100,
-                render: (text, record, index) => {
-
-                }
-            }, {
-                title: '科目',
-                width: 100,
+                title: '审核状态',
                 render: (text, record) => {
-
-                }
-            }, {
-                title: '知识树',
-                render: (text, record) => {
-
+                    if(record.checkStatus) {
+                        return '已审核';
+                    } else {
+                        return '未审核';
+                    }
                 }
             }, {
                 title: 'Action',
@@ -57,6 +49,10 @@ class School extends Component {
     deleteRecord(record) {
         console.log('delete course record: ' + record);
     }
+
+    searchFunc(value) {
+        console.log('searching school: ' + value);
+    }
     componentWillMount() {
         const {dispatch, userState} = this.props;
         const requestInfo = {
@@ -66,23 +62,25 @@ class School extends Component {
             'offset': this.offset,
             'limit': this.limit
         };
-        doFetchCourseList(requestInfo,  null, (msg)=> {message.error(msg)})(dispatch);
+        // doFetchSchoolList(requestInfo,  null, (msg)=> {message.error(msg)})(dispatch);
     }
 
     render() {
-        const {dictionary} = this.props.dictionary;
-        const {courseList, loading} = this.props.course;
+        const {schoolList, loading} = this.props.school;
 
         return (
             <div>
-                <FilterHeader knowledgeTree={dictionary.knowledgeTree}> </FilterHeader>
+                <Row className="filter-header">
+                    <SearchBox searchLabel="学校名：" searchFunc={this.searchFunc.bind(this)}/>
+                </Row>
+
                 <div className="table-style">{
                     loading ? (
                         <div className="center-point">
                             <Spin tip="Loading..."/>
                         </div>
                     ) : (
-                        <Table columns={this.columns} dataSource={courseList}
+                        <Table columns={this.columns} dataSource={schoolList}
                                rowKey={record => record.courseId}/>
                     )
                 }</div>
@@ -93,9 +91,8 @@ class School extends Component {
 
 function mapStateToProps(state) {
     return {
-        course: state.course,
+        school: state.school,
         userState: state.login,
-        dictionary: state.dictionary,
     }
 }
 export default connect(mapStateToProps)(School)

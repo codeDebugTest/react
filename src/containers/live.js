@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import FilterHeader from '../components/filterHeader'
-import {doFetchCourseList} from '../actions/course.action'
+import {doFetchLiveList} from '../actions/live.action'
 import {Table, Popconfirm, message, Icon, Spin} from 'antd'
 import '../App.css'
 
@@ -12,8 +12,8 @@ class Live extends Component {
         this.limit= 30;
         this.columns = [
             {
-                title: '名称',
-                dataIndex: 'courseTitle',
+                title: '标题',
+                dataIndex: 'title',
             }, {
                 title: '年级',
                 width: 100,
@@ -27,9 +27,13 @@ class Live extends Component {
 
                 }
             }, {
-                title: '知识树',
+                title: '审核状态',
                 render: (text, record) => {
-
+                    if(record.checkStatus) {
+                        return '已审核';
+                    } else {
+                        return '未审核';
+                    }
                 }
             }, {
                 title: 'Action',
@@ -52,11 +56,12 @@ class Live extends Component {
     }
 
     editRecord(record) {
-        console.log('edit course record: ' + record)
+        console.log('edit live record: ' + record)
     }
     deleteRecord(record) {
-        console.log('delete course record: ' + record);
+        console.log('delete live record: ' + record);
     }
+
     componentWillMount() {
         const {dispatch, userState} = this.props;
         const requestInfo = {
@@ -66,24 +71,23 @@ class Live extends Component {
             'offset': this.offset,
             'limit': this.limit
         };
-        doFetchCourseList(requestInfo,  null, (msg)=> {message.error(msg)})(dispatch);
+
+        doFetchLiveList(requestInfo,  null, (msg)=> {message.error(msg)})(dispatch);
     }
 
     render() {
         const {dictionary} = this.props.dictionary;
-        const {courseList, loading} = this.props.course;
+        const {liveList, loading} = this.props.live;
 
         return (
-            <div>
+            <div className="content-wrapper">
                 <FilterHeader knowledgeTree={dictionary.knowledgeTree}> </FilterHeader>
                 <div className="table-style">{
                     loading ? (
-                        <div className="center-point">
-                            <Spin tip="Loading..."/>
-                        </div>
+                        <Spin tip="Loading..."/>
                     ) : (
-                        <Table columns={this.columns} dataSource={courseList}
-                               rowKey={record => record.courseId}/>
+                        <Table columns={this.columns} dataSource={liveList}
+                               rowKey={record => record.userId}/>
                     )
                 }</div>
             </div>
@@ -93,7 +97,7 @@ class Live extends Component {
 
 function mapStateToProps(state) {
     return {
-        course: state.course,
+        live: state.live,
         userState: state.login,
         dictionary: state.dictionary,
     }

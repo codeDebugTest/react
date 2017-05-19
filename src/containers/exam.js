@@ -61,10 +61,10 @@ class Exam extends Component {
     }
 
     editRecord(record) {
-        console.log('edit course record: ' + record)
+        console.log('edit exam record: ' + record)
     }
     deleteRecord(record) {
-        console.log('delete course record: ' + record);
+        console.log('delete exam record: ' + record);
     }
     componentWillMount() {
         const {dispatch, userState} = this.props;

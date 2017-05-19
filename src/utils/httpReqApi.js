@@ -7,6 +7,8 @@ const _dictionaryUrl = config.realHost +  '/app/dictionary';
 const _courseListUrl = config.realHost +  '/visitor/course/list';
 const _examListUrl = config.realHost +  '/visitor/exam/list';
 const _teacherListUrl = config.realHost +  '/visitor/teacher/list';
+const _liveListUrl = config.realHost +  '/student/live_course/list';
+const _schoolListUrl = config.realHost +  '/visitor/school/list';
 
 export function userLogin (data, callback){
     return ajaxPost(_loginUrl, {}, data, callback)
@@ -26,4 +28,12 @@ export function fetchExamList(requestInfo, callback) {
 
 export function fetchTeacherList(requestInfo, callback) {
     return ajaxPost(_teacherListUrl, {}, requestInfo, callback)
+}
+
+export function fetchLiveList(requestInfo, callback) {
+    return ajaxPost(_liveListUrl, {}, requestInfo, callback)
+}
+
+export function fetchSchoolList(requestInfo, callback) {
+    return ajaxPost(_schoolListUrl, {}, requestInfo, callback)
 }
