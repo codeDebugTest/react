@@ -53,6 +53,11 @@ class School extends Component {
     searchFunc(value) {
         console.log('searching school: ' + value);
     }
+
+    onCheckStatusChange(value) {
+        console.log(`check status change to: ${value}`)
+    }
+    
     componentWillMount() {
         const {dispatch, userState} = this.props;
         const requestInfo = {
@@ -72,6 +77,16 @@ class School extends Component {
             <div>
                 <Row className="filter-header">
                     <SearchBox searchLabel="学校名：" searchFunc={this.searchFunc.bind(this)}/>
+
+                    <div className="item-warp">
+                        <label>审核状态:</label>
+                        <Select className="select-style" showSearch defaultValue="2"
+                                onChange={this.onCheckStatusChange.bind(this)}>
+                            <Option value="2">不限 </Option>
+                            <Option value="0">未审核</Option>
+                            <Option value="1">已审核</Option>
+                        </Select>
+                    </div>
                 </Row>
 
                 <div className="table-style">{

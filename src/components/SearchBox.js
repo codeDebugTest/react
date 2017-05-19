@@ -8,7 +8,7 @@ class SearchBox extends Component {
     constructor(props) {
         super(props);
     }
-    
+
     onSearchSelect(value) {
         console.log(`search text: ${value}`);
         this.props.searchFunc(value);
