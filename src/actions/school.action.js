@@ -3,6 +3,8 @@ import {fetchTeacherList} from '../utils/httpReqApi'
 export const FETCH_SCHOOL_LIST = 'fetch_school_list';
 export const FETCH_SCHOOL_SUCCESS = 'fetch_school_success';
 export const FETCH_SCHOOL_FAILED = 'fetch_school_failed';
+export const DELETE_SCHOOL_SUCCESS = 'delete_school_success';
+export const DELETE_SCHOOL_FAILED = 'delete_school_failed';
 
 const doFetch = () => {
     return {
@@ -23,6 +25,20 @@ const doFailed = (response) => {
     }
 };
 
+const deleteSuccess = (index) => {
+    return {
+        type: DELETE_SCHOOL_SUCCESS,
+        index: index
+    }
+}
+
+const deleteFailed = (response) => {
+    return {
+        type: DELETE_SCHOOL_FAILED,
+        index: response
+    }
+}
+
 export function doFetchSchoolList(data, successFunc, failedFuc) {
     return dispatch => {
         dispatch(doFetch(data));
@@ -42,5 +58,12 @@ export function doFetchSchoolList(data, successFunc, failedFuc) {
                 }
             }
         );
+    }
+}
+
+export function doDeleteSchool(data, successFunc, failedFunc) {
+    return dispatch => {
+        dispatch(deleteSuccess(data));
+        successFunc();
     }
 }

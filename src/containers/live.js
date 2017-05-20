@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import FilterHeader from '../components/filterHeader'
-import {doFetchLiveList} from '../actions/live.action'
+import {doFetchLiveList, doDeleteLive} from '../actions/live.action'
 import {Table, message, Spin} from 'antd'
 import '../App.css'
 import {getLiveColumns} from '../utils/tableColumnsDef'
@@ -16,11 +16,14 @@ class Live extends Component {
     editRecord(record) {
         console.log('edit live record: ' + record)
     }
-    deleteRecord(record) {
-        console.log('delete live record: ' + record);
+    deleteRecord(index) {
+        const { dispatch } = this.props;
+        console.log('delete live record: ' + index);
+        const successFunc = () => message.success('delete live record success');
+        doDeleteLive(index, successFunc, null)(dispatch);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const {dispatch, userState} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo && userState.userInfo.userToken,

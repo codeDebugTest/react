@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {getSchoolColumns} from '../utils/tableColumnsDef'
+import {doFetchSchoolList, doDeleteSchool} from '../actions/school.action'
 import SearchBox from '../components/SearchBox'
 import {Table, message, Spin, Row, Select} from 'antd'
 import '../App.css'
-import {getSchoolColumns} from '../utils/tableColumnsDef'
+
 
 class School extends Component {
     constructor(props) {
@@ -15,8 +17,11 @@ class School extends Component {
     editRecord(record) {
         console.log('edit course record: ' + record)
     }
-    deleteRecord(record) {
-        console.log('delete course record: ' + record);
+    deleteRecord(index) {
+        const { dispatch } = this.props;
+        console.log('delete school record: ' + index);
+        const successFunc = () => message.success('delete school record success');
+        doDeleteSchool(index, successFunc, null)(dispatch);
     }
 
     searchFunc(value) {
@@ -27,7 +32,7 @@ class School extends Component {
         console.log(`check status change to: ${value}`)
     }
     
-    componentWillMount() {
+    componentDidMount() {
         const {dispatch, userState} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo.userToken,

@@ -22,7 +22,8 @@ class Exam extends Component {
         const successFunc = () => message.success('delete course record success');
         doDeleteExam(index, successFunc, null)(dispatch);
     }
-    componentWillMount() {
+
+    componentDidMount() {
         const {dispatch, userState} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo && userState.userInfo.userToken,
