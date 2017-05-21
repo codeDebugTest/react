@@ -8,6 +8,7 @@ import { Form } from 'antd'
 import App from './App'
 import KnowledgeTree from './containers/knowledgeTree'
 import Course from './containers/course'
+import CourseDetail from './containers/courseDetail'
 import Exam from './containers/exam'
 import Teacher from './containers/teacher'
 import Live from './containers/live'
@@ -28,6 +29,7 @@ ReactDOM.render(
                     <IndexRoute component={KnowledgeTree}/>
                     <Route path="knowledge_tree" component={KnowledgeTree}/>
                     <Route path="course" component={Course}/>
+                    <Route path="course/:id" component={CourseDetail}/>
                     <Route path="exam" component={Exam}/>
                     <Route path="teacher" component={Teacher}/>
                     <Route path="live" component={Live}/>

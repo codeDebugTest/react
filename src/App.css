@@ -17,14 +17,13 @@
   bottom: 0;
   left: 0;
   right: 0;
-  margin: 15px;
+  margin: 15px 1px 10px 15px;
   padding: 10px;
   background-color: #fff;
   border-radius: 4px;
   overflow-y: auto;
 }
 .filter-header {
-  margin: 5px 5px;
   padding: 15px 5px 15px;
   border-radius: 4px;
   background-color: antiquewhite;
@@ -56,9 +55,10 @@
 
 .content-wrapper {
   position: relative;
+  padding: 5px 5px;
 }
 .content-wrapper .table-style {
-  padding: 15px 5px
+  padding: 15px 0
 }
 
 .tree-ul {
@@ -131,4 +131,63 @@
   visibility: hidden;
   height: 0;
   clear:both
+}
+
+/* --- 布局 --- */
+.row-form {
+  position: relative;
+  padding: 0;
+  height: 30px;
+  margin-bottom: 15px;
+}
+.row-form .offset-1-2 { /* 向左偏移 1/2*/
+  position: absolute;
+  left: 50%;
+}
+.row-form .offset-1-3 { /* 向左偏移 1/3 */
+  position: absolute;
+  left: 33.33%;
+}
+.row-form .offset-2-3 { /* 向左偏移 2/3 */
+  position: absolute;
+  left: 66.66%;
+}
+.row-form > * {
+  line-height: 30px;
+  float: left;
+}
+.row-form .offset-1-2 > * ,
+.row-form .offset-1-3 > * ,
+.row-form .offset-2-3 > * {
+  float: left;
+}
+/* --- 布局 --- */
+.row-form .margin-left-20 {
+  margin-left: 20px;
+}
+.row-form .margin-left-20 > button{
+  margin-right: 30px;
+}
+.row-form .file-icon {
+  margin-right: 5px;
+  font-size: 14px;
+}
+.row-form a {
+  font-size: 14px;
+}
+.row-form .control-label {
+  text-align: right;
+  width: 120px;
+  font-size: 14px;
+}
+.row-form .info-label {
+  font-weight: bold;
+  font-size: 14px;
+}
+.row-form .player-btn {
+  font-size: 16px;
+  border-radius: 30px;
+  width: 31px;
+  height: 31px;
+  padding: 0 10px;
 }

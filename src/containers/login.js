@@ -36,8 +36,12 @@ class LoginForm extends Component {
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
+        <div className="login-page">
             <div className="login-wrap">
                 <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
+                    <FormItem>
+                        <img src={process.env.PUBLIC_URL + '/imgs/logo.png'} className="login-img"/>
+                    </FormItem>
                     <FormItem>
                         {getFieldDecorator('userName', {
                             rules: [{ required: true, message: 'Please input your username!' }],
@@ -59,6 +63,7 @@ class LoginForm extends Component {
                     </FormItem>
                 </Form>
             </div>
+        </div>
         );
     }
 }

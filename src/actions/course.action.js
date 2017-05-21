@@ -5,6 +5,7 @@ export const FETCH_COURSE_SUCCESS = 'fetch_course_success';
 export const FETCH_COURSE_FAILED = 'fetch_course_failed';
 export const DELETE_COURSE_SUCCESS = 'delete_course_success';
 export const DELETE_COURSE_FAILED = 'delete_course_failed';
+export const SHOW_COURSE_DETAIL = 'show_course_detail';
 
 const doFetch = () => {
     return {
@@ -30,7 +31,14 @@ const deleteSuccess = (index) => {
         type: DELETE_COURSE_SUCCESS,
         index: index
     }
-}
+};
+
+const showDetail = (course) => {
+    return {
+        type: SHOW_COURSE_DETAIL,
+        course: course
+    }
+};
 
 const deleteFailed = (response) => {
     return {
@@ -65,5 +73,11 @@ export function doDeleteCourse(data, successFunc, failedFunc) {
     return dispatch => {
         dispatch(deleteSuccess(data));
         successFunc();
+    }
+}
+
+export function doShowDetail(data) {
+    return dispatch => {
+        dispatch(showDetail(data))
     }
 }

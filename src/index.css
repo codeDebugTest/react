@@ -3,7 +3,12 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
-
+.login-page {
+  background-color: #0c6561;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
 .login-wrap {
   position:absolute;
   top:0;
@@ -20,6 +25,11 @@ body {
 }
 .login-wrap .login-form-button {
   width: 100%;
+}
+.login-img{
+  height: 75px;
+  width: 250px;
+  margin-left: 30px;
 }
 
 .radio-style {

@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {browserHistory} from 'react-router'
 import FilterHeader from '../components/filterHeader'
-import {doFetchCourseList, doDeleteCourse} from '../actions/course.action'
+import {doFetchCourseList, doDeleteCourse, doShowDetail} from '../actions/course.action'
+import {getCourseColumns} from '../utils/tableColumnsDef'
 import {Table, message, Spin} from 'antd'
 import '../App.css'
-import {getCourseColumns} from '../utils/tableColumnsDef'
 
 class Course extends Component {
     constructor(props) {
@@ -14,7 +15,14 @@ class Course extends Component {
     }
 
     editRecord(index) {
-        console.log('edit course record: ' + index)
+        console.log('edit course record: ' + index);
+        const {courseList} = this.props.course;
+        const {dispatch} = this.props;
+
+        doShowDetail(courseList[index])(dispatch);
+        browserHistory.push({
+            pathname: `/management/course/${courseList[index].courseId}`
+        })
     }
 
     deleteRecord(index) {

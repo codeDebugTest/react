@@ -41,6 +41,18 @@ const keyNotEmpty = (obj, key) => {
 
 const keyEmpty = (obj, key) => {
     return !varNotEmpty(obj[key]);
-}
+};
 
-export {isArray, isObject, varEmpty, keyNotEmpty, varNotEmpty, keyEmpty}
+const mapTagIdsToNames = (tagList, tagIds) => {
+    let tagNames = [];
+    if (varNotEmpty(tagIds) && varNotEmpty(tagList)) {
+        tagIds.map(tagId => {
+            let matched = tagList.filter(tag => tag.id.toString() === tagId);
+            if (varNotEmpty(matched))
+                tagNames.push(matched[0].display);
+        });
+    }
+    return tagNames.toString();
+};
+
+export {isArray, isObject, varEmpty, keyNotEmpty, varNotEmpty, keyEmpty, mapTagIdsToNames}
