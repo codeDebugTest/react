@@ -172,9 +172,6 @@
   margin-right: 5px;
   font-size: 14px;
 }
-.row-form a {
-  font-size: 14px;
-}
 .row-form .control-label {
   text-align: right;
   width: 120px;
@@ -190,4 +187,11 @@
   width: 31px;
   height: 31px;
   padding: 0 10px;
+}
+.row-form a {
+  font-size: 14px;
+}
+.row-form textarea {
+  height: 70px;
+  width: 400px;
 }

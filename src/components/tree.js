@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Icon, Popconfirm, Popover} from 'antd'
+import {Icon, Popconfirm, Tooltip} from 'antd'
 import {isArray, isObject} from '../utils/util'
 
 
@@ -67,24 +67,24 @@ class TreeNode extends Component {
 
                 <Popconfirm placement="topRight" title={addMsg} okText="Yes" cancelText="No"
                             onConfirm={this.onAddNode.bind(this)}>
-                    <Popover content="添加节点" trigger="hover" placement="right">
+                    <Tooltip title="添加节点" placement="right">
                         <span className="add-icon"><Icon type="plus-circle-o"/></span>
-                    </Popover>
+                    </Tooltip>
                 </Popconfirm>
 
 
                 <Popconfirm placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
                             onConfirm={this.onDeleteNode.bind(this)} >
-                    <Popover content="删除节点" trigger="hover" placement="right">
+                    <Tooltip title="删除节点" placement="right">
                         <span className="delete-icon"><Icon type="delete" /></span>
-                    </Popover>
+                    </Tooltip>
                 </Popconfirm>
 
                 <Popconfirm placement="topRight" title={closeMsg} okText="Yes" cancelText="No"
                             onConfirm={this.onCloseNode.bind(this)} >
-                    <Popover content="禁用节点" trigger="hover" placement="right">
+                    <Tooltip title="禁用节点" placement="right">
                         <span className="close-icon"><Icon type="close-circle-o" /></span>
-                    </Popover>
+                    </Tooltip>
                 </Popconfirm>
 
                 <div style={style}>

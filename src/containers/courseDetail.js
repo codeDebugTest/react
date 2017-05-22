@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getRecordTreeNames} from '../utils/TreeToo'
 import {mapTagIdsToNames} from '../utils/util'
-import {Col, Button, Icon} from 'antd'
+import {Button, Icon, Input, message} from 'antd'
 import '../App.css'
 
 class CourseDetail extends Component {
@@ -23,6 +23,15 @@ class CourseDetail extends Component {
         const {course} = this.props.detail;
         const files = course.courseItems.filter(item => item.itemType === type);
         return files.length && files[0];
+    }
+
+    handleUnPassClick() {
+        const textArea = document.getElementById('comment');
+        if (textArea.value === '') {
+            message.warning('请输入未通过原因')
+            return;
+        }
+        console.log(textArea.value);
     }
 
     render() {
@@ -69,11 +78,16 @@ class CourseDetail extends Component {
                     <Icon type="file-text margin-left-20 file-icon" style={{display: courseCase.fileName ? '': 'none'}}/>
                     <a href={courseCase.fileUrl} target="new">{courseCase.fileName}</a>
                 </div>
+                <div className="row-form" style={{height: '70px'}}>
+                    <label className='control-label'>备注：</label>
+
+                    <Input id="comment" type="textarea" className="margin-left-20" placeholder="请输入否决原因" />
+                </div>
                 <div className="row-form">
                     <label className='control-label'>审核：</label>
                     <div className="margin-left-20">
                         <Button type="primary">通过</Button>
-                        <Button type="danger">否决</Button>
+                        <Button type="danger" onClick={this.handleUnPassClick.bind(this)}>否决</Button>
                     </div>
                 </div>
             </div>
