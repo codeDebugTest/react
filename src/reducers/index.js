@@ -6,6 +6,7 @@ import {examReducer} from  './exam.reducer'
 import {teacherReducer} from  './teacher.reducer'
 import {liveReducer} from  './live.reducer'
 import {schoolReducer} from  './school.reducer'
+import {livePlayerReducer} from  './livePlayer.reducer'
 
 const appReducer = combineReducers({
     login: loginReducer,
@@ -14,7 +15,8 @@ const appReducer = combineReducers({
     exam: examReducer,
     teacher: teacherReducer,
     live: liveReducer,
-    school: schoolReducer
+    school: schoolReducer,
+    livePlayer: livePlayerReducer
 });
 
 export default appReducer

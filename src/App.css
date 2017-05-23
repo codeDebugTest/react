@@ -182,10 +182,10 @@
   font-size: 14px;
 }
 .row-form .player-btn {
-  font-size: 16px;
-  border-radius: 30px;
-  width: 31px;
-  height: 31px;
+  font-size: 26px;
+  border-radius: 34px;
+  width: 36px;
+  height: 34px;
   padding: 0 10px;
 }
 .row-form a {
@@ -194,4 +194,12 @@
 .row-form textarea {
   height: 70px;
   width: 400px;
+}
+.live-player {
+  height: 500px;
+}
+.row-form .live-box {
+  width: 800px;
+  height: 500px;
+  margin-left: 140px;
 }
