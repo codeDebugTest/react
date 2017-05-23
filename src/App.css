@@ -182,7 +182,7 @@
   font-size: 14px;
 }
 .row-form .player-btn {
-  font-size: 26px;
+  font-size: 22px;
   border-radius: 34px;
   width: 36px;
   height: 34px;
@@ -196,10 +196,10 @@
   width: 400px;
 }
 .live-player {
-  height: 500px;
+  height: 460px;
 }
 .row-form .live-box {
   width: 800px;
-  height: 500px;
-  margin-left: 140px;
+  height: 460px;
+  margin-top: 5px;
 }

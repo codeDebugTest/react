@@ -45,31 +45,19 @@ class CourseDetail extends Component {
         this.setState({startPlay: true});
     }
 
-    getLivePlayerComponent() {
-        if (this.state.startPlay) {
-
-            doCreateLivePlayer({
-                liveBox: 'video-box',
-                playerType: 'video/mp4',
-                pullStreamUrl: this.getFileInfo(this.getCourseItemByType(1)).fileUrl,
-            });
-
-            return (
-                <div className="row-form live-player">
-                    <label className='control-label'> </label>
-                    <div className="live-box">
-                        <video id="video-box" className="video-js vjs-big-play-centered vjs-fluid"></video>
-                    </div>
-                </div>
-            )
-        }
+    componentWillMount() {
+        this.courseFile = this.getFileInfo(this.getCourseItemByType(2));
+        this.courseVideo = this.getFileInfo(this.getCourseItemByType(1));
+        this.courseCase = this.getFileInfo(this.getCourseItemByType(3));
     }
 
-    componentDidMount() {
-        const {livePlayer} = this.props.liveObj;
-        if (livePlayer) {
-            livePlayer.play();
-        }
+    componentDidUpdate() {
+        const {dispatch} = this.props;
+        doCreateLivePlayer({
+            liveBox: 'video-box',
+            playerType: 'video/mp4',
+            pullStreamUrl: this.courseVideo.fileUrl,
+        })(dispatch);
     }
 
     componentWillUnmount() {
@@ -79,12 +67,30 @@ class CourseDetail extends Component {
         }
     }
 
+    LivePlayerRender() {
+        if (this.state.startPlay) {
+            return (
+                <div className="row-form live-player">
+                    <label className='control-label'>视频：</label>
+                    <div className="live-box margin-left-20">
+                        <video id="video-box" className="video-js vjs-big-play-centered vjs-fluid"></video>
+                    </div>
+                </div>
+            )
+        } else {
+            return (
+                <div className="row-form">
+                    <label className='control-label'>视频：</label>
+                    <Button type="primary" className="margin-left-20 player-btn" onClick={this.onLivePlayerClick.bind(this)}
+                            style={{display: this.courseVideo.fileUrl ? '': 'none'}}> ▶ </Button>
+                </div>
+            )
+        }
+    }
+
     render() {
         const {course} = this.props.detail;
         const {dictionary} = this.props.dictionary;
-        const courseFile = this.getFileInfo(this.getCourseItemByType(2));
-        const courseVideo = this.getFileInfo(this.getCourseItemByType(1));
-        const courseCase = this.getFileInfo(this.getCourseItemByType(3));
 
         return (
             <div className="detail-warp">
@@ -110,21 +116,16 @@ class CourseDetail extends Component {
                     <label className='control-label'>课件：</label>
 
                     <Icon type="file-text margin-left-20 file-icon"
-                          style={{display: courseFile.fileName ? '': 'none'}}/>
-                    <a href={courseFile.fileUrl} target="new">{courseFile.fileName}</a>
-                </div>
-                <div className="row-form">
-                    <label className='control-label'>视频：</label>
-                    <Button type="primary" className="margin-left-20 player-btn" onClick={this.onLivePlayerClick.bind(this)}
-                            style={{display: courseVideo.fileUrl ? '': 'none'}}> ▶ </Button>
+                          style={{display: this.courseFile.fileName ? '': 'none'}}/>
+                    <a href={this.courseFile.fileUrl} target="new">{this.courseFile.fileName}</a>
                 </div>
 
-                {this.getLivePlayerComponent()}
+                {this.LivePlayerRender()}
 
                 <div className="row-form">
                     <label className='control-label'>教案：</label>
-                    <Icon type="file-text margin-left-20 file-icon" style={{display: courseCase.fileName ? '': 'none'}}/>
-                    <a href={courseCase.fileUrl} target="new">{courseCase.fileName}</a>
+                    <Icon type="file-text margin-left-20 file-icon" style={{display: this.courseCase.fileName ? '': 'none'}}/>
+                    <a href={this.courseCase.fileUrl} target="new">{this.courseCase.fileName}</a>
                 </div>
                 <div className="row-form" style={{height: '70px'}}>
                     <label className='control-label'>备注：</label>
