@@ -5,6 +5,7 @@ export const FETCH_SCHOOL_SUCCESS = 'fetch_school_success';
 export const FETCH_SCHOOL_FAILED = 'fetch_school_failed';
 export const DELETE_SCHOOL_SUCCESS = 'delete_school_success';
 export const DELETE_SCHOOL_FAILED = 'delete_school_failed';
+export const SHOW_SCHOOL_DETAIL = 'show_school_detail';
 
 const doFetch = () => {
     return {
@@ -39,6 +40,13 @@ const deleteFailed = (response) => {
     }
 }
 
+const showDetail = (school) => {
+    return {
+        type: SHOW_SCHOOL_DETAIL,
+        school: school
+    }
+};
+
 export function doFetchSchoolList(data, successFunc, failedFuc) {
     return dispatch => {
         dispatch(doFetch(data));
@@ -65,5 +73,11 @@ export function doDeleteSchool(data, successFunc, failedFunc) {
     return dispatch => {
         dispatch(deleteSuccess(data));
         successFunc();
+    }
+}
+
+export function doShowDetail(data) {
+    return dispatch => {
+        dispatch(showDetail(data))
     }
 }

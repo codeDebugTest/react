@@ -62,13 +62,13 @@ class FilterHeader extends Component {
     }
 
     render() {
-        const searchLabel ='课程名称:';
+        const searchLabel = this.props.searchLabel || '课程名称:';
         const gradeLabel ='年级:';
         const subjectLabel ='科目:';
 
         return (
             <Row className="filter-header">
-                <div>
+                <div style={{display: this.props.hideSearchBox ? 'none' : '' }} className="margin-right-30">
                     <label>{searchLabel}</label>
                     <Search style={{marginLeft: 15, width: 200}}
                             placeholder="input search text"
@@ -76,7 +76,7 @@ class FilterHeader extends Component {
                     />
                 </div>
 
-                <div className="item-warp">
+                <div className="item-warp margin-right-30">
                     <label>{gradeLabel}</label>
                     <Select className="select-style" showSearch
                             onChange={this.onGradeChange.bind(this)}>
@@ -84,7 +84,7 @@ class FilterHeader extends Component {
                     </Select>
                 </div>
 
-                <div className="item-warp">
+                <div className="item-warp margin-right-30">
                     <label>{subjectLabel}</label>
                     <Select className="select-style" showSearch value={this.state.selectedSubject}
                             onChange={this.onSubjectChange.bind(this)}>

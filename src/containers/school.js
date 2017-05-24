@@ -52,7 +52,7 @@ class School extends Component {
                 <Row className="filter-header">
                     <SearchBox searchLabel="学校名：" searchFunc={this.searchFunc.bind(this)}/>
 
-                    <div className="item-warp">
+                    <div className="item-warp margin-left-30">
                         <label>审核状态:</label>
                         <Select className="select-style" showSearch defaultValue="2"
                                 onChange={this.onCheckStatusChange.bind(this)}>

@@ -41,7 +41,7 @@ class Exam extends Component {
 
         return (
             <div className="content-wrapper">
-                <FilterHeader knowledgeTree={dictionary.knowledgeTree}> </FilterHeader>
+                <FilterHeader knowledgeTree={dictionary.knowledgeTree} hideSearchBox="true"> </FilterHeader>
                 <div className="table-style">{
                     loading ? (
                         <Spin tip="Loading..."/>

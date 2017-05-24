@@ -5,6 +5,7 @@ export const FETCH_EXAM_SUCCESS = 'fetch_exam_success';
 export const FETCH_EXAM_FAILED = 'fetch_exam_failed';
 export const DELETE_EXAM_SUCCESS = 'delete_exam_success';
 export const DELETE_EXAM_FAILED = 'delete_exam_failed';
+export const SHOW_EXAM_DETAIL = 'show_exam_detail';
 
 const doFetch = () => {
     return {
@@ -32,6 +33,13 @@ const deleteSuccess = (index) => {
     }
 }
 
+const showDetail = (exam) => {
+    return {
+        type: SHOW_EXAM_DETAIL,
+        exam: exam
+    }
+};
+
 export function doFetchExamList(data, successFunc, failedFuc) {
     return dispatch => {
         dispatch(doFetch(data));
@@ -58,5 +66,11 @@ export function doDeleteExam(data, successFunc, failedFunc) {
     return dispatch => {
         dispatch(deleteSuccess(data));
         successFunc();
+    }
+}
+
+export function doShowDetail(data) {
+    return dispatch => {
+        dispatch(showDetail(data))
     }
 }

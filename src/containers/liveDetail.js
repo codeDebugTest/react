@@ -28,7 +28,8 @@ class LiveDetail extends Component {
 
     getLiveItemByType(type) {
         const {live} = this.props.detail;
-        const files = live.courseItems.filter(item => item.itemType === type);
+        // const files = live.courseItems.filter(item => item.itemType === type);
+        const files = [];
         return files.length && files[0];
     }
 
@@ -93,6 +94,12 @@ class LiveDetail extends Component {
 
         return (
             <div className="detail-warp">
+                <div className="row-form img-height">
+                    <label className='control-label'>封面：</label>
+                    <div className="margin-left-20">
+                        <img src={live.coverImageUrl}/>
+                    </div>
+                </div>
                 <div className="row-form">
                     <label className='control-label'>名称：</label>
                     <div className="margin-left-20">
@@ -101,23 +108,23 @@ class LiveDetail extends Component {
                 </div>
                 <div className="row-form">
                     <label className='control-label'>简介：</label>
-                    <label className="margin-left-20 info-label"> {live.description}</label>
+                    <label className="margin-left-20 info-label"> {live.introduction}</label>
                 </div>
                 <div className="row-form">
                     <label className='control-label'>发布教师：</label>
-                    <label className="margin-left-20 info-label"> {live.teacher}</label>
+                    <label className="margin-left-20 info-label"> {live.teacherName}</label>
                 </div>
                 <div className="row-form">
                     <label className='control-label'>日期：</label>
-                    <label className="margin-left-20 info-label">live.date</label>
+                    <label className="margin-left-20 info-label">{live.liveDate}</label>
                 </div>
                 <div className="row-form">
                     <label className='control-label'>开始时间：</label>
-                    <label className="margin-left-20 info-label">live.startTime</label>
+                    <label className="margin-left-20 info-label">{live.startTime.split(' ')[1]}</label>
                 </div>
                 <div className="row-form">
                     <label className='control-label'>结束时间：</label>
-                    <label className="margin-left-20 info-label">live.endTime</label>
+                    <label className="margin-left-20 info-label">{live.endTime.split(' ')[1]}</label>
                 </div>
                 <div className="row-form">
                     <label className='control-label'>知识树：</label>

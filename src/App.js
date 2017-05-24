@@ -12,11 +12,11 @@ message.config({
 class App extends Component {
     render() {
         const items = [
-            {iconType: 'user', code: 'knowledge_tree', text: '知识树'},
-            {iconType: 'video-camera', code: 'course', text: '课程'},
-            {iconType: 'upload', code: 'exam', text: '题目'},
+            {iconType: 'fork', code: 'knowledge_tree', text: '知识树'},
+            {iconType: 'calendar', code: 'course', text: '课程'},
+            {iconType: 'area-chart', code: 'exam', text: '题目'},
             {iconType: 'bar-chart', code: 'teacher', text: '教师'},
-            {iconType: 'cloud-o', code: 'live', text: '直播'},
+            {iconType: 'video-camera', code: 'live', text: '直播'},
             {iconType: 'appstore-o', code: 'school', text: '学校'},
         ];
 

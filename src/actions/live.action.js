@@ -40,10 +40,10 @@ const deleteFailed = (response) => {
     }
 }
 
-const showDetail = (course) => {
+const showDetail = (live) => {
     return {
-        type: SHOW_COURSE_DETAIL,
-        course: course
+        type: SHOW_LIVE_DETAIL,
+        live: live
     }
 };
 
@@ -74,5 +74,11 @@ export function doDeleteLive(data, successFunc, failedFunc) {
     return dispatch => {
         dispatch(deleteSuccess(data));
         successFunc();
+    }
+}
+
+export function doShowDetail(data) {
+    return dispatch => {
+        dispatch(showDetail(data))
     }
 }

@@ -12,6 +12,7 @@ import CourseDetail from './containers/courseDetail'
 import Exam from './containers/exam'
 import Teacher from './containers/teacher'
 import Live from './containers/live'
+import LiveDetail from './containers/liveDetail'
 import School from './containers/school'
 import LoginForm from './containers/login'
 import appReducer from './reducers/index'
@@ -33,6 +34,7 @@ ReactDOM.render(
                     <Route path="exam" component={Exam}/>
                     <Route path="teacher" component={Teacher}/>
                     <Route path="live" component={Live}/>
+                    <Route path="live/:id" component={LiveDetail}/>
                     <Route path="school" component={School}/>
                 </Route>
             </Route>
