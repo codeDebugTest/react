@@ -97,8 +97,7 @@
 .tree-ul li > .null-label {
   margin-left: 21px;
 }
-.tree-ul li > label:disabled,
-.tree-ul li > .null-label:disabled {
+.tree-ul li[disabled] + label{
   color: #dfe2cf;
 }
 
@@ -113,7 +112,7 @@
 .add-icon:disabled,
 .delete-icon:disabled,
 .close-icon:disabled {
-  color: #dfe2cf;
+  color: #dfe2cf !important;
 }
 .add-icon {
   color: #0c06f3;

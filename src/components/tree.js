@@ -54,36 +54,38 @@ class TreeNode extends Component {
     }
 
     render() {
-        const deleteMsg = 'Are you sure delete this node: ' + this.props.node.display + ' ?';
-        const addMsg = 'Are you sure add a new node in this node: ' + this.props.node.display + '?';
-        const closeMsg = 'Are you sure disable this node: ' + this.props.node.display + '?';
+        const deleteMsg = '确定要删除此节点: ' + this.props.node.display + ' ?';
+        const addMsg = '确定要为此节点添加子节点: ' + this.props.node.display + '?';
+        const closeAction = this.state.visible ? '禁用' : '恢复';
+        const closeMsg = '确定要' + closeAction + '此节点: ' + this.props.node.display + '?';
 
         const childrenNodes = this.state.isTreeNode ? this.getChildrenNodes() : null;
         const style = this.state.visible ? null: {display: "none"};
         const labelClass = this.getLiStyleClass();
         return (
-            <li className="clearfixed">
-                <label className={labelClass} onClick={this.toggleVisible.bind(this)}>{this.props.node.display}</label>
+            <li className="clearfixed" disabled={this.state.visible}>
+                <label className={labelClass} disabled={this.state.visible}
+                       onClick={this.toggleVisible.bind(this)}>{this.props.node.display}</label>
 
                 <Popconfirm placement="topRight" title={addMsg} okText="Yes" cancelText="No"
-                            onConfirm={this.onAddNode.bind(this)}>
+                            onConfirm={this.onAddNode.bind(this)} >
                     <Tooltip title="添加节点" placement="right">
-                        <span className="add-icon"><Icon type="plus-circle-o"/></span>
+                        <span className="add-icon" disabled={this.state.visible}><Icon type="plus-circle-o"/></span>
                     </Tooltip>
                 </Popconfirm>
 
 
                 <Popconfirm placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
-                            onConfirm={this.onDeleteNode.bind(this)} >
-                    <Tooltip title="删除节点" placement="right">
-                        <span className="delete-icon"><Icon type="delete" /></span>
+                            onConfirm={this.onDeleteNode.bind(this)}>
+                    <Tooltip title="删除节点" placement="right" >
+                        <span className="delete-icon" disabled={this.state.visible}><Icon type="delete" /></span>
                     </Tooltip>
                 </Popconfirm>
 
                 <Popconfirm placement="topRight" title={closeMsg} okText="Yes" cancelText="No"
-                            onConfirm={this.onCloseNode.bind(this)} >
-                    <Tooltip title="禁用节点" placement="right">
-                        <span className="close-icon"><Icon type="close-circle-o" /></span>
+                            onConfirm={this.onCloseNode.bind(this)}>
+                    <Tooltip title={this.state.visible ? "禁用节点" : "恢复节点" } placement="right">
+                        <span className="close-icon" disabled={this.state.visible}><Icon type="close-circle-o" /></span>
                     </Tooltip>
                 </Popconfirm>
 
