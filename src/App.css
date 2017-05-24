@@ -158,7 +158,6 @@
   left: 66.66%;
 }
 .row-form > * {
-  line-height: 30px;
   float: left;
 }
 .row-form .offset-1-2 > * ,
@@ -170,9 +169,7 @@
 .row-form .margin-left-20 {
   margin-left: 20px;
 }
-.row-form .margin-left-20 > button{
-  margin-right: 30px;
-}
+
 .row-form .file-icon {
   margin-right: 5px;
   font-size: 14px;
@@ -182,6 +179,7 @@
   width: 120px;
   font-size: 14px;
 }
+.row-form .ant-radio-group label,
 .row-form .info-label {
   font-weight: bold;
   font-size: 14px;
@@ -193,17 +191,26 @@
   height: 34px;
   padding: 0 10px;
 }
+.row-form .live-box {
+  width: 800px;
+  height: 460px;
+  margin-top: 5px;
+}
 .row-form a {
   font-size: 14px;
 }
 .row-form textarea {
-  height: 70px;
+  height: 80px;
   width: 400px;
+  font-size: 14px;
 }
 .row-form img {
   width: 240px;
   height: 200px;
   margin-top: 10px;
+}
+.textarea-height {
+  height: 80px
 }
 .img-height {
   height: 220px;
@@ -211,8 +218,14 @@
 .live-player {
   height: 460px;
 }
-.row-form .live-box {
-  width: 800px;
-  height: 460px;
-  margin-top: 5px;
+.item-hide {
+  display: none;
+}
+
+.confirm-box {
+  height: 30px;
+  margin: 30px auto 0;
+}
+.confirm-box > button{
+  margin-right: 100px;
 }

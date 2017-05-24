@@ -1,10 +1,17 @@
 
 export const CREATE_LIVE_PLAYER = 'create_live_player';
+export const RELEASE_LIVE_PLAYER = 'release_live_player';
 
-const createLiveAction = (data) => {
+const createAction = (data) => {
     return {
         type: CREATE_LIVE_PLAYER,
         livePlayer: data
+    }
+};
+
+const releaseAction = () => {
+    return {
+        type: RELEASE_LIVE_PLAYER,
     }
 };
 
@@ -37,7 +44,7 @@ const createLivePlayer = function (liveConfig, dispatch) {
                 src: liveConfig.pullStreamUrl
             });
 
-            dispatch(createLiveAction(livePlayer))
+            dispatch(createAction(livePlayer))
         }
     );
 
@@ -46,5 +53,11 @@ const createLivePlayer = function (liveConfig, dispatch) {
 export function doCreateLivePlayer(liveConfig) {
     return dispatch => {
         createLivePlayer(liveConfig, dispatch)
+    }
+}
+
+export function doReleaseLivePlayer() {
+    return dispatch => {
+        dispatch(releaseAction())
     }
 }

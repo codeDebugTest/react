@@ -1,16 +1,20 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {browserHistory} from 'react-router'
 import {getRecordTreeNames} from '../utils/TreeToo'
 import {mapTagIdsToNames} from '../utils/util'
-import {Button, Icon, Input, message} from 'antd'
-import {doCreateLivePlayer} from '../actions/livePlayer'
+import {Button, Icon, Input, message, Radio} from 'antd'
+import {doCreateLivePlayer, doReleaseLivePlayer} from '../actions/livePlayer.action'
 import '../App.css'
+const RadioGroup = Radio.Group;
 
 class CourseDetail extends Component {
     constructor(props) {
         super(props);
+        const {course} = props.detail;
         this.state = {
-            startPlay: false
+            startPlay: false,
+            checkStatus: course.checkStatus !== undefined ? course.checkStatus : 0
         }
     }
 
@@ -32,17 +36,24 @@ class CourseDetail extends Component {
         return files.length && files[0];
     }
 
-    handleUnPassClick() {
-        const textArea = document.getElementById('comment');
-        if (textArea.value === '') {
-            message.warning('请输入未通过原因');
-            return;
-        }
-        console.log(textArea.value);
+    onCheckStatusChange(e) {
+        this.setState({checkStatus: e.target.value})
     }
 
     onLivePlayerClick() {
         this.setState({startPlay: true});
+    }
+
+    onConfirmBtnClick() {
+        if (this.state.checkStatus) {
+            const textArea = document.getElementById('comment');
+            if (textArea.value === '') {
+                message.warning('请输入未通过原因');
+                return;
+            }
+        }
+
+        browserHistory.goBack();
     }
 
     componentWillMount() {
@@ -52,19 +63,18 @@ class CourseDetail extends Component {
     }
 
     componentDidUpdate() {
-        const {dispatch} = this.props;
-        doCreateLivePlayer({
-            liveBox: 'video-box',
-            playerType: 'video/mp4',
-            pullStreamUrl: this.liveVideo.fileUrl,
-        })(dispatch);
+        if (this.state.startPlay) {
+            const {dispatch} = this.props;
+            doCreateLivePlayer({
+                liveBox: 'video-box',
+                playerType: 'video/mp4',
+                pullStreamUrl: this.liveVideo.fileUrl,
+            })(dispatch);
+        }
     }
 
     componentWillUnmount() {
-        const {livePlayer} = this.props.liveObj;
-        if (livePlayer) {
-            livePlayer.release();
-        }
+        doReleaseLivePlayer();
     }
 
     LivePlayerRender() {
@@ -127,17 +137,26 @@ class CourseDetail extends Component {
                     <Icon type="file-text margin-left-20 file-icon" style={{display: this.courseCase.fileName ? '': 'none'}}/>
                     <a href={this.courseCase.fileUrl} target="new">{this.courseCase.fileName}</a>
                 </div>
-                <div className="row-form" style={{height: '70px'}}>
+
+                <div className="row-form">
+                    <label className='control-label'>审核：</label>
+                    <div className="margin-left-20">
+                        <RadioGroup onChange={e => this.onCheckStatusChange(e)} value={this.state.checkStatus}>
+                            <Radio value={0}>通过</Radio>
+                            <Radio value={1}>否决</Radio>
+                        </RadioGroup>
+                    </div>
+                </div>
+
+                <div className={'row-form textarea-height ' + (this.state.checkStatus ? '' : 'item-hide')}>
                     <label className='control-label'>备注：</label>
 
                     <Input id="comment" type="textarea" className="margin-left-20" placeholder="请输入否决原因" />
                 </div>
-                <div className="row-form">
-                    <label className='control-label'>审核：</label>
-                    <div className="margin-left-20">
-                        <Button type="primary">通过</Button>
-                        <Button type="danger" onClick={this.handleUnPassClick.bind(this)}>否决</Button>
-                    </div>
+
+                <div className="confirm-box">
+                    <Button type="primary" onClick={()=> this.onConfirmBtnClick()}>确定</Button>
+                    <Button type="default" onClick={browserHistory.goBack}>取消</Button>
                 </div>
             </div>
         )
