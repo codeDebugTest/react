@@ -6,7 +6,7 @@ import {Button, Icon, Input, message} from 'antd'
 import {doCreateLivePlayer} from '../actions/livePlayer'
 import '../App.css'
 
-class CourseDetail extends Component {
+class LiveDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -26,9 +26,9 @@ class CourseDetail extends Component {
         }
     }
 
-    getCourseItemByType(type) {
-        const {course} = this.props.detail;
-        const files = course.courseItems.filter(item => item.itemType === type);
+    getLiveItemByType(type) {
+        const {live} = this.props.detail;
+        const files = live.courseItems.filter(item => item.itemType === type);
         return files.length && files[0];
     }
 
@@ -46,9 +46,8 @@ class CourseDetail extends Component {
     }
 
     componentWillMount() {
-        this.liveFile = this.getFileInfo(this.getCourseItemByType(2));
-        this.liveVideo = this.getFileInfo(this.getCourseItemByType(1));
-        this.courseCase = this.getFileInfo(this.getCourseItemByType(3));
+        this.liveFile = this.getFileInfo(this.getLiveItemByType(2));
+        this.liveVideo = this.getFileInfo(this.getLiveItemByType(1));
     }
 
     componentDidUpdate() {
@@ -89,28 +88,40 @@ class CourseDetail extends Component {
     }
 
     render() {
-        const {course} = this.props.detail;
+        const {live} = this.props.detail;
         const {dictionary} = this.props.dictionary;
 
         return (
             <div className="detail-warp">
                 <div className="row-form">
-                    <label className='control-label'>课程名称：</label>
+                    <label className='control-label'>名称：</label>
                     <div className="margin-left-20">
-                        <label className="info-label"> {course.courseTitle}</label>
+                        <label className="info-label"> {live.title}</label>
                     </div>
                 </div>
                 <div className="row-form">
-                    <label className='control-label'>课程描述：</label>
-                        <label className="margin-left-20 info-label"> {course.description}</label>
+                    <label className='control-label'>简介：</label>
+                    <label className="margin-left-20 info-label"> {live.description}</label>
                 </div>
                 <div className="row-form">
-                    <label className='control-label'>标签：</label>
-                        <label className="margin-left-20 info-label">{mapTagIdsToNames(dictionary.courseTagList, course.tags)}</label>
+                    <label className='control-label'>发布教师：</label>
+                    <label className="margin-left-20 info-label"> {live.teacher}</label>
+                </div>
+                <div className="row-form">
+                    <label className='control-label'>日期：</label>
+                    <label className="margin-left-20 info-label">live.date</label>
+                </div>
+                <div className="row-form">
+                    <label className='control-label'>开始时间：</label>
+                    <label className="margin-left-20 info-label">live.startTime</label>
+                </div>
+                <div className="row-form">
+                    <label className='control-label'>结束时间：</label>
+                    <label className="margin-left-20 info-label">live.endTime</label>
                 </div>
                 <div className="row-form">
                     <label className='control-label'>知识树：</label>
-                        <label className="margin-left-20 info-label">{getRecordTreeNames(dictionary.knowledgeTree, course)}</label>
+                    <label className="margin-left-20 info-label">{getRecordTreeNames(dictionary.knowledgeTree, live)}</label>
                 </div>
                 <div className="row-form">
                     <label className='control-label'>课件：</label>
@@ -122,11 +133,6 @@ class CourseDetail extends Component {
 
                 {this.LivePlayerRender()}
 
-                <div className="row-form">
-                    <label className='control-label'>教案：</label>
-                    <Icon type="file-text margin-left-20 file-icon" style={{display: this.courseCase.fileName ? '': 'none'}}/>
-                    <a href={this.courseCase.fileUrl} target="new">{this.courseCase.fileName}</a>
-                </div>
                 <div className="row-form" style={{height: '70px'}}>
                     <label className='control-label'>备注：</label>
 
@@ -147,9 +153,9 @@ const mapStateToProps = (state) => {
     return {
         dictionary: state.dictionary,
         userState: state.login,
-        detail: state.course,
+        detail: state.live,
         liveObj: state.livePlayer,
     }
 };
 
-export default connect(mapStateToProps)(CourseDetail)
+export default connect(mapStateToProps)(LiveDetail)

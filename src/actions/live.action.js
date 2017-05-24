@@ -5,6 +5,7 @@ export const FETCH_LIVE_SUCCESS = 'fetch_live_success';
 export const FETCH_LIVE_FAILED = 'fetch_live_failed';
 export const DELETE_LIVE_SUCCESS = 'delete_live_success';
 export const DELETE_LIVE_FAILED = 'delete_live_failed';
+export const SHOW_LIVE_DETAIL = 'show_live_detail';
 
 const doFetch = () => {
     return {
@@ -38,6 +39,14 @@ const deleteFailed = (response) => {
         index: response
     }
 }
+
+const showDetail = (course) => {
+    return {
+        type: SHOW_COURSE_DETAIL,
+        course: course
+    }
+};
+
 
 export function doFetchLiveList(data, successFunc, failedFuc) {
     return dispatch => {

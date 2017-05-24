@@ -97,7 +97,8 @@
 .tree-ul li > .null-label {
   margin-left: 21px;
 }
-.tree-ul li[disabled] + label{
+
+.tree-ul li label:disabled{
   color: #dfe2cf;
 }
 
