@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {browserHistory} from 'react-router'
 import FilterHeader from '../components/filterHeader'
-import {doFetchTeacherList, doDeleteTeacher} from '../actions/teacher.action'
+import {doFetchTeacherList, doDeleteTeacher, doShowDetail} from '../actions/teacher.action'
 import {Table, message, Spin} from 'antd'
 import '../App.css'
 import {getTeacherColumns} from  '../utils/tableColumnsDef'
@@ -13,8 +14,15 @@ class Teacher extends Component {
         this.limit= 30;
     }
 
-    editRecord(record) {
-        console.log('edit teacher record: ' + record)
+    editRecord(index) {
+        console.log('edit course record: ' + index);
+        const {teacherList} = this.props.teacher;
+        const {dispatch} = this.props;
+
+        doShowDetail(teacherList[index])(dispatch);
+        browserHistory.push({
+            pathname: `/management/teacher/${teacherList[index].userId}`
+        })
     }
     deleteRecord(index) {
         const { dispatch } = this.props;
@@ -48,7 +56,7 @@ class Teacher extends Component {
                         <Spin tip="Loading..."/>
                     ) : (
                         <Table dataSource={teacherList} rowKey={record => record.userId}
-                               columns={getTeacherColumns(dictionary.knowledgeTree, this.editRecord.bind(this), this.deleteRecord.bind(this))}/>
+                               columns={getTeacherColumns(dictionary, this.editRecord.bind(this), this.deleteRecord.bind(this))}/>
                     )
                 }</div>
             </div>

@@ -200,8 +200,23 @@ const getRecordTreeNames = (knowledgeTree, record) => {
     return validNames.join(',');
 }
 
+const mapSubjectIdToName = (subjectList, subjectId) => {
+    let arr = subjectList.filter(tempSubject => tempSubject.id + '' === subjectId + '');
+    if (arr.length === 0)
+        return '';
+    return arr[0].display;
+}
+
+const mapGradeIdToName = (knowledgeTree, gradeId) => {
+    let arr = knowledgeTree.filter(tempGrade => tempGrade.id.split('-')[1] + '' === gradeId + '');
+    if (arr.length === 0)
+        return '';
+    return arr[0].display;
+}
+
 export {
     findTreeNodeFromPath, ID_ALL, getNodeAll, getValidTreeIdFromPath, getValidTreeIdFromPathStr,
     getFullPathNameByKtId, getNameByKtId, treeIdsToNames, treeIdToTreeArray,validateKtTree,
-    getGradeSubjectNodes, getRecordTreeNames, getRecordTreeSubject, getRecordTreeGrad
+    getGradeSubjectNodes, getRecordTreeNames, getRecordTreeSubject, getRecordTreeGrad, mapSubjectIdToName,
+    mapGradeIdToName
 };

@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Button, Icon, Input, message} from 'antd'
 import '../App.css'
 
-class LiveDetail extends Component {
+class SchoolDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -65,4 +65,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps)(LiveDetail)
+export default connect(mapStateToProps)(SchoolDetail)

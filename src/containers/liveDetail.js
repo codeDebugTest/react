@@ -2,11 +2,10 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
 import {getRecordTreeNames} from '../utils/TreeToo'
-import {Button, Icon, Input, message, Radio} from 'antd'
 import {doCreateLivePlayer, doReleaseLivePlayer} from '../actions/livePlayer.action'
+import {Button, Icon, Input, message, Radio} from 'antd'
 import '../App.css'
 const RadioGroup = Radio.Group;
-
 
 class LiveDetail extends Component {
     constructor(props) {
@@ -181,5 +180,4 @@ const mapStateToProps = (state) => {
         liveObj: state.livePlayer,
     }
 };
-
 export default connect(mapStateToProps)(LiveDetail)

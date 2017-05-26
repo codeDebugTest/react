@@ -1,6 +1,7 @@
 import React from 'react'
 import {Popconfirm, Icon} from 'antd'
-import {getRecordTreeGrad, getRecordTreeNames, getRecordTreeSubject} from '../utils/TreeToo'
+import {getRecordTreeGrad, getRecordTreeNames, getRecordTreeSubject,
+    mapGradeIdToName, mapSubjectIdToName} from '../utils/TreeToo'
 
 const getCourseColumns = (knowledgeTree, editRecord, deleteRecord) => {
     return [
@@ -104,7 +105,7 @@ const getExamColumns = (knowledgeTree, editRecord, deleteRecord) => {
     ]
 };
 
-const getTeacherColumns = (knowledgeTree, editRecord, deleteRecord) => {
+const getTeacherColumns = (dictionary, editRecord, deleteRecord) => {
     return [
         {
             title: '姓名',
@@ -113,13 +114,13 @@ const getTeacherColumns = (knowledgeTree, editRecord, deleteRecord) => {
         title: '年级',
         width: 100,
         render: (text, record, index) => {
-            return getRecordTreeGrad(knowledgeTree, record);
+            return mapGradeIdToName(dictionary.knowledgeTree, record.gradeId);
         }
     }, {
         title: '科目',
         width: 100,
         render: (text, record) => {
-            return getRecordTreeSubject(knowledgeTree, record);
+            return mapSubjectIdToName(dictionary.subjectList, record.subjectIds);
         }
     }, {
         title: '审核状态',
