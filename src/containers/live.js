@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
 import FilterHeader from '../components/filterHeader'
 import {doFetchLiveList, doDeleteLive, doShowDetail} from '../actions/live.action'
-import {Table, message, Spin} from 'antd'
+import {Table, message, Spin, Button} from 'antd'
 import '../App.css'
 import {getLiveColumns} from '../utils/tableColumnsDef'
 
@@ -31,7 +31,7 @@ class Live extends Component {
         doDeleteLive(index, successFunc, null)(dispatch);
     }
 
-    componentDidMount() {
+    loadData() {
         const {dispatch, userState} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo && userState.userInfo.userToken,
@@ -44,6 +44,20 @@ class Live extends Component {
         doFetchLiveList(requestInfo,  null, (msg)=> {message.error(msg)})(dispatch);
     }
 
+    prevPage() {
+        this.offset -= this.limit;
+        this.loadData();
+    }
+    nextPage() {
+        this.offset += this.limit;
+        this.loadData();
+    }
+
+    componentDidMount() {
+        this.offset = 0;
+        this.loadData();
+    }
+
     render() {
         const {dictionary} = this.props.dictionary;
         const {liveList, loading} = this.props.live;
@@ -51,14 +65,26 @@ class Live extends Component {
         return (
             <div className="content-wrapper">
                 <FilterHeader knowledgeTree={dictionary.knowledgeTree} searchLabel="教师："> </FilterHeader>
-                <div className="table-style">{
-                    loading ? (
-                        <Spin tip="Loading..."/>
-                    ) : (
-                        <Table dataSource={liveList} rowKey={record => record.liveId}
-                               columns={getLiveColumns(dictionary.knowledgeTree, this.editRecord.bind(this), this.deleteRecord.bind(this))}/>
-                    )
-                }</div>
+                <div className="table-style">
+                    {
+                        loading ? (
+                            <Spin tip="Loading..."/>
+                        ) : (
+                            <Table dataSource={liveList} rowKey={record => record.liveId}
+                                   pagination={false}
+                                   columns={
+                                       getLiveColumns(dictionary.knowledgeTree,
+                                           this.editRecord.bind(this),
+                                           this.deleteRecord.bind(this))
+                                   }
+                            />
+                        )
+                    }
+                    <div className="pagination">
+                        <Button disabled={this.offset <= 0} onClick={this.prevPage.bind(this)}>上一页</Button>
+                        <Button disabled={!liveList || liveList.length < this.limit} onClick={this.nextPage.bind(this)}>下一页</Button>
+                    </div>
+                </div>
             </div>
         )
     }

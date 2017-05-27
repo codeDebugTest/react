@@ -4,7 +4,7 @@ import {getSchoolColumns} from '../utils/tableColumnsDef'
 import InfiniteScrollCtrl from '../components/InfiniteScrollCtrl'
 import {doFetchSchoolList, doDeleteSchool} from '../actions/school.action'
 import SearchBox from '../components/SearchBox'
-import {Table, message, Spin, Row, Select} from 'antd'
+import {Table, message, Spin, Row, Select, Button} from 'antd'
 import '../App.css'
 
 
@@ -32,8 +32,8 @@ class School extends Component {
     onCheckStatusChange(value) {
         console.log(`check status change to: ${value}`)
     }
-    
-    componentDidMount() {
+
+    loadData() {
         const {dispatch, userState} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo.userToken,
@@ -45,11 +45,25 @@ class School extends Component {
         // doFetchSchoolList(requestInfo,  null, (msg)=> {message.error(msg)})(dispatch);
     }
 
+    prevPage() {
+        this.offset -= this.limit;
+        this.loadData();
+    }
+    nextPage() {
+        this.offset += this.limit;
+        this.loadData();
+    }
+    
+    componentDidMount() {
+        this.offset = 0;
+        this.loadData();
+    }
+
     render() {
         const {schoolList, loading} = this.props.school;
 
         return (
-            <div>
+            <div className="content-wrapper">
                 <Row className="filter-header">
                     <SearchBox searchLabel="学校名：" searchFunc={this.searchFunc.bind(this)}/>
 
@@ -64,16 +78,24 @@ class School extends Component {
                     </div>
                 </Row>
 
-                <div className="table-style">{
-                    loading ? (
-                        <div className="center-point">
-                            <Spin tip="Loading..."/>
-                        </div>
-                    ) : (
-                        <Table dataSource={[]} rowKey={record => record.schoolId}
-                               columns={getSchoolColumns(this.editRecord.bind(this), this.deleteRecord.bind(this))}/>
-                    )
-                }</div>
+                <div className="table-style">
+                    {
+                        loading ? (
+                            <div className="center-point">
+                                <Spin tip="Loading..."/>
+                            </div>
+                        ) : (
+                            <Table dataSource={[]} rowKey={record => record.schoolId}
+                                   pagination={false}
+                                   columns={getSchoolColumns(this.editRecord.bind(this), this.deleteRecord.bind(this))}
+                            />
+                        )
+                    }
+                    <div className="pagination">
+                        <Button disabled={this.offset <= 0} onClick={this.prevPage.bind(this)}>上一页</Button>
+                        <Button disabled={!schoolList || schoolList.length < this.limit} onClick={this.nextPage.bind(this)}>下一页</Button>
+                    </div>
+                </div>
             </div>
         )
     }
