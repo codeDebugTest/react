@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getSchoolColumns} from '../utils/tableColumnsDef'
+import InfiniteScrollCtrl from '../components/InfiniteScrollCtrl'
 import {doFetchSchoolList, doDeleteSchool} from '../actions/school.action'
 import SearchBox from '../components/SearchBox'
 import {Table, message, Spin, Row, Select} from 'antd'

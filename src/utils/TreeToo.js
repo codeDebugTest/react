@@ -214,9 +214,41 @@ const mapGradeIdToName = (knowledgeTree, gradeId) => {
     return arr[0].display;
 }
 
+const getKnowledgeTreePath = (knowledgeTree, knowledgeTreeId) => {
+    let fullPath = [];
+    _getPath(knowledgeTree, knowledgeTreeId, fullPath);
+    return fullPath;
+}
+
+const _getPath = (knowledgeTree, targetId, fullPath) => {
+    if (knowledgeTree.length > 0) {
+        for (let i in knowledgeTree) {
+            if (knowledgeTree[i].children) {
+                if (knowledgeTree[i].id.toString() === targetId) {
+                    fullPath.unshift(knowledgeTree[i].id);
+                    fullPath.push("-1");
+                    break;
+                } else {
+                    _getPath(knowledgeTree[i].children, targetId, fullPath);
+                    if (fullPath.length > 0) {
+                        fullPath.unshift(knowledgeTree[i].id);
+                        break;
+                    }
+                }
+            }
+            else {
+                if (knowledgeTree[i].id.toString() === targetId) {
+                    fullPath.unshift(knowledgeTree[i].id);
+                    break;
+                }
+            }
+        }
+    }
+}
+
 export {
     findTreeNodeFromPath, ID_ALL, getNodeAll, getValidTreeIdFromPath, getValidTreeIdFromPathStr,
     getFullPathNameByKtId, getNameByKtId, treeIdsToNames, treeIdToTreeArray,validateKtTree,
     getGradeSubjectNodes, getRecordTreeNames, getRecordTreeSubject, getRecordTreeGrad, mapSubjectIdToName,
-    mapGradeIdToName
+    mapGradeIdToName, getKnowledgeTreePath
 };

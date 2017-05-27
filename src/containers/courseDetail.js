@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
-import {getRecordTreeNames} from '../utils/TreeToo'
+import KnowledgeTreeLinePrivate from '../components/knowledgeTreeLine'
+import {getRecordTreeNames, getKnowledgeTreePath} from '../utils/TreeToo'
+import {varNotEmpty} from '../utils/util'
 import {mapTagIdsToNames} from '../utils/util'
 import {Button, Icon, Input, message, Radio} from 'antd'
 import {doCreateLivePlayer, doReleaseLivePlayer} from '../actions/livePlayer.action'
@@ -60,6 +62,15 @@ class CourseDetail extends Component {
         this.liveFile = this.getFileInfo(this.getCourseItemByType(2));
         this.liveVideo = this.getFileInfo(this.getCourseItemByType(1));
         this.courseCase = this.getFileInfo(this.getCourseItemByType(3));
+
+        const {course} = this.props.detail;
+        const {dictionary} = this.props.dictionary;
+        let knowledgeTreeId = course.knowledgeTreeIds.split(',')[0];
+        if (varNotEmpty(knowledgeTreeId)) {
+            this.setState({
+                knowledgeTreePath: getKnowledgeTreePath(dictionary.knowledgeTree, knowledgeTreeId),
+            });
+        }
     }
 
     componentDidUpdate() {
@@ -91,8 +102,9 @@ class CourseDetail extends Component {
             return (
                 <div className="row-form">
                     <label className='control-label'>视频：</label>
-                    <Button type="primary" className="margin-left-20 player-btn" onClick={this.onLivePlayerClick.bind(this)}
-                            style={{display: this.liveVideo.fileUrl ? '': 'none'}}> ▶ </Button>
+                    <Button type="primary" className="margin-left-20 player-btn"
+                            onClick={this.onLivePlayerClick.bind(this)}
+                            style={{display: this.liveVideo.fileUrl ? '' : 'none'}}> ▶ </Button>
                 </div>
             )
         }
@@ -112,21 +124,27 @@ class CourseDetail extends Component {
                 </div>
                 <div className="row-form">
                     <label className='control-label'>课程描述：</label>
-                        <label className="margin-left-20 info-label"> {course.description}</label>
+                    <label className="margin-left-20 info-label"> {course.description}</label>
                 </div>
                 <div className="row-form">
                     <label className='control-label'>标签：</label>
-                        <label className="margin-left-20 info-label">{mapTagIdsToNames(dictionary.courseTagList, course.tags)}</label>
+                    <label className="margin-left-20 info-label">
+                        {mapTagIdsToNames(dictionary.courseTagList, course.tags)}
+                    </label>
                 </div>
                 <div className="row-form">
                     <label className='control-label'>知识树：</label>
-                        <label className="margin-left-20 info-label">{getRecordTreeNames(dictionary.knowledgeTree, course)}</label>
+                    <label className="margin-left-20 info-label">
+                        {/*{getRecordTreeNames(dictionary.knowledgeTree, course)}*/}
+                        <KnowledgeTreeLinePrivate selectedIdsPath={this.state.knowledgeTreePath}
+                        />
+                    </label>
                 </div>
                 <div className="row-form">
                     <label className='control-label'>课件：</label>
 
                     <Icon type="file-text margin-left-20 file-icon"
-                          style={{display: this.liveFile.fileName ? '': 'none'}}/>
+                          style={{display: this.liveFile.fileName ? '' : 'none'}}/>
                     <a href={this.liveFile.fileUrl} target="new">{this.liveFile.fileName}</a>
                 </div>
 
@@ -134,7 +152,8 @@ class CourseDetail extends Component {
 
                 <div className="row-form">
                     <label className='control-label'>教案：</label>
-                    <Icon type="file-text margin-left-20 file-icon" style={{display: this.courseCase.fileName ? '': 'none'}}/>
+                    <Icon type="file-text margin-left-20 file-icon"
+                          style={{display: this.courseCase.fileName ? '' : 'none'}}/>
                     <a href={this.courseCase.fileUrl} target="new">{this.courseCase.fileName}</a>
                 </div>
 
@@ -151,11 +170,11 @@ class CourseDetail extends Component {
                 <div className={'row-form textarea-height ' + (this.state.checkStatus ? '' : 'item-hide')}>
                     <label className='control-label'>备注：</label>
 
-                    <Input id="comment" type="textarea" className="margin-left-20" placeholder="请输入否决原因" />
+                    <Input id="comment" type="textarea" className="margin-left-20" placeholder="请输入否决原因"/>
                 </div>
 
                 <div className="confirm-box">
-                    <Button type="primary" onClick={()=> this.onConfirmBtnClick()}>确定</Button>
+                    <Button type="primary" onClick={() => this.onConfirmBtnClick()}>确定</Button>
                     <Button type="default" onClick={browserHistory.goBack}>取消</Button>
                 </div>
             </div>

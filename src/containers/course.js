@@ -4,14 +4,14 @@ import {browserHistory} from 'react-router'
 import FilterHeader from '../components/filterHeader'
 import {doFetchCourseList, doDeleteCourse, doShowDetail} from '../actions/course.action'
 import {getCourseColumns} from '../utils/tableColumnsDef'
-import {Table, message, Spin} from 'antd'
+import {Table, message, Spin, Button} from 'antd'
 import '../App.css'
 
 class Course extends Component {
     constructor(props) {
         super(props);
-        this.offset= 0;
-        this.limit= 30;
+        this.offset = 0;
+        this.limit = 30;
     }
 
     editRecord(index) {
@@ -26,22 +26,36 @@ class Course extends Component {
     }
 
     deleteRecord(index) {
-        const { dispatch } = this.props;
+        const {dispatch} = this.props;
         console.log('delete course record: ' + index);
         const successFunc = () => message.success('delete course record success');
         doDeleteCourse(index, successFunc, null)(dispatch);
     }
 
-    componentDidMount() {
+    loadData() {
         const {dispatch, userState} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo && userState.userInfo.userToken,
-            'knowledgeTreeId': -1,
-            'regionId':  userState.userInfo && userState.userInfo.regionId,
+            'knowledgeTreeId': '3-2',
+            'regionId': userState.userInfo && userState.userInfo.regionId,
             'offset': this.offset,
             'limit': this.limit
         };
-        doFetchCourseList(requestInfo,  null, (msg)=> {message.error(msg)})(dispatch);
+        doFetchCourseList(requestInfo, null, (msg) => message.error(msg))(dispatch);
+    }
+
+    prevPage() {
+        this.offset -= this.limit;
+        this.loadData();
+    }
+    nextPage() {
+        this.offset += this.limit;
+        this.loadData();
+    }
+
+    componentDidMount() {
+        this.offset = 0;
+        this.loadData();
     }
 
     render() {
@@ -51,14 +65,26 @@ class Course extends Component {
         return (
             <div className="content-wrapper">
                 <FilterHeader knowledgeTree={dictionary.knowledgeTree}> </FilterHeader>
-                <div className="table-style">{
-                    loading ? (
-                        <Spin tip="Loading..."/>
-                    ) : (
-                        <Table dataSource={courseList} rowKey={record => record.courseId}
-                            columns={getCourseColumns(dictionary.knowledgeTree, this.editRecord.bind(this), this.deleteRecord.bind(this))}/>
-                    )
-                }</div>
+                <div className="table-style">
+                    {
+                        loading ? (
+                            <Spin tip="Loading..."/>
+                        ) : (
+                            <Table dataSource={courseList} rowKey={record => record.courseId}
+                                   pagination={false}
+                                   columns={
+                                       getCourseColumns(dictionary.knowledgeTree,
+                                           this.editRecord.bind(this),
+                                           this.deleteRecord.bind(this))
+                                   }
+                            />
+                        )
+                    }
+                    <div className="pagination">
+                        <Button disabled={this.offset <= 0} onClick={this.prevPage.bind(this)}>上一页</Button>
+                        <Button disabled={!courseList || courseList.length < this.limit} onClick={this.nextPage.bind(this)}>下一页</Button>
+                    </div>
+                </div>
             </div>
         )
     }

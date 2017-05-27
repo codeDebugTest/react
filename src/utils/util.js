@@ -55,4 +55,8 @@ const mapTagIdsToNames = (tagList, tagIds) => {
     return tagNames.toString();
 };
 
-export {isArray, isObject, varEmpty, keyNotEmpty, varNotEmpty, keyEmpty, mapTagIdsToNames}
+const getOrDefault = (var1, def) => {
+    return varNotEmpty(var1) ? var1 : def;
+}
+
+export {isArray, isObject, varEmpty, keyNotEmpty, varNotEmpty, keyEmpty, mapTagIdsToNames, getOrDefault}

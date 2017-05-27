@@ -65,6 +65,12 @@
 .content-wrapper .table-style {
   padding: 15px 0
 }
+.content-wrapper .table-style .pagination {
+  margin-top: 30px;
+}
+.content-wrapper .table-style .pagination button {
+  margin-right: 50px;
+}
 
 .tree-ul {
   padding: 20px 20px 0;
