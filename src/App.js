@@ -24,15 +24,17 @@ class App extends Component {
             <div className="App">
                 <Layout style={{height: '100vh'}}>
                     <Sider style={{overflow: 'auto'}}>
-                        <div className="logo"/>
+                        <div className="logo" style={{marginBottom: '15px'}}/>
                         <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
                             {items.map((item, index) => {
                                 return (
                                     <Menu.Item key={index + 1}>
-                                        <Icon type={item.iconType}/>
-                                        <span className="nav-text">
-                                            <Link to={'/management/' + item.code} className="nave-label">{item.text}</Link>
-                                        </span>
+                                        <Link to={'/management/' + item.code}>
+                                            <Icon type={item.iconType}/>
+                                            <span className="nav-text nave-label">
+                                                {item.text}
+                                            </span>
+                                        </Link>
                                     </Menu.Item>
                                 )
                             })}

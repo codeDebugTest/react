@@ -1,10 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
+import {mapGradeIdToName, mapSubjectIdToName} from '../utils/TreeToo'
 import {Button, Input, Tabs, Radio, message, Popover} from 'antd'
 import '../App.css'
 const RadioGroup = Radio.Group;
 const TabPane = Tabs.TabPane;
+
 const teacherCertificates = [
     { "code": "idCard", "display": "身份证"},
     { "code": "degreeCert", "display": "学位证" },
@@ -56,6 +58,7 @@ class TeacherDetail extends Component {
 
     render() {
         const {teacher} = this.props.detail;
+        const {dictionary} = this.props.dictionary;
 
         return (
             <div className="detail-warp">
@@ -82,14 +85,14 @@ class TeacherDetail extends Component {
                 <div className="row-form">
                     <label className='control-label'>年级：</label>
                     <div className="margin-left-20">
-                        <label className="info-label"> {teacher.name}</label>
+                        <label className="info-label"> {mapGradeIdToName(dictionary.knowledgeTree, teacher.gradeId)}</label>
                     </div>
                 </div>
 
                 <div className="row-form">
                     <label className='control-label'>科目：</label>
                     <div className="margin-left-20">
-                        <label className="info-label"> {teacher.name}</label>
+                        <label className="info-label"> {mapSubjectIdToName(dictionary.subjectList, teacher.subjectIds)}</label>
                     </div>
                 </div>
 
@@ -133,6 +136,7 @@ class TeacherDetail extends Component {
 }
 const mapStateToProps = (state) => {
     return {
+        dictionary: state.dictionary,
         detail: state.teacher
     }
 };
