@@ -16,6 +16,7 @@ class CourseDetail extends Component {
         const {course} = props.detail;
         this.state = {
             startPlay: false,
+            knowledgeTreePath: [],
             checkStatus: course.checkStatus !== undefined ? course.checkStatus : 0
         }
     }
@@ -65,7 +66,7 @@ class CourseDetail extends Component {
 
         const {course} = this.props.detail;
         const {dictionary} = this.props.dictionary;
-        let knowledgeTreeId = course.knowledgeTreeIds.split(',')[0];
+        let knowledgeTreeId = course.knowledgeTreeIds && course.knowledgeTreeIds.split(',')[0];
         if (varNotEmpty(knowledgeTreeId)) {
             this.setState({
                 knowledgeTreePath: getKnowledgeTreePath(dictionary.knowledgeTree, knowledgeTreeId),

@@ -2,6 +2,7 @@ import React from 'react'
 import {Popconfirm, Icon} from 'antd'
 import {getRecordTreeGrad, getRecordTreeNames, getRecordTreeSubject,
     mapGradeIdToName, mapSubjectIdToName} from '../utils/TreeToo'
+import {EXERCISE_TYPE} from '../utils/constants'
 
 const getCourseColumns = (knowledgeTree, editRecord, deleteRecord) => {
     return [
@@ -27,8 +28,9 @@ const getCourseColumns = (knowledgeTree, editRecord, deleteRecord) => {
             }
         }, {
             title: '审核状态',
+            width: 120,
             render: (text, record) => {
-                if(record.checkStatus) {
+                if(record.verified) {
                     return '已审核';
                 } else {
                     return '未审核';
@@ -36,17 +38,17 @@ const getCourseColumns = (knowledgeTree, editRecord, deleteRecord) => {
             }
         }, {
             title: 'Action',
-            width: 150,
+            width: 80,
             render: (text, record, index) => {
                 const deleteMsg = 'Are you sure delete this record';
                 return (
                     <div>
                         <span className="add-icon" onClick={()=>editRecord(index)}><Icon type="edit"/></span>
 
-                        <Popconfirm  placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
-                                     onConfirm={()=>deleteRecord(index)}>
-                            <span className="delete-icon"><Icon type="delete" /></span>
-                        </Popconfirm>
+                        {/*<Popconfirm  placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"*/}
+                                     {/*onConfirm={()=>deleteRecord(index)}>*/}
+                            {/*<span className="delete-icon"><Icon type="delete" /></span>*/}
+                        {/*</Popconfirm>*/}
                     </div>
                 )
             }
@@ -57,12 +59,18 @@ const getCourseColumns = (knowledgeTree, editRecord, deleteRecord) => {
 const getExamColumns = (knowledgeTree, editRecord, deleteRecord) => {
     return [
         {
-            title: '名称',
-            dataIndex: 'examName',
+            title: '题干',
+            dataIndex: 'content',
+        },{
+            title: '类型',
+            width: 100,
+            render: (text, record) => {
+                return EXERCISE_TYPE[record.type] && EXERCISE_TYPE[record.type].name
+            }
         }, {
             title: '年级',
             width: 100,
-            render: (text, record, index) => {
+            render: (text, record) => {
                 return getRecordTreeGrad(knowledgeTree, record);
             }
         }, {
@@ -78,8 +86,9 @@ const getExamColumns = (knowledgeTree, editRecord, deleteRecord) => {
             }
         }, {
             title: '审核状态',
+            width: 100,
             render: (text, record) => {
-                if(record.checkStatus) {
+                if(record.verified) {
                     return '已审核';
                 } else {
                     return '未审核';
@@ -87,17 +96,17 @@ const getExamColumns = (knowledgeTree, editRecord, deleteRecord) => {
             }
         }, {
             title: 'Action',
-            width: 150,
+            width: 60,
             render: (text, record,index) => {
                 const deleteMsg = 'Are you sure delete this record';
                 return (
                     <div>
                         <span className="add-icon" onClick={()=>editRecord(index)}><Icon type="edit"/></span>
 
-                        <Popconfirm  placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
+{/*                        <Popconfirm  placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
                                      onConfirm={()=>deleteRecord(index)}>
                             <span className="delete-icon"><Icon type="delete" /></span>
-                        </Popconfirm>
+                        </Popconfirm>*/}
                     </div>
                 )
             }
@@ -112,20 +121,18 @@ const getTeacherColumns = (dictionary, editRecord, deleteRecord) => {
             dataIndex: 'userName',
         }, {
         title: '年级',
-        width: 100,
         render: (text, record, index) => {
             return mapGradeIdToName(dictionary.knowledgeTree, record.gradeId);
         }
     }, {
         title: '科目',
-        width: 100,
         render: (text, record) => {
             return mapSubjectIdToName(dictionary.subjectList, record.subjectIds);
         }
     }, {
         title: '审核状态',
         render: (text, record) => {
-            if(record.checkStatus) {
+            if(record.verified) {
                 return '已审核';
             } else {
                 return '未审核';
@@ -133,17 +140,17 @@ const getTeacherColumns = (dictionary, editRecord, deleteRecord) => {
         }
     }, {
         title: 'Action',
-        width: 150,
+        width: 80,
         render: (text, record, index) => {
             const deleteMsg = 'Are you sure delete this record';
             return (
                 <div>
                     <span className="add-icon" onClick={()=>editRecord(index)}><Icon type="edit"/></span>
 
-                    <Popconfirm  placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
+{/*                    <Popconfirm  placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
                                  onConfirm={()=>deleteRecord(index)}>
                         <span className="delete-icon"><Icon type="delete" /></span>
-                    </Popconfirm>
+                    </Popconfirm>*/}
                 </div>
             )
         }
@@ -170,8 +177,9 @@ const getLiveColumns = (knowledgeTree, editRecord, deleteRecord) => {
             }
         }, {
             title: '审核状态',
+            width: 120,
             render: (text, record) => {
-                if(record.checkStatus) {
+                if(record.verified) {
                     return '已审核';
                 } else {
                     return '未审核';
@@ -179,17 +187,17 @@ const getLiveColumns = (knowledgeTree, editRecord, deleteRecord) => {
             }
         }, {
             title: 'Action',
-            width: 150,
+            width: 80,
             render: (text, record, index) => {
                 const deleteMsg = 'Are you sure delete this record';
                 return (
                     <div>
                         <span className="add-icon" onClick={()=>editRecord(index)}><Icon type="edit"/></span>
 
-                        <Popconfirm  placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
+{/*                        <Popconfirm  placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
                                      onConfirm={()=>deleteRecord(index)}>
                             <span className="delete-icon"><Icon type="delete" /></span>
-                        </Popconfirm>
+                        </Popconfirm>*/}
                     </div>
                 )
             }
@@ -206,7 +214,7 @@ const getSchoolColumns = (editRecord, deleteRecord) => {
             title: '审核状态',
             width: 150,
             render: (text, record) => {
-                if(record.checkStatus) {
+                if(record.verified) {
                     return '已审核';
                 } else {
                     return '未审核';
@@ -214,17 +222,17 @@ const getSchoolColumns = (editRecord, deleteRecord) => {
             }
         }, {
             title: 'Action',
-            width: 150,
+            width: 80,
             render: (text, record, index) => {
                 const deleteMsg = 'Are you sure delete this record';
                 return (
                     <div>
                         <span className="add-icon" onClick={()=>editRecord(index)}><Icon type="edit"/></span>
 
-                        <Popconfirm  placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
+{/*                        <Popconfirm  placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
                                      onConfirm={()=>deleteRecord(index)}>
                             <span className="delete-icon"><Icon type="delete" /></span>
-                        </Popconfirm>
+                        </Popconfirm>*/}
                     </div>
                 )
             }
@@ -232,6 +240,5 @@ const getSchoolColumns = (editRecord, deleteRecord) => {
     ];
 };
 
-const tablePageSize = 20;
 
-export {getCourseColumns, getExamColumns, getTeacherColumns, getLiveColumns, getSchoolColumns, tablePageSize}
+export {getCourseColumns, getExamColumns, getTeacherColumns, getLiveColumns, getSchoolColumns}

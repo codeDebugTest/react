@@ -6,7 +6,7 @@ export function examReducer(state = {}, action){
         case FETCH_EXAM_LIST:
             return Object.assign({}, state, {loading: true, examList: []});
         case FETCH_EXAM_SUCCESS:
-            return Object.assign({}, state, {loading: false, examList: action.response.content});
+            return Object.assign({}, state, {loading: false, examList: action.response.content.exerciseItems});
         case FETCH_EXAM_FAILED:
             return Object.assign({}, state, {loading: false, examList: []});
         case SHOW_EXAM_DETAIL:

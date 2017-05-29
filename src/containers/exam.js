@@ -2,15 +2,18 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import FilterHeader from '../components/filterHeader'
 import {doFetchExamList, doDeleteExam} from '../actions/exam.action'
+import {getExamColumns} from '../utils/tableColumnsDef'
+import {TABLE_PAGE_SIZE} from '../utils/constants'
 import {Table, message, Spin, Button} from 'antd'
 import '../App.css'
-import {getExamColumns} from '../utils/tableColumnsDef'
 
 class Exam extends Component {
     constructor(props) {
         super(props);
         this.offset= 0;
-        this.limit= 30;
+        this.limit= TABLE_PAGE_SIZE;
+        this.knowledgeTreeId = null;
+        this.verified = null;
     }
 
     editRecord(index) {
@@ -23,11 +26,22 @@ class Exam extends Component {
         doDeleteExam(index, successFunc, null)(dispatch);
     }
 
+    filterChangeCallback(filterObj) {
+        const {knowledgeTreeId, verified} = filterObj;
+        this.knowledgeTreeId = knowledgeTreeId;
+        this.verified = verified;
+        this.offset = 0;
+
+        this.loadData();
+    }
+
     loadData() {
         const {dispatch, userState} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo && userState.userInfo.userToken,
-            'knowledgeTreeId': '3-2',
+            'knowledgeTreeId': this.knowledgeTreeId,
+            'verified': this.verified,
+            'onlyMyself': false,
             'regionId': userState.userInfo && userState.userInfo.regionId,
             'offset': this.offset,
             'limit': this.limit
@@ -55,7 +69,8 @@ class Exam extends Component {
 
         return (
             <div className="content-wrapper">
-                <FilterHeader knowledgeTree={dictionary.knowledgeTree} hideSearchBox="true"> </FilterHeader>
+                <FilterHeader knowledgeTree={dictionary.knowledgeTree} hideSearchBox="true"
+                              searchFunc={this.filterChangeCallback.bind(this)}> </FilterHeader>
                 <div className="table-style">
                     {
                         loading ? (

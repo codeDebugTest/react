@@ -215,6 +215,9 @@
   height: 200px;
   margin-top: 10px;
 }
+.row-form .img-height {
+  height: 220px;
+}
 .textarea-height {
   height: 80px
 }

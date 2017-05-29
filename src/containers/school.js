@@ -4,6 +4,7 @@ import {getSchoolColumns} from '../utils/tableColumnsDef'
 import InfiniteScrollCtrl from '../components/InfiniteScrollCtrl'
 import {doFetchSchoolList, doDeleteSchool} from '../actions/school.action'
 import SearchBox from '../components/SearchBox'
+import {TABLE_PAGE_SIZE} from '../utils/constants'
 import {Table, message, Spin, Row, Select, Button} from 'antd'
 import '../App.css'
 
@@ -12,7 +13,9 @@ class School extends Component {
     constructor(props) {
         super(props);
         this.offset= 0;
-        this.limit= 30;
+        this.limit= TABLE_PAGE_SIZE;
+        this.searchKey = null;
+        this.verified = null;
     }
 
     editRecord(record) {
@@ -27,18 +30,25 @@ class School extends Component {
 
     searchFunc(value) {
         console.log('searching school: ' + value);
+        this.searchKey = value;
+        this.offset = 0;
+        this.loadData();
     }
 
-    onCheckStatusChange(value) {
+    onVerifiedStatusChange(value) {
         console.log(`check status change to: ${value}`)
+        this.verified = value === '0' ? false : value === '1' ? true : null;
+        this.offset = 0;
+        this.loadData();
     }
 
     loadData() {
         const {dispatch, userState} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo.userToken,
-            'knowledgeTreeId': -1,
             'regionId': userState.userInfo.regionId,
+            'searchKey': this.searchKey,
+            'verified': this.verified,
             'offset': this.offset,
             'limit': this.limit
         };
@@ -70,7 +80,7 @@ class School extends Component {
                     <div className="item-warp margin-left-30">
                         <label>审核状态:</label>
                         <Select className="select-style" showSearch defaultValue="2"
-                                onChange={this.onCheckStatusChange.bind(this)}>
+                                onChange={this.onVerifiedStatusChange.bind(this)}>
                             <Option value="2">不限 </Option>
                             <Option value="0">未审核</Option>
                             <Option value="1">已审核</Option>

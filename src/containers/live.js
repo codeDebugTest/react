@@ -3,15 +3,20 @@ import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
 import FilterHeader from '../components/filterHeader'
 import {doFetchLiveList, doDeleteLive, doShowDetail} from '../actions/live.action'
+import {getLiveColumns} from '../utils/tableColumnsDef'
+import {TABLE_PAGE_SIZE} from '../utils/constants'
 import {Table, message, Spin, Button} from 'antd'
 import '../App.css'
-import {getLiveColumns} from '../utils/tableColumnsDef'
+
 
 class Live extends Component {
     constructor(props) {
         super(props);
         this.offset= 0;
-        this.limit= 30;
+        this.limit= TABLE_PAGE_SIZE;
+        this.knowledgeTreeId = null;
+        this.searchKey = null;
+        this.verified = null;
     }
 
     editRecord(index) {
@@ -31,11 +36,23 @@ class Live extends Component {
         doDeleteLive(index, successFunc, null)(dispatch);
     }
 
+    filterChangeCallback(filterObj) {
+        const {knowledgeTreeId, searchKey, verified} = filterObj;
+        this.knowledgeTreeId = knowledgeTreeId;
+        this.searchKey = searchKey;
+        this.verified = verified;
+        this.offset = 0;
+
+        this.loadData();
+    }
+
     loadData() {
         const {dispatch, userState} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo && userState.userInfo.userToken,
-            'knowledgeTreeId': -1,
+            'knowledgeTreeId': this.knowledgeTreeId,
+            'searchKey': this.searchKey,
+            'verified': this.verified,
             'regionId': userState.userInfo && userState.userInfo.regionId,
             'offset': this.offset,
             'limit': this.limit
@@ -64,7 +81,8 @@ class Live extends Component {
 
         return (
             <div className="content-wrapper">
-                <FilterHeader knowledgeTree={dictionary.knowledgeTree} searchLabel="教师："> </FilterHeader>
+                <FilterHeader knowledgeTree={dictionary.knowledgeTree} searchLabel="教师："
+                              searchFunc={this.filterChangeCallback.bind(this)}> </FilterHeader>
                 <div className="table-style">
                     {
                         loading ? (

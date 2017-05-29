@@ -60,7 +60,7 @@ class FilterHeader extends Component {
         this.onConditionChange();
     }
 
-    onCheckStatusChange(value) {
+    onVerifiedStatusChange(value) {
         console.log(`check status change to: ${value}`)
     }
 
@@ -110,7 +110,7 @@ class FilterHeader extends Component {
                 <div className="item-warp">
                     <label>审核状态:</label>
                     <Select className="select-style" showSearch defaultValue="2"
-                            onChange={this.onCheckStatusChange.bind(this)}>
+                            onChange={this.onVerifiedStatusChange.bind(this)}>
                         <Option value="2">不限 </Option>
                         <Option value="0">未审核</Option>
                         <Option value="1">已审核</Option>

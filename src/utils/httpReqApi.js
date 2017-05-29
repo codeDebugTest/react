@@ -4,11 +4,11 @@ import {ajaxGet, ajaxPost} from './ajaxMethod'
 
 const _loginUrl = config.realHost +  '/login/do/user_login';
 const _dictionaryUrl = config.realHost +  '/app/dictionary';
-const _courseListUrl = config.realHost +  '/visitor/course/list';
-const _examListUrl = config.realHost +  '/visitor/exam/list';
+const _courseListUrl = config.realHost +  '/app/search';
+const _examListUrl = config.realHost +  '/teacher/exercise_item/list ';
 const _teacherListUrl = config.realHost +  '/app/search';
 const _liveListUrl = config.realHost +  '/student/live_course/list';
-const _schoolListUrl = config.realHost +  '/visitor/school/list';
+const _schoolListUrl = config.realHost +  '/school/list';
 
 export function userLogin (data, callback){
     return ajaxPost(_loginUrl, {}, data, callback)

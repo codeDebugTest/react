@@ -3,7 +3,8 @@ import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
 import FilterHeader from '../components/filterHeader'
 import {doFetchCourseList, doDeleteCourse, doShowDetail} from '../actions/course.action'
-import {getCourseColumns, tablePageSize} from '../utils/tableColumnsDef'
+import {getCourseColumns} from '../utils/tableColumnsDef'
+import {TABLE_PAGE_SIZE} from '../utils/constants'
 import {Table, message, Spin, Button} from 'antd'
 import '../App.css'
 
@@ -11,7 +12,7 @@ class Course extends Component {
     constructor(props) {
         super(props);
         this.offset = 0;
-        this.limit = tablePageSize;
+        this.limit = TABLE_PAGE_SIZE;
         this.knowledgeTreeId = null;
         this.searchKey = null;
         this.verified = null;
@@ -80,7 +81,8 @@ class Course extends Component {
 
         return (
             <div className="content-wrapper">
-                <FilterHeader knowledgeTree={dictionary.knowledgeTree} searchFunc={this.filterChangeCallback.bind(this)}> </FilterHeader>
+                <FilterHeader knowledgeTree={dictionary.knowledgeTree}
+                              searchFunc={this.filterChangeCallback.bind(this)}> </FilterHeader>
                 <div className="table-style">
                     {
                         loading ? (

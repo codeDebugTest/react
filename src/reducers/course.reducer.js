@@ -6,7 +6,7 @@ export function courseReducer(state = {}, action){
         case FETCH_COURSE_LIST:
             return Object.assign({}, state, {loading: true, courseList: []});
         case FETCH_COURSE_SUCCESS:
-            return Object.assign({}, state, {loading: false, courseList: action.response.content});
+            return Object.assign({}, state, {loading: false, courseList: action.response.content[0].results});
         case FETCH_COURSE_FAILED:
             return Object.assign({}, state, {loading: false, courseList: []});
         case SHOW_COURSE_DETAIL:

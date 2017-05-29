@@ -3,15 +3,18 @@ import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
 import FilterHeader from '../components/filterHeader'
 import {doFetchTeacherList, doDeleteTeacher, doShowDetail} from '../actions/teacher.action'
+import {getTeacherColumns} from  '../utils/tableColumnsDef'
+import {TABLE_PAGE_SIZE} from '../utils/constants'
 import {Table, message, Spin, Button} from 'antd'
 import '../App.css'
-import {getTeacherColumns} from  '../utils/tableColumnsDef'
 
 class Teacher extends Component {
     constructor(props) {
         super(props);
         this.offset= 0;
-        this.limit= 30;
+        this.limit= TABLE_PAGE_SIZE;
+        this.knowledgeTreeId = null;
+        this.verified = null;
     }
 
     editRecord(index) {
@@ -31,11 +34,23 @@ class Teacher extends Component {
         doDeleteTeacher(index, successFunc, null)(dispatch);
     }
 
+    filterChangeCallback(filterObj) {
+        const {knowledgeTreeId, verified} = filterObj;
+        this.knowledgeTreeId = knowledgeTreeId;
+        this.verified = verified;
+        this.offset = 0;
+``
+        this.loadData();
+    }
+
+
     loadData() {
         const {dispatch, userState} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo && userState.userInfo.userToken,
-            'knowledgeTreeId': -1,
+            'bizTargetTypes': ['1'],
+            'knowledgeTreeId': this.knowledgeTreeId,
+            'verified': this.verified,
             'regionId': userState.userInfo && userState.userInfo.regionId,
             'offset': this.offset,
             'limit': this.limit
@@ -64,7 +79,8 @@ class Teacher extends Component {
 
         return (
             <div className="content-wrapper">
-                <FilterHeader knowledgeTree={dictionary.knowledgeTree} hideSearchBox="true"> </FilterHeader>
+                <FilterHeader knowledgeTree={dictionary.knowledgeTree} hideSearchBox="true"
+                              searchFunc={this.filterChangeCallback.bind(this)}> </FilterHeader>
                 <div className="table-style">
                     {
                         loading ? (
