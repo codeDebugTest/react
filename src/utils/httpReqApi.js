@@ -6,7 +6,7 @@ const _loginUrl = config.realHost +  '/login/do/user_login';
 const _dictionaryUrl = config.realHost +  '/app/dictionary';
 const _courseListUrl = config.realHost +  '/visitor/course/list';
 const _examListUrl = config.realHost +  '/visitor/exam/list';
-const _teacherListUrl = config.realHost +  '/visitor/teacher/list';
+const _teacherListUrl = config.realHost +  '/app/search';
 const _liveListUrl = config.realHost +  '/student/live_course/list';
 const _schoolListUrl = config.realHost +  '/visitor/school/list';
 

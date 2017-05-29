@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
 import FilterHeader from '../components/filterHeader'
 import {doFetchCourseList, doDeleteCourse, doShowDetail} from '../actions/course.action'
-import {getCourseColumns} from '../utils/tableColumnsDef'
+import {getCourseColumns, tablePageSize} from '../utils/tableColumnsDef'
 import {Table, message, Spin, Button} from 'antd'
 import '../App.css'
 
@@ -11,7 +11,10 @@ class Course extends Component {
     constructor(props) {
         super(props);
         this.offset = 0;
-        this.limit = 30;
+        this.limit = tablePageSize;
+        this.knowledgeTreeId = null;
+        this.searchKey = null;
+        this.verified = null;
     }
 
     editRecord(index) {
@@ -32,11 +35,24 @@ class Course extends Component {
         doDeleteCourse(index, successFunc, null)(dispatch);
     }
 
+    filterChangeCallback(filterObj) {
+        const {knowledgeTreeId, searchKey, verified} = filterObj;
+        this.knowledgeTreeId = knowledgeTreeId;
+        this.searchKey = searchKey;
+        this.verified = verified;
+        this.offset = 0;
+
+        this.loadData();
+    }
+
     loadData() {
         const {dispatch, userState} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo && userState.userInfo.userToken,
-            'knowledgeTreeId': '3-2',
+            'bizTargetTypes': ['2'],
+            'knowledgeTreeId': this.knowledgeTreeId,
+            'searchKey': this.searchKey,
+            'verified': this.verified,
             'regionId': userState.userInfo && userState.userInfo.regionId,
             'offset': this.offset,
             'limit': this.limit
@@ -64,7 +80,7 @@ class Course extends Component {
 
         return (
             <div className="content-wrapper">
-                <FilterHeader knowledgeTree={dictionary.knowledgeTree}> </FilterHeader>
+                <FilterHeader knowledgeTree={dictionary.knowledgeTree} searchFunc={this.filterChangeCallback.bind(this)}> </FilterHeader>
                 <div className="table-style">
                     {
                         loading ? (

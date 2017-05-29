@@ -13,6 +13,12 @@ class FilterHeader extends Component {
             selectedSubject: "",
             ...this.knowledgeToMap()
         };
+
+        this.searchCondition = {
+            knowledgeTreeId: null,
+            searchKey: '',
+            verified: null
+        }
     }
 
     knowledgeToMap() {
@@ -26,23 +32,32 @@ class FilterHeader extends Component {
         return {grades:[], gradMap: result}
     }
 
+    onConditionChange() {
+        if (this.props.searchFunc) {
+            this.props.searchFunc(this.searchCondition);
+        }
+    }
+
 
     onGradeChange(value) {
         console.log(`grade selected: ${value}`);
-        this.selectedSubject = '';
         this.setState({
             subjects: this.state.gradMap[value].children || [],
-            selectedSubject: ""
         });
+        this.searchCondition.knowledgeTreeId = value;
+        this.onConditionChange();
     }
 
     onSubjectChange(value) {
-        this.setState({selectedSubject: value});
         console.log(`subject selected: ${value}`);
+        this.searchCondition.knowledgeTreeId = value;
+        this.onConditionChange();
     }
 
     onSearchSelect(value) {
         console.log(`search text: ${value}`)
+        this.searchCondition.searchKey = value;
+        this.onConditionChange();
     }
 
     onCheckStatusChange(value) {

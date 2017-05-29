@@ -230,6 +230,8 @@ const getSchoolColumns = (editRecord, deleteRecord) => {
             }
         }
     ];
-}
+};
 
-export {getCourseColumns, getExamColumns, getTeacherColumns, getLiveColumns, getSchoolColumns}
+const tablePageSize = 20;
+
+export {getCourseColumns, getExamColumns, getTeacherColumns, getLiveColumns, getSchoolColumns, tablePageSize}
