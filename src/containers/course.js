@@ -53,7 +53,7 @@ class Course extends Component {
             'bizTargetTypes': ['2'],
             'knowledgeTreeId': this.knowledgeTreeId,
             'searchKey': this.searchKey,
-            'verified': this.verified,
+            'bizTargetStatus': this.verified,
             'regionId': userState.userInfo && userState.userInfo.regionId,
             'offset': this.offset,
             'limit': this.limit

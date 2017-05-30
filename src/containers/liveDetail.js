@@ -13,7 +13,7 @@ class LiveDetail extends Component {
         const {live} = props.detail;
         this.state = {
             startPlay: false,
-            checkStatus: live.checkStatus !== undefined ? live.checkStatus : 0
+            checkStatus: live.passed !== undefined ? live.passed : 0
         }
     }
 
@@ -45,7 +45,7 @@ class LiveDetail extends Component {
     }
 
     onConfirmBtnClick() {
-        if (this.state.checkStatus) {
+        if (this.state.passed) {
             const textArea = document.getElementById('comment');
             if (textArea.value === '') {
                 message.warning('请输入未通过原因');
@@ -151,14 +151,14 @@ class LiveDetail extends Component {
                 <div className="row-form">
                     <label className='control-label'>审核：</label>
                     <div className="margin-left-20">
-                        <RadioGroup onChange={e => this.onCheckStatusChange(e)} value={this.state.checkStatus}>
+                        <RadioGroup onChange={e => this.onCheckStatusChange(e)} value={this.state.passed}>
                             <Radio value={0}>通过</Radio>
                             <Radio value={1}>否决</Radio>
                         </RadioGroup>
                     </div>
                 </div>
 
-                <div className={'row-form textarea-height ' + (this.state.checkStatus ? '' : 'item-hide')}>
+                <div className={'row-form textarea-height ' + (this.state.passed ? '' : 'item-hide')}>
                     <label className='control-label'>备注：</label>
 
                     <Input id="comment" type="textarea" className="margin-left-20" placeholder="请输入否决原因" />

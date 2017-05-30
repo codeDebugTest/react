@@ -8,7 +8,8 @@ const _courseListUrl = config.realHost +  '/app/search';
 const _examListUrl = config.realHost +  '/teacher/exercise_item/list ';
 const _teacherListUrl = config.realHost +  '/app/search';
 const _liveListUrl = config.realHost +  '/student/live_course/list';
-const _schoolListUrl = config.realHost +  '/school/list';
+const _schoolListUrl = config.realHost +  '/login/register/do/search_school';
+const _verifyUrl = config.realHost +  '/audit'
 
 export function userLogin (data, callback){
     return ajaxPost(_loginUrl, {}, data, callback)
@@ -36,4 +37,8 @@ export function fetchLiveList(requestInfo, callback) {
 
 export function fetchSchoolList(requestInfo, callback) {
     return ajaxPost(_schoolListUrl, {}, requestInfo, callback)
+}
+
+export function verifyResource(requestInfo, callback) {
+    return ajaxPost(_verifyUrl, {}, requestInfo, callback)
 }

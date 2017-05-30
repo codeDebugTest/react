@@ -52,7 +52,7 @@ class Live extends Component {
             'userToken': userState.userInfo && userState.userInfo.userToken,
             'knowledgeTreeId': this.knowledgeTreeId,
             'searchKey': this.searchKey,
-            'verified': this.verified,
+            'bizTargetStatus': this.verified,
             'regionId': userState.userInfo && userState.userInfo.regionId,
             'offset': this.offset,
             'limit': this.limit

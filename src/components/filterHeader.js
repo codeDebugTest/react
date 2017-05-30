@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {biz_Target_Status} from '../utils/constants'
 import {Row, Input, Select} from 'antd'
 import '../App.css'
 
@@ -61,7 +62,8 @@ class FilterHeader extends Component {
     }
 
     onVerifiedStatusChange(value) {
-        console.log(`check status change to: ${value}`)
+        console.log(`check status change to: ${value}`);
+        this.searchCondition.verified = value === '0' ? biz_Target_Status.IN_VERIFY : value === '1' ? biz_Target_Status.RELEASED : null;
     }
 
     getGradeOptions() {

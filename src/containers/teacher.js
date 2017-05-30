@@ -50,7 +50,7 @@ class Teacher extends Component {
             'userToken': userState.userInfo && userState.userInfo.userToken,
             'bizTargetTypes': ['1'],
             'knowledgeTreeId': this.knowledgeTreeId,
-            'verified': this.verified,
+            'bizTargetStatus': this.verified,
             'regionId': userState.userInfo && userState.userInfo.regionId,
             'offset': this.offset,
             'limit': this.limit

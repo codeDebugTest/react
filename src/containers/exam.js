@@ -40,7 +40,7 @@ class Exam extends Component {
         const requestInfo = {
             'userToken': userState.userInfo && userState.userInfo.userToken,
             'knowledgeTreeId': this.knowledgeTreeId,
-            'verified': this.verified,
+            'bizTargetStatus': this.verified,
             'onlyMyself': false,
             'regionId': userState.userInfo && userState.userInfo.regionId,
             'offset': this.offset,
@@ -76,7 +76,7 @@ class Exam extends Component {
                         loading ? (
                             <Spin tip="Loading..."/>
                         ) : (
-                            <Table dataSource={examList} rowKey={record => record.examId}
+                            <Table dataSource={examList} rowKey={record => record.exerciseItemId}
                                    pagination={false}
                                    columns={
                                        getExamColumns(dictionary.knowledgeTree,
