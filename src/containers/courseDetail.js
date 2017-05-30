@@ -13,11 +13,10 @@ const RadioGroup = Radio.Group;
 class CourseDetail extends Component {
     constructor(props) {
         super(props);
-        const {course} = props.detail;
         this.state = {
             startPlay: false,
             knowledgeTreePath: [],
-            checkStatus: course.passed !== undefined ? course.passed : 0
+            passed: true,
         }
     }
 
@@ -40,7 +39,7 @@ class CourseDetail extends Component {
     }
 
     onCheckStatusChange(e) {
-        this.setState({checkStatus: e.target.value})
+        this.setState({passed: e.target.value})
     }
 
     onLivePlayerClick() {
@@ -162,13 +161,13 @@ class CourseDetail extends Component {
                     <label className='control-label'>审核：</label>
                     <div className="margin-left-20">
                         <RadioGroup onChange={e => this.onCheckStatusChange(e)} value={this.state.passed}>
-                            <Radio value={0}>通过</Radio>
-                            <Radio value={1}>否决</Radio>
+                            <Radio value={true}>通过</Radio>
+                            <Radio value={false}>否决</Radio>
                         </RadioGroup>
                     </div>
                 </div>
 
-                <div className={'row-form textarea-height ' + (this.state.passed ? '' : 'item-hide')}>
+                <div className={'row-form textarea-height ' + (this.state.passed ? 'item-hide' : '')}>
                     <label className='control-label'>备注：</label>
 
                     <Input id="comment" type="textarea" className="margin-left-20" placeholder="请输入否决原因"/>

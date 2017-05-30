@@ -33,10 +33,10 @@ const deleteSuccess = (index) => {
     }
 }
 
-const showDetail = (exam) => {
+const showDetail = (exercise) => {
     return {
         type: SHOW_EXAM_DETAIL,
-        exam: exam
+        exercise: exercise
     }
 };
 

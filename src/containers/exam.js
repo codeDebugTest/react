@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {browserHistory} from 'react-router'
 import FilterHeader from '../components/filterHeader'
-import {doFetchExamList, doDeleteExam} from '../actions/exam.action'
+import {doFetchExamList, doDeleteExam, doShowDetail} from '../actions/exam.action'
 import {getExamColumns} from '../utils/tableColumnsDef'
 import {TABLE_PAGE_SIZE} from '../utils/constants'
 import {Table, message, Spin, Button} from 'antd'
@@ -17,7 +18,14 @@ class Exam extends Component {
     }
 
     editRecord(index) {
-        console.log('edit exam record: ' + index)
+        console.log('edit exam record: ' + index);
+        const {examList} = this.props.exam;
+        const {dispatch} = this.props;
+
+        doShowDetail(examList[index])(dispatch);
+        browserHistory.push({
+            pathname: `/management/exercise/${examList[index].exerciseItemId}`
+        })
     }
     deleteRecord(index) {
         const { dispatch } = this.props;

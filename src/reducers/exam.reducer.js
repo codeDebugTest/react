@@ -10,7 +10,7 @@ export function examReducer(state = {}, action){
         case FETCH_EXAM_FAILED:
             return Object.assign({}, state, {loading: false, examList: []});
         case SHOW_EXAM_DETAIL:
-            return Object.assign({}, state, {exam: action.exam});
+            return Object.assign({}, state, {exercise: action.exercise});
         case DELETE_EXAM_SUCCESS:
             state.examList.splice(action.index, 1);
             return Object.assign({}, state);

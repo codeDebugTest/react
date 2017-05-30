@@ -237,3 +237,23 @@
 .confirm-box > button{
   margin-right: 100px;
 }
+
+.exercise-line {
+  margin-bottom: 20px;
+}
+
+.exercise-label {
+  font-size: 14px;
+  text-align: right;
+  width: 120px;
+  float: left;
+}
+
+.exercise-content {
+  margin-left: 20px;
+  text-align: left;
+  max-width: 800px;
+  font-weight: bold;
+  font-size: 14px;
+  float: left;
+}
