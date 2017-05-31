@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
-import {getRecordTreeNames} from '../utils/TreeToo'
+import KnowledgeTreeItem from '../components/knowledgeTreeItem'
+import {ID_ALL} from '../utils/TreeToo'
+import {varEmpty, varNotEmpty} from '../utils/util'
 import {EXERCISE_TYPE, FILL_EXERCISE, SUBJECT_EXERCISE} from '../utils/constants'
-import {varNotEmpty} from '../utils/util'
 import ExerciseContent from '../components/ExerciseConent'
-import {Button, Input, message, Radio, Rate} from 'antd'
+import {Button, Input, message, Radio, Rate, Tooltip, Icon} from 'antd'
 import '../App.css'
 const RadioGroup = Radio.Group;
 
@@ -13,8 +14,10 @@ const RadioGroup = Radio.Group;
 class ExerciseDetail extends Component {
     constructor(props) {
         super(props);
+        const {exercise} = this.props.detail;
         this.state = {
-            passed: true
+            passed: true,
+            knowledgeTreeIds: varEmpty(exercise.knowledgeTreeIds) ? ID_ALL : '' + exercise.knowledgeTreeIds,
         }
     }
 
@@ -33,6 +36,19 @@ class ExerciseDetail extends Component {
         browserHistory.goBack()
     }
 
+    addKnowledgeTree() {
+        this.knowledgeTreeIdList = this.knowledgeTreeIdList.concat([ID_ALL]);
+
+        this.setState({knowledgeTreeIds: this.knowledgeTreeIdList.join(',')});
+    }
+
+    removeKnowledgeTree() {
+        this.knowledgeTreeIdList.pop();
+        this.knowledgeTreeIdList = this.knowledgeTreeIdList.concat([]);
+
+        this.setState({knowledgeTreeIds: this.knowledgeTreeIdList.join(',')});
+    }
+
     getStage(level) {
         if (level === '1') {
             return '新课';
@@ -43,6 +59,10 @@ class ExerciseDetail extends Component {
             return '总复习';
         }
         return '未知阶段';
+    }
+
+    componentWillMount() {
+        this.knowledgeTreeIdList = this.state.knowledgeTreeIds.split(',');
     }
 
     render() {
@@ -100,9 +120,22 @@ class ExerciseDetail extends Component {
                         }
                 </div>
 
+                <KnowledgeTreeItem knowledgeTreeIds={this.knowledgeTreeIdList}/>
+
                 <div className="row-form">
                     <label className='control-label'>知识树：</label>
-                    <label className="margin-left-20 info-label">{getRecordTreeNames(dictionary.knowledgeTree, exercise)}</label>
+                    <div className="margin-left-20 info-label">
+                        <Tooltip title="添加知识树" placement="top" >
+                            <span className="add-tree" onClick={() => this.addKnowledgeTree()}>
+                                <Icon type="plus-circle-o" />
+                            </span>
+                        </Tooltip>
+                        <Tooltip title="删除知识树" placement="top" >
+                            <span className="remove-tree" onClick={() => this.removeKnowledgeTree()}>
+                                <Icon type="minus-circle-o" />
+                            </span>
+                        </Tooltip>
+                    </div>
                 </div>
 
                 { varNotEmpty(exercise.difficultyDegree)

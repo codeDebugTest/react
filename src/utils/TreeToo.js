@@ -215,6 +215,10 @@ const mapGradeIdToName = (knowledgeTree, gradeId) => {
 }
 
 const getKnowledgeTreePath = (knowledgeTree, knowledgeTreeId) => {
+    if (knowledgeTreeId === ID_ALL) {
+        return [ID_ALL];
+    }
+
     let fullPath = [];
     _getPath(knowledgeTree, knowledgeTreeId, fullPath);
     return fullPath;
@@ -247,7 +251,7 @@ const _getPath = (knowledgeTree, targetId, fullPath) => {
 }
 
 export {
-    findTreeNodeFromPath, ID_ALL, getNodeAll, getValidTreeIdFromPath, getValidTreeIdFromPathStr,
+    findTreeNodeFromPath, ID_ALL, NODE_ALL, getNodeAll, getValidTreeIdFromPath, getValidTreeIdFromPathStr,
     getFullPathNameByKtId, getNameByKtId, treeIdsToNames, treeIdToTreeArray,validateKtTree,
     getGradeSubjectNodes, getRecordTreeNames, getRecordTreeSubject, getRecordTreeGrad, mapSubjectIdToName,
     mapGradeIdToName, getKnowledgeTreePath

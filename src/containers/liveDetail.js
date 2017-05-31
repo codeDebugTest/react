@@ -1,18 +1,22 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
-import {getRecordTreeNames} from '../utils/TreeToo'
+import KnowledgeTreeItem from '../components/knowledgeTreeItem'
+import {ID_ALL} from '../utils/TreeToo'
+import {varEmpty} from '../utils/util'
 import {doCreateLivePlayer, doReleaseLivePlayer} from '../actions/livePlayer.action'
-import {Button, Icon, Input, message, Radio} from 'antd'
+import {Button, Icon, Input, message, Radio, Tooltip} from 'antd'
 import '../App.css'
 const RadioGroup = Radio.Group;
 
 class LiveDetail extends Component {
     constructor(props) {
         super(props);
+        const {live} = this.props.detail;
         this.state = {
             startPlay: false,
             passed: true,
+            knowledgeTreeIds: varEmpty(live.knowledgeTreeIds) ? ID_ALL : '' + live.knowledgeTreeIds,
         }
     }
 
@@ -54,9 +58,25 @@ class LiveDetail extends Component {
         browserHistory.goBack()
     }
 
+    addKnowledgeTree() {
+        this.knowledgeTreeIdList = this.knowledgeTreeIdList.concat([ID_ALL]);
+
+        this.setState({knowledgeTreeIds: this.knowledgeTreeIdList.join(',')});
+    }
+
+    removeKnowledgeTree() {
+        this.knowledgeTreeIdList.pop();
+        this.knowledgeTreeIdList = this.knowledgeTreeIdList.concat([]);
+
+        this.setState({knowledgeTreeIds: this.knowledgeTreeIdList.join(',')});
+    }
+
+
     componentWillMount() {
         this.liveFile = this.getFileInfo(this.getLiveItemByType(2));
         this.liveVideo = this.getFileInfo(this.getLiveItemByType(1));
+
+        this.knowledgeTreeIdList = this.state.knowledgeTreeIds.split(',');
     }
 
     componentDidUpdate() {
@@ -133,10 +153,25 @@ class LiveDetail extends Component {
                     <label className='control-label'>结束时间：</label>
                     <label className="margin-left-20 info-label">{live.endTime.split(' ')[1]}</label>
                 </div>
+
+                <KnowledgeTreeItem knowledgeTreeIds={this.knowledgeTreeIdList}/>
+
                 <div className="row-form">
                     <label className='control-label'>知识树：</label>
-                    <label className="margin-left-20 info-label">{getRecordTreeNames(dictionary.knowledgeTree, live)}</label>
+                    <div className="margin-left-20 info-label">
+                        <Tooltip title="添加知识树" placement="top" >
+                            <span className="add-tree" onClick={() => this.addKnowledgeTree()}>
+                                <Icon type="plus-circle-o" />
+                            </span>
+                        </Tooltip>
+                        <Tooltip title="删除知识树" placement="top" >
+                            <span className="remove-tree" onClick={() => this.removeKnowledgeTree()}>
+                                <Icon type="minus-circle-o" />
+                            </span>
+                        </Tooltip>
+                    </div>
                 </div>
+
                 <div className="row-form">
                     <label className='control-label'>课件：</label>
 

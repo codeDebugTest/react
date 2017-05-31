@@ -215,7 +215,17 @@
   height: 200px;
   margin-top: 10px;
 }
-.row-form .img-height {
+.row-form .add-tree{
+  font-size: 18px;
+  color: blue;
+}
+.row-form .remove-tree{
+  margin-left: 50px;
+  font-size: 18px;
+  color: red;
+}
+
+.img-height {
   height: 220px;
 }
 .textarea-height {

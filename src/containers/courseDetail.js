@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
-import KnowledgeTreeLinePrivate from '../components/knowledgeTreeLine'
-import {getRecordTreeNames, getKnowledgeTreePath} from '../utils/TreeToo'
-import {varNotEmpty} from '../utils/util'
+import KnowledgeTreeItem from '../components/knowledgeTreeItem'
+import {ID_ALL} from '../utils/TreeToo'
+import {varEmpty} from '../utils/util'
 import {mapTagIdsToNames} from '../utils/util'
-import {Button, Icon, Input, message, Radio} from 'antd'
+import {Button, Icon, Input, message, Radio, Tooltip} from 'antd'
 import {doCreateLivePlayer, doReleaseLivePlayer} from '../actions/livePlayer.action'
 import '../App.css'
 const RadioGroup = Radio.Group;
@@ -13,11 +13,13 @@ const RadioGroup = Radio.Group;
 class CourseDetail extends Component {
     constructor(props) {
         super(props);
+        const {course} = this.props.detail;
         this.state = {
             startPlay: false,
-            knowledgeTreePath: [],
+            knowledgeTreePaths: [],
+            knowledgeTreeIds: varEmpty(course.knowledgeTreeIds) ? ID_ALL : '' + course.knowledgeTreeIds,
             passed: true,
-        }
+        };
     }
 
     getFileInfo(fileItem) {
@@ -47,6 +49,7 @@ class CourseDetail extends Component {
     }
 
     onConfirmBtnClick() {
+        console.log(this.knowledgeTreeIdList);
         if (this.state.passed) {
             const textArea = document.getElementById('comment');
             if (textArea.value === '') {
@@ -58,19 +61,25 @@ class CourseDetail extends Component {
         browserHistory.goBack();
     }
 
+    addKnowledgeTree() {
+        this.knowledgeTreeIdList = this.knowledgeTreeIdList.concat([ID_ALL]);
+
+        this.setState({knowledgeTreeIds: this.knowledgeTreeIdList.join(',')});
+    }
+
+    removeKnowledgeTree() {
+        this.knowledgeTreeIdList.pop();
+        this.knowledgeTreeIdList = this.knowledgeTreeIdList.concat([]);
+
+        this.setState({knowledgeTreeIds: this.knowledgeTreeIdList.join(',')});
+    }
+
     componentWillMount() {
         this.liveFile = this.getFileInfo(this.getCourseItemByType(2));
         this.liveVideo = this.getFileInfo(this.getCourseItemByType(1));
         this.courseCase = this.getFileInfo(this.getCourseItemByType(3));
 
-        const {course} = this.props.detail;
-        const {dictionary} = this.props.dictionary;
-        let knowledgeTreeId = course.knowledgeTreeIds && course.knowledgeTreeIds.split(',')[0];
-        if (varNotEmpty(knowledgeTreeId)) {
-            this.setState({
-                knowledgeTreePath: getKnowledgeTreePath(dictionary.knowledgeTree, knowledgeTreeId),
-            });
-        }
+        this.knowledgeTreeIdList = this.state.knowledgeTreeIds.split(',');
     }
 
     componentDidUpdate() {
@@ -132,14 +141,25 @@ class CourseDetail extends Component {
                         {mapTagIdsToNames(dictionary.courseTagList, course.tags)}
                     </label>
                 </div>
+
+                <KnowledgeTreeItem knowledgeTreeIds={this.knowledgeTreeIdList}/>
+
                 <div className="row-form">
                     <label className='control-label'>知识树：</label>
-                    <label className="margin-left-20 info-label">
-                        {/*{getRecordTreeNames(dictionary.knowledgeTree, course)}*/}
-                        <KnowledgeTreeLinePrivate selectedIdsPath={this.state.knowledgeTreePath}
-                        />
-                    </label>
+                    <div className="margin-left-20 info-label">
+                        <Tooltip title="添加知识树" placement="top" >
+                            <span className="add-tree" onClick={() => this.addKnowledgeTree()}>
+                                <Icon type="plus-circle-o" />
+                            </span>
+                        </Tooltip>
+                        <Tooltip title="删除知识树" placement="top" >
+                            <span className="remove-tree" onClick={() => this.removeKnowledgeTree()}>
+                                <Icon type="minus-circle-o" />
+                            </span>
+                        </Tooltip>
+                    </div>
                 </div>
+
                 <div className="row-form">
                     <label className='control-label'>课件：</label>
 

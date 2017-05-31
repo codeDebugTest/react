@@ -105,17 +105,10 @@ class KnowledgeTreeLineInternal extends Component {
 }
 
 class KnowledgeTreeLinePrivate extends Component {
-    componentWillMount() {
-        this.setState({ privateIdsPath: this.props.selectedIdsPath });
-    }
-
     onNodeSelectedWrapper(newPath) {
-        if (varEmpty(this.props.selectedIdsPath)) {
-            this.setState({ privateIdsPath: newPath });
-            if (varNotEmpty(this.props.treeNodeSelectedCallback))
-                this.props.treeNodeSelectedCallback(getValidTreeIdFromPath(newPath));
-        }
-        else
+        if (varNotEmpty(this.props.treeNodeSelectedCallback)){}
+            this.props.treeNodeSelectedCallback(getValidTreeIdFromPath(newPath), this.props.index);
+
         if (varNotEmpty(this.props.treePathSelectedCallback))
             this.props.treePathSelectedCallback(newPath);
     }
@@ -129,7 +122,7 @@ class KnowledgeTreeLinePrivate extends Component {
                 <div className="margin-y-10">
                     <KnowledgeTreeLineInternal
                         treeRootNodes={dictionary.knowledgeTree}
-                        selectedIdsPath={getOrDefault(this.props.selectedIdsPath, this.state.privateIdsPath)}
+                        selectedIdsPath={this.props.selectedIdsPath}
                         onNodeSelected={this.onNodeSelectedWrapper.bind(this)}
                         gradeSubjectOnly={this.props.gradeSubjectOnly} />
                 </div>);
