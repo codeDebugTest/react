@@ -5,4 +5,10 @@ const config = {
     imgUrlDir: "http://yixi-1.oss-cn-hangzhou.aliyuncs.com/"
 };
 
-export default config
+const userList = {
+    'liuye': true,
+    'sunjian11': true,
+    'tony': true,
+}
+
+export {config, userList}

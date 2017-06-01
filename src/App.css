@@ -95,37 +95,38 @@
 .tree-ul .togglable-up::before {
   content: "▶";
 }
-.tree-ul li > label {
+.tree-ul li .node {
+  float: left;
+}
+
+.tree-ul li .node > label {
   color: #070708;
   float: left;
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
 }
-.tree-ul li > label:hover {
+.tree-ul li .node > label:hover {
   color: blue;
 }
-.tree-ul li > .null-label {
+.tree-ul li .node > .null-label {
   margin-left: 21px;
 }
 
-.tree-ul li label:disabled{
-  color: #dfe2cf;
+.tree-ul li .disabled-node {
+  color: #dfe2cf !important;
 }
 
 .add-icon,
 .delete-icon,
-.close-icon{
+.close-icon,
+.open-icon{
   float: left;
-  margin-left: 16px;
+  margin-left: 20px;
   font-size: 15px;
   cursor: pointer;
 }
-.add-icon:disabled,
-.delete-icon:disabled,
-.close-icon:disabled {
-  color: #dfe2cf !important;
-}
+
 .add-icon {
   color: #0c06f3;
 }
@@ -133,7 +134,10 @@
   color: red;
 }
 .close-icon{
-  color: #88a00b;
+  color: #61710a
+}
+.open-icon {
+  color: #48f346;
 }
 
 .clearfixed:after{

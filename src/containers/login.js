@@ -3,6 +3,7 @@ import { message } from 'antd';
 import React, {Component } from 'react'
 import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
+import {userList} from '../config'
 import {fetchLogin}from '../actions/login.action'
 import '../index.css'
 const FormItem = Form.Item;
@@ -29,7 +30,13 @@ class LoginForm extends Component {
             if (!err) {
                 console.log('Received values of form: ', values);
             }
-            fetchLogin(values, this.loginSuccessFunc, this.loginFailedFuc)(dispatch)
+
+            if (userList.hasOwnProperty(values.userName)) {
+                fetchLogin(values, this.loginSuccessFunc, this.loginFailedFuc)(dispatch);
+            } else {
+                message.error('登录失败，请检查用户名密码!')
+            }
+
         });
     };
 

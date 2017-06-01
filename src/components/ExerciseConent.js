@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import config from '../config'
+import {config} from '../config'
 import { varEmpty, strFindIgnoreCase } from '../utils/util';
 
 class ExerciseContent extends Component {
