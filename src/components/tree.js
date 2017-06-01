@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {Icon, Popconfirm, Tooltip} from 'antd'
 import {isArray, isObject} from '../utils/util'
 
-
 const isLeafNode = (node) => {
     return !( node.hasOwnProperty('children') && node.children && isArray(node.children) )
 };
@@ -108,7 +107,7 @@ class TreeNode extends Component {
                             <Popconfirm placement="topRight" title={closeMsg} okText="是" cancelText="否"
                                         onConfirm={() => this.onCloseNode(false)}>
                                 <Tooltip title={"恢复节点"} placement="right">
-                                    <span className="open-icon" ><Icon type="check-circle-o" /></span>
+                                    <span className="open-icon" ><Icon type="smile-o" /></span>
                                 </Tooltip>
                             </Popconfirm>
                         )

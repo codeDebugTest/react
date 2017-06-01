@@ -3,7 +3,6 @@ import {config} from '../config'
 import { varEmpty, strFindIgnoreCase } from '../utils/util';
 
 class ExerciseContent extends Component {
-
     render() { // props: text
         const { text} = this.props;
         const imgSuffixes = ['.jpg', '.gif', '.png', '.bmp'];
