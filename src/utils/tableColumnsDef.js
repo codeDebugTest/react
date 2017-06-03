@@ -2,7 +2,7 @@ import React from 'react'
 import {Popconfirm, Icon} from 'antd'
 import {getRecordTreeGrad, getRecordTreeNames, getRecordTreeSubject,
     mapGradeIdToName, mapSubjectIdToName} from '../utils/TreeToo'
-import {EXERCISE_TYPE} from '../utils/constants'
+import {EXERCISE_TYPE, biz_Target_Status} from '../utils/constants'
 
 const getCourseColumns = (knowledgeTree, editRecord, deleteRecord) => {
     return [
@@ -30,7 +30,8 @@ const getCourseColumns = (knowledgeTree, editRecord, deleteRecord) => {
             title: '审核状态',
             width: 120,
             render: (text, record) => {
-                if(record.verified) {
+                if(record.bizTargetStatus === biz_Target_Status.UN_PASSED ||
+                    record.bizTargetStatus === biz_Target_Status.RELEASED) {
                     return '已审核';
                 } else {
                     return '未审核';
@@ -88,7 +89,8 @@ const getExamColumns = (knowledgeTree, editRecord, deleteRecord) => {
             title: '审核状态',
             width: 100,
             render: (text, record) => {
-                if(record.verified) {
+                if(record.bizTargetStatus === biz_Target_Status.UN_PASSED ||
+                    record.bizTargetStatus === biz_Target_Status.RELEASED) {
                     return '已审核';
                 } else {
                     return '未审核';

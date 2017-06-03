@@ -37,7 +37,7 @@ class School extends Component {
 
     onVerifiedStatusChange(value) {
         console.log(`check status change to: ${value}`)
-        this.verified = value === '0' ? biz_Target_Status.IN_VERIFY : value === '1' ? biz_Target_Status.RELEASED : null;
+        this.verified = value === '0' ? biz_Target_Status.SUBMITTED : value === '1' ? biz_Target_Status.RELEASED : null;
         this.offset = 0;
         this.loadData();
     }

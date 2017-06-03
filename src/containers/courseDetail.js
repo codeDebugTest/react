@@ -8,7 +8,7 @@ import {mapTagIdsToNames} from '../utils/util'
 import {Button, Icon, Input, message, Radio, Tooltip} from 'antd'
 import {doCreateLivePlayer, doReleaseLivePlayer} from '../actions/livePlayer.action'
 import {doAuditResource} from '../actions/auditResource.action'
-import {biz_Target_Type} from '../utils/constants'
+import {biz_Target_Type, CourseItemType} from '../utils/constants'
 import '../App.css'
 const RadioGroup = Radio.Group;
 
@@ -38,7 +38,7 @@ class CourseDetail extends Component {
 
     getCourseItemByType(type) {
         const {course} = this.props.detail;
-        const files = course.courseItems.filter(item => item.itemType === type);
+        const files = course.courseItems.filter(item => item.itemTypeCode === type);
         return files.length && files[0];
     }
 
@@ -72,7 +72,7 @@ class CourseDetail extends Component {
             auditComment: textArea.value,
             auditPassed: this.state.passed,
             bizTargetType: biz_Target_Type.COURSE,
-            targetId: detail.course.courseId,
+            targetId: detail.course.id,
             userToken: userState.userInfo.userToken
         };
 
@@ -93,9 +93,9 @@ class CourseDetail extends Component {
     }
 
     componentWillMount() {
-        this.liveFile = this.getFileInfo(this.getCourseItemByType(2));
-        this.liveVideo = this.getFileInfo(this.getCourseItemByType(1));
-        this.courseCase = this.getFileInfo(this.getCourseItemByType(3));
+        this.courseCase = this.getFileInfo(this.getCourseItemByType(CourseItemType.COURSE_CASE));
+        this.liveVideo = this.getFileInfo(this.getCourseItemByType(CourseItemType.VIDEO));
+        this.learningCase = this.getFileInfo(this.getCourseItemByType(CourseItemType.LEARNING_CASE));
 
         this.knowledgeTreeIdList = this.state.knowledgeTreeIds.split(',');
     }
@@ -182,17 +182,17 @@ class CourseDetail extends Component {
                     <label className='control-label'>课件：</label>
 
                     <Icon type="file-text margin-left-20 file-icon"
-                          style={{display: this.liveFile.fileName ? '' : 'none'}}/>
-                    <a href={this.liveFile.fileUrl} target="new">{this.liveFile.fileName}</a>
+                          style={{display: this.courseCase.fileName ? '' : 'none'}}/>
+                    <a href={this.courseCase.fileUrl} target="new">{this.courseCase.fileName}</a>
                 </div>
 
                 {this.LivePlayerRender()}
 
                 <div className="row-form">
-                    <label className='control-label'>教案：</label>
+                    <label className='control-label'>学案：</label>
                     <Icon type="file-text margin-left-20 file-icon"
-                          style={{display: this.courseCase.fileName ? '' : 'none'}}/>
-                    <a href={this.courseCase.fileUrl} target="new">{this.courseCase.fileName}</a>
+                          style={{display: this.learningCase.fileName ? '' : 'none'}}/>
+                    <a href={this.learningCase.fileUrl} target="new">{this.learningCase.fileName}</a>
                 </div>
 
                 <div className="row-form">

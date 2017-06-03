@@ -10,15 +10,15 @@ class TreeNode extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            visible: true,
+            unfold: false,
             isTreeNode: !isLeafNode(this.props.node),
             disabled: false
         };
     }
 
-    toggleVisible() {
+    toggleSpread() {
         if (this.state.isTreeNode) {
-            this.setState({visible: !this.state.visible});
+            this.setState({unfold: !this.state.unfold});
         }
     };
 
@@ -26,7 +26,7 @@ class TreeNode extends Component {
         if (!this.state.isTreeNode) {
             return 'null-label';
         }
-        return this.state.visible ? 'togglable-down' : 'togglable-up';
+        return this.state.unfold ? 'togglable-down' : 'togglable-up';
     }
     onDeleteNode() {
         this.props.deleteNodeHandler(this.props.node);
@@ -62,13 +62,13 @@ class TreeNode extends Component {
         const closeAction = this.state.disabled ? '恢复' : '禁用';
         const closeMsg = '确定要' + closeAction + '此节点: ' + display + '?';
 
-        const style = this.state.visible ? null: {display: "none"};
+        const style = this.state.unfold ? null: {display: "none"};
         const labelClass = this.getLiStyleClass();
         return (
             <li className="clearfixed">
                 <div className="node">
                     <label className={labelClass + (this.state.disabled ? ' disabled-node' : '')}
-                           onClick={this.toggleVisible.bind(this)}>{this.props.node.display}</label>
+                           onClick={this.toggleSpread.bind(this)}>{this.props.node.display}</label>
 
                     {!this.state.disabled
                         ? (

@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {message, Spin} from 'antd'
 import Tree from '../components/tree'
-import {doFetchDictionary} from '../actions/knowledge.ation'
+import {doFetchDictionary, doFetchKnowledgeTree} from '../actions/knowledge.ation'
 
 class KnowledgeTree extends Component {
     deleteTreeNode(node) {
@@ -13,16 +13,25 @@ class KnowledgeTree extends Component {
         console.log('add tree node: ' + node);
     }
 
-    componentDidMount() {
+    getKnowledgeTree() {
         const { dispatch } = this.props;
         const { userInfo } = this.props.userState;
 
+        doFetchKnowledgeTree({
+            regionId: userInfo.regionId,
+            showVisible: true
+        }, null, (msg) => {message.error(msg)})(dispatch);
+    }
+
+    componentDidMount() {
+        const { dispatch } = this.props;
+        const { userInfo } = this.props.userState;
+        this.getKnowledgeTree();
         doFetchDictionary(userInfo.regionId, null, (msg)=> {message.error(msg)})(dispatch)
     }
 
     render() {
-        const {dictionary, loading} = this.props.dictionary;
-        const knowledgeTree = dictionary && dictionary.knowledgeTree;
+        const {knowledgeTree, loading} = this.props.dictionary;
         return (
             <div style={{position: 'relative'}}>{
                 loading ? (

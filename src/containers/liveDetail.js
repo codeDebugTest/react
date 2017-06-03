@@ -73,7 +73,7 @@ class LiveDetail extends Component {
 
 
     componentWillMount() {
-        this.liveFile = this.getFileInfo(this.getLiveItemByType(2));
+        this.courseCase = this.getFileInfo(this.getLiveItemByType(2));
         this.liveVideo = this.getFileInfo(this.getLiveItemByType(1));
 
         this.knowledgeTreeIdList = this.state.knowledgeTreeIds.split(',');
@@ -176,8 +176,8 @@ class LiveDetail extends Component {
                     <label className='control-label'>课件：</label>
 
                     <Icon type="file-text margin-left-20 file-icon"
-                          style={{display: this.liveFile.fileName ? '': 'none'}}/>
-                    <a href={this.liveFile.fileUrl} target="new">{this.liveFile.fileName}</a>
+                          style={{display: this.courseCase.fileName ? '': 'none'}}/>
+                    <a href={this.courseCase.fileUrl} target="new">{this.courseCase.fileName}</a>
                 </div>
 
                 {this.LivePlayerRender()}

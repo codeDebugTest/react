@@ -61,9 +61,22 @@ class FilterHeader extends Component {
         this.onConditionChange();
     }
 
+    getVerifiedStatus(value) {
+        switch (value) {
+            case biz_Target_Status.SUBMITTED.toString():
+                return biz_Target_Status.SUBMITTED;
+            case biz_Target_Status.RELEASED.toString():
+                return biz_Target_Status.RELEASED;
+            case biz_Target_Status.UN_PASSED.toString():
+                return biz_Target_Status.UN_PASSED;
+            default:
+                return null;
+        }
+    }
     onVerifiedStatusChange(value) {
         console.log(`check status change to: ${value}`);
-        this.searchCondition.verified = value === '0' ? biz_Target_Status.IN_VERIFY : value === '1' ? biz_Target_Status.RELEASED : null;
+        this.searchCondition.verified = this.getVerifiedStatus(value);
+        this.onConditionChange();
     }
 
     getGradeOptions() {
@@ -111,11 +124,12 @@ class FilterHeader extends Component {
 
                 <div className="item-warp">
                     <label>审核状态:</label>
-                    <Select className="select-style" showSearch defaultValue="2"
+                    <Select className="select-style" showSearch defaultValue="-1"
                             onChange={this.onVerifiedStatusChange.bind(this)}>
-                        <Option value="2">不限 </Option>
-                        <Option value="0">未审核</Option>
-                        <Option value="1">已审核</Option>
+                        <Option value="-1">不限 </Option>
+                        <Option value={biz_Target_Status.SUBMITTED.toString()}>未审核</Option>
+                        <Option value={biz_Target_Status.RELEASED.toString()}>审核已通过</Option>
+                        <Option value={biz_Target_Status.UN_PASSED.toString()}>审核未通过</Option>
                     </Select>
                 </div>
             </Row>

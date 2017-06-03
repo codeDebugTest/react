@@ -1,8 +1,9 @@
-import {fetchDictionary} from '../utils/httpReqApi'
+import {fetchDictionary, fetchKnowledgeTree} from '../utils/httpReqApi'
 
 export const FETCH_DICTIONARY = 'fetch_dictionary';
-export const FETCH_SUCCESS = 'fetch_success';
-export const FETCH_FAILED = 'fetch_failed';
+export const FETCH_DICTIONARY_SUCCESS = 'fetch_dictionary_success';
+export const FETCH_DICTIONARY_FAILED = 'fetch_dictionary_failed';
+export const FETCH_KNOWLEDGE_TREE_SUCCESS = 'fetch_knowledge_tree_success';
 
 const doFetch = () => {
     return {
@@ -11,17 +12,45 @@ const doFetch = () => {
 };
 const doSuccess = (response) => {
     return {
-        type: FETCH_SUCCESS,
+        type: FETCH_DICTIONARY_SUCCESS,
+        response: response
+    }
+};
+
+const fetchKnowledgeTreeSuccess = (response) => {
+    return {
+        type: FETCH_KNOWLEDGE_TREE_SUCCESS,
         response: response
     }
 };
 
 const doFailed = (response) => {
     return {
-        type: FETCH_FAILED,
+        type: FETCH_DICTIONARY_FAILED,
         response: response
     }
 };
+
+export function doFetchKnowledgeTree(requestInfo, successFunc, failedFunc) {
+    return dispatch => {
+        return fetchKnowledgeTree (requestInfo).then(
+            response => {
+                if (response.code === undefined) {
+                    alert(`获取知识树失败！`);
+                    dispatch(doFailed(response));
+                    return;
+                }
+
+                if (response.code === 0) {
+                    dispatch(fetchKnowledgeTreeSuccess(response))
+                } else {
+                    dispatch(doFailed(response));
+                    failedFunc(response.message);
+                }
+            }
+        )
+    }
+}
 
 export function doFetchDictionary (regionId, successFunc, failedFuc){
     return dispatch => {
@@ -31,6 +60,7 @@ export function doFetchDictionary (regionId, successFunc, failedFuc){
             response => {
                 if (response.code === undefined) {
                     alert(`No code in result of post: fetchKnowledgeTree`);
+                    dispatch(doFailed(response));
                     return;
                 }
                 if (response.code === 0) {
@@ -43,3 +73,4 @@ export function doFetchDictionary (regionId, successFunc, failedFuc){
         );
     }
 }
+

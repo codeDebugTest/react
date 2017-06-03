@@ -4,7 +4,7 @@ import {browserHistory} from 'react-router'
 import FilterHeader from '../components/filterHeader'
 import {doFetchCourseList, doDeleteCourse, doShowDetail} from '../actions/course.action'
 import {getCourseColumns} from '../utils/tableColumnsDef'
-import {TABLE_PAGE_SIZE} from '../utils/constants'
+import {TABLE_PAGE_SIZE, biz_Target_Type} from '../utils/constants'
 import {Table, message, Spin, Button} from 'antd'
 import '../App.css'
 
@@ -50,13 +50,14 @@ class Course extends Component {
         const {dispatch, userState} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo && userState.userInfo.userToken,
-            'bizTargetTypes': ['2'],
+            'bizTargetType': biz_Target_Type.COURSE,
             'knowledgeTreeId': this.knowledgeTreeId,
             'searchKey': this.searchKey,
             'bizTargetStatus': this.verified,
             'regionId': userState.userInfo && userState.userInfo.regionId,
             'offset': this.offset,
-            'limit': this.limit
+            'limit': this.limit,
+            'fromAdmin': !this.verified || null
         };
         doFetchCourseList(requestInfo, null, (msg) => message.error(msg))(dispatch);
     }
@@ -88,7 +89,7 @@ class Course extends Component {
                         loading ? (
                             <Spin tip="Loading..."/>
                         ) : (
-                            <Table dataSource={courseList} rowKey={record => record.courseId}
+                            <Table dataSource={courseList} rowKey={record => record.id}
                                    pagination={false}
                                    columns={
                                        getCourseColumns(dictionary.knowledgeTree,
