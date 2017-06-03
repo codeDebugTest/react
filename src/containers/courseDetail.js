@@ -7,6 +7,8 @@ import {varEmpty} from '../utils/util'
 import {mapTagIdsToNames} from '../utils/util'
 import {Button, Icon, Input, message, Radio, Tooltip} from 'antd'
 import {doCreateLivePlayer, doReleaseLivePlayer} from '../actions/livePlayer.action'
+import {doAuditResource} from '../actions/auditResource.action'
+import {biz_Target_Type} from '../utils/constants'
 import '../App.css'
 const RadioGroup = Radio.Group;
 
@@ -48,17 +50,33 @@ class CourseDetail extends Component {
         this.setState({startPlay: true});
     }
 
+    closePage() {
+        browserHistory.goBack();
+    }
+
+    auditFailed() {
+        message.error('审批失败！');
+    }
     onConfirmBtnClick() {
         console.log(this.knowledgeTreeIdList);
+        const textArea = document.getElementById('comment');
         if (this.state.passed) {
-            const textArea = document.getElementById('comment');
             if (textArea.value === '') {
                 message.warning('请输入未通过原因');
                 return;
             }
         }
 
-        browserHistory.goBack();
+        const {detail, userState} = this.props;
+        const requestInfo = {
+            auditComment: textArea.value,
+            auditPassed: this.state.passed,
+            bizTargetType: biz_Target_Type.COURSE,
+            targetId: detail.course.courseId,
+            userToken: userState.userInfo.userToken
+        };
+
+        doAuditResource(requestInfo, this.closePage, this.auditFailed);
     }
 
     addKnowledgeTree() {
@@ -195,7 +213,7 @@ class CourseDetail extends Component {
 
                 <div className="confirm-box">
                     <Button type="primary" onClick={() => this.onConfirmBtnClick()}>确定</Button>
-                    <Button type="default" onClick={browserHistory.goBack}>取消</Button>
+                    <Button type="default" onClick={this.closePage}>取消</Button>
                 </div>
             </div>
         )

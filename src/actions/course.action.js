@@ -58,7 +58,7 @@ export function doFetchCourseList(data, successFunc, failedFunc) {
                     return;
                 }
 
-                if(response.code === 0) {
+                if(response.code === 0 && response.content) {
                     dispatch(doSuccess(response));
                 } else {
                     dispatch(doFailed(response));

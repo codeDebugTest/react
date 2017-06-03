@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
 import {biz_Target_Type} from '../utils/constants'
-import {doVerifyResource} from '../actions/verifyResource.action'
+import {doAuditResource} from '../actions/auditResource.action'
 import {Button, Icon, Input, message} from 'antd'
 import '../App.css'
 
@@ -46,7 +46,7 @@ class SchoolDetail extends Component {
             'auditComment': this.state.passed ?  '' : textArea.value
         };
 
-        doVerifyResource(requestInfo, this.closePage.bind(this), (msg)=> {message.error(msg)});
+        doAuditResource(requestInfo, this.closePage.bind(this), (msg)=> {message.error(msg)});
     }
 
     onConfirmBtnClick() {

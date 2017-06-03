@@ -31,7 +31,7 @@ const deleteSuccess = (index) => {
         type: DELETE_EXAM_SUCCESS,
         index: index
     }
-}
+};
 
 const showDetail = (exercise) => {
     return {
@@ -51,7 +51,7 @@ export function doFetchExamList(data, successFunc, failedFuc) {
                     return;
                 }
 
-                if(response.code === 0) {
+                if(response.code === 0 && response.content) {
                     dispatch(doSuccess(response));
                 } else {
                     dispatch(doFailed(response));

@@ -18,7 +18,8 @@ const biz_Target_Status = {
     UN_SUBMIT: 1,   // 未上架
     IN_VERIFY: 2,   //上架审核中
     RELEASED: 3,    //已上架发布
-    REMOVED: 4      //已下架
+    REMOVED: 4,      //已下架
+    UN_PASSED: 5,    //未通过
 }
 
 const biz_Target_Type = {

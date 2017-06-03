@@ -58,7 +58,7 @@ export function doFetchTeacherList(data, successFunc, failedFuc) {
                     return;
                 }
 
-                if(response.code === 0) {
+                if(response.code === 0 && response.content) {
                     dispatch(doSuccess(response));
                 } else {
                     dispatch(doFailed(response));

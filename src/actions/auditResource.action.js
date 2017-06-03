@@ -1,7 +1,7 @@
-import {verifyResource} from '../utils/httpReqApi'
+import {auditResource} from '../utils/httpReqApi'
 
-export function doVerifyResource(data, successFunc, failedFuc) {
-    verifyResource(data).then(
+export function doAuditResource(data, successFunc, failedFuc) {
+    auditResource(data).then(
         response => {
             if (response.code === undefined) {
                 alert(`审批失败：未收到请求结果！`);

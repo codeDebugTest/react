@@ -37,7 +37,7 @@ export function fetchLogin(data, successFunc, failedFuc) {
                     return;
                 }
 
-                if(response.code === 0) {
+                if(response.code === 0 && response.content) {
                     dispatch(loginSuccess(response));
                     successFunc();
                 } else {
