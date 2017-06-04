@@ -23,7 +23,7 @@ export function teacherReducer(state = {}, action){
         case FETCH_TEACHER_LIST:
             return Object.assign({}, state, {loading: true, teacherList: []});
         case FETCH_TEACHER_SUCCESS:
-            return Object.assign({}, state, {loading: false, teacherList: action.response.content[0].results});
+            return Object.assign({}, state, {loading: false, teacherList: action.response.content});
         case FETCH_TEACHER_FAILED:
             return Object.assign({}, state, {loading: false, teacherList: []});
         case SHOW_TEACHER_DETAIL:

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
 import {mapGradeIdToName, mapSubjectIdToName} from '../utils/TreeToo'
+import {GENDER_FEMALE, GENDER_MALE} from '../utils/constants'
 import {Button, Input, Tabs, Radio, message, Popover} from 'antd'
 import '../App.css'
 const RadioGroup = Radio.Group;
@@ -71,7 +72,7 @@ class TeacherDetail extends Component {
                 <div className="row-form">
                     <label className='control-label'>性别：</label>
                     <div className="margin-left-20">
-                        <label className="info-label"> {teacher.genderId ==='1' ? '男' : '女' }</label>
+                        <label className="info-label"> {teacher.genderId ===GENDER_MALE ? '男' : teacher.genderId === GENDER_FEMALE ? '女' : ''}</label>
                     </div>
                 </div>
                 <div className="row-form">

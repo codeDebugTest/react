@@ -44,6 +44,7 @@ class FilterHeader extends Component {
         console.log(`grade selected: ${value}`);
         this.setState({
             subjects: this.state.gradMap[value].children || [],
+            selectedSubject: ''
         });
         this.searchCondition.knowledgeTreeId = value;
         this.onConditionChange();
@@ -51,6 +52,7 @@ class FilterHeader extends Component {
 
     onSubjectChange(value) {
         console.log(`subject selected: ${value}`);
+        this.setState({selectedSubject: value});
         this.searchCondition.knowledgeTreeId = value;
         this.onConditionChange();
     }

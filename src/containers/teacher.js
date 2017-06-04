@@ -4,7 +4,7 @@ import {browserHistory} from 'react-router'
 import FilterHeader from '../components/filterHeader'
 import {doFetchTeacherList, doDeleteTeacher, doShowDetail} from '../actions/teacher.action'
 import {getTeacherColumns} from  '../utils/tableColumnsDef'
-import {TABLE_PAGE_SIZE} from '../utils/constants'
+import {TABLE_PAGE_SIZE, biz_Target_Type} from '../utils/constants'
 import {Table, message, Spin, Button} from 'antd'
 import '../App.css'
 
@@ -48,12 +48,13 @@ class Teacher extends Component {
         const {dispatch, userState} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo && userState.userInfo.userToken,
-            'bizTargetTypes': ['1'],
+            'bizTargetType': biz_Target_Type.TEACHER,
             'knowledgeTreeId': this.knowledgeTreeId,
             'bizTargetStatus': this.verified,
             'regionId': userState.userInfo && userState.userInfo.regionId,
             'offset': this.offset,
-            'limit': this.limit
+            'limit': this.limit,
+            'fromAdmin': !this.verified || null
         };
 
         doFetchTeacherList(requestInfo,  null, (msg)=> {message.error(msg)})(dispatch);

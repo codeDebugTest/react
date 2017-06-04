@@ -2,7 +2,7 @@ import React from 'react'
 import {Popconfirm, Icon} from 'antd'
 import {getRecordTreeGrad, getRecordTreeNames, getRecordTreeSubject,
     mapGradeIdToName, mapSubjectIdToName} from '../utils/TreeToo'
-import {EXERCISE_TYPE, biz_Target_Status} from '../utils/constants'
+import {EXERCISE_TYPE, biz_Target_Status, GENDER_MALE, GENDER_FEMALE} from '../utils/constants'
 
 const getCourseColumns = (knowledgeTree, editRecord, deleteRecord) => {
     return [
@@ -121,15 +121,25 @@ const getTeacherColumns = (dictionary, editRecord, deleteRecord) => {
         {
             title: '姓名',
             dataIndex: 'userName',
+        },{
+            title: '性别',
+            render: (text, record) => {
+                if (record.genderId === GENDER_MALE) {
+                    return '男';
+                } else if (record.genderId === GENDER_FEMALE) {
+                    return '女';
+                }
+                return '';
+            }
         }, {
         title: '年级',
-        render: (text, record, index) => {
+        render: (text, record) => {
             return mapGradeIdToName(dictionary.knowledgeTree, record.gradeId);
         }
     }, {
         title: '科目',
         render: (text, record) => {
-            return mapSubjectIdToName(dictionary.subjectList, record.subjectIds);
+            return mapSubjectIdToName(dictionary.subjectList, record.subjectId);
         }
     }, {
         title: '审核状态',
