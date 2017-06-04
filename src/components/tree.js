@@ -48,6 +48,7 @@ class TreeNode extends Component {
                     return (<TreeNode node={child} key={index}
                                       addNodeHandler={this.props.addNodeHandler}
                                       deleteNodeHandler={this.props.deleteNodeHandler}
+                                      level={this.props.level + 1}
                     />)
                 })
             }</ul>
@@ -70,7 +71,7 @@ class TreeNode extends Component {
                     <label className={labelClass + (this.state.disabled ? ' disabled-node' : '')}
                            onClick={this.toggleSpread.bind(this)}>{this.props.node.display}</label>
 
-                    {!this.state.disabled
+                    {!this.state.disabled && this.props.level !== 1 && this.props.level !== 2
                         ? (
                             <Popconfirm placement="topRight" title={addMsg} okText="是" cancelText="否"
                                         onConfirm={this.onAddNode.bind(this)} >
@@ -82,7 +83,7 @@ class TreeNode extends Component {
                         : ''
                     }
 
-                    {!this.state.disabled
+                    {!this.state.disabled && this.props.level !== 1 && this.props.level !== 2
                         ? (
                             <Popconfirm placement="topRight" title={deleteMsg} okText="是" cancelText="否"
                                         onConfirm={this.onDeleteNode.bind(this)}>
@@ -114,9 +115,13 @@ class TreeNode extends Component {
                     }
                 </div>
 
-                <div style={style}>
-                    {this.state.isTreeNode ? this.getChildrenNodes() : null}
-                </div>
+                {!this.state.disabled
+                    ?
+                        <div style={style}>
+                            {this.state.isTreeNode ? this.getChildrenNodes() : null}
+                        </div>
+                    : ''
+                }
             </li>
         )
     }
@@ -133,6 +138,7 @@ class Tree extends Component{
                             <TreeNode node={root} key={index}
                                       addNodeHandler={this.props.addTreeNode}
                                       deleteNodeHandler={this.props.deleteTreeNode}
+                                      level={1}
                             />
                         )
                     })}
@@ -145,6 +151,7 @@ class Tree extends Component{
                     <TreeNode node={this.props.tree}
                               addNodeHandler={this.props.addTreeNode}
                               deleteNodeHandler={this.props.deleteTreeNode}
+                              level={1}
                     />
                 </ul>
             )

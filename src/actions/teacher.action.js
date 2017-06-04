@@ -53,7 +53,7 @@ export function doFetchTeacherList(data, successFunc, failedFuc) {
 
         return fetchTeacherList(data).then(
             response => {
-                if (response.code === undefined) {
+                if (!response || response.code === undefined) {
                     alert(`No code in result of post: fetch course list`);
                     return;
                 }

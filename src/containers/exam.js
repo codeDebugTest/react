@@ -4,7 +4,7 @@ import {browserHistory} from 'react-router'
 import FilterHeader from '../components/filterHeader'
 import {doFetchExamList, doDeleteExam, doShowDetail} from '../actions/exam.action'
 import {getExamColumns} from '../utils/tableColumnsDef'
-import {TABLE_PAGE_SIZE} from '../utils/constants'
+import {TABLE_PAGE_SIZE, Biz_Target_Type} from '../utils/constants'
 import {Table, message, Spin, Button} from 'antd'
 import '../App.css'
 
@@ -46,13 +46,15 @@ class Exam extends Component {
     loadData() {
         const {dispatch, userState} = this.props;
         const requestInfo = {
+            'regionId': userState.userInfo && userState.userInfo.regionId,
             'userToken': userState.userInfo && userState.userInfo.userToken,
+            'bizTargetType': Biz_Target_Type.EXERCISE,
+            'searchKey': this.searchKey,
             'knowledgeTreeId': this.knowledgeTreeId,
             'bizTargetStatus': this.verified,
-            'onlyMyself': false,
-            'regionId': userState.userInfo && userState.userInfo.regionId,
             'offset': this.offset,
-            'limit': this.limit
+            'limit': this.limit,
+            'fromAdmin': !this.verified || null
         };
         doFetchExamList(requestInfo,  null, (msg)=> {message.error(msg)})(dispatch);
     }

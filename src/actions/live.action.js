@@ -54,7 +54,7 @@ export function doFetchLiveList(data, successFunc, failedFuc) {
 
         return fetchLiveList(data).then(
             response => {
-                if (response.code === undefined) {
+                if (!response || response.code === undefined) {
                     alert(`No code in result of post: fetch course list`);
                     return;
                 }
