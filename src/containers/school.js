@@ -4,7 +4,7 @@ import {getSchoolColumns} from '../utils/tableColumnsDef'
 import InfiniteScrollCtrl from '../components/InfiniteScrollCtrl'
 import {doFetchSchoolList, doDeleteSchool} from '../actions/school.action'
 import SearchBox from '../components/SearchBox'
-import {TABLE_PAGE_SIZE, biz_Target_Status} from '../utils/constants'
+import {TABLE_PAGE_SIZE, Biz_Target_Status} from '../utils/constants'
 import {Table, message, Spin, Row, Select, Button} from 'antd'
 import '../App.css'
 
@@ -37,7 +37,7 @@ class School extends Component {
 
     onVerifiedStatusChange(value) {
         console.log(`check status change to: ${value}`)
-        this.verified = value === '0' ? biz_Target_Status.SUBMITTED : value === '1' ? biz_Target_Status.RELEASED : null;
+        this.verified = value === '0' ? Biz_Target_Status.SUBMITTED : value === '1' ? Biz_Target_Status.RELEASED : null;
         this.offset = 0;
         this.loadData();
     }

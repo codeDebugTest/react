@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
-import {biz_Target_Type} from '../utils/constants'
+import {Biz_Target_Type} from '../utils/constants'
 import {doAuditResource} from '../actions/auditResource.action'
 import {Button, Icon, Input, message} from 'antd'
 import '../App.css'
@@ -41,7 +41,7 @@ class SchoolDetail extends Component {
         const {userState} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo.userToken,
-            'bizTargetType': biz_Target_Type.SCHOOL,
+            'bizTargetType': Biz_Target_Type.SCHOOL,
             'auditPassed': this.state.passed,
             'auditComment': this.state.passed ?  '' : textArea.value
         };

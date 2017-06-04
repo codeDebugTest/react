@@ -4,7 +4,7 @@ import {browserHistory} from 'react-router'
 import FilterHeader from '../components/filterHeader'
 import {doFetchCourseList, doDeleteCourse, doShowDetail} from '../actions/course.action'
 import {getCourseColumns} from '../utils/tableColumnsDef'
-import {TABLE_PAGE_SIZE, biz_Target_Type} from '../utils/constants'
+import {TABLE_PAGE_SIZE, Biz_Target_Type} from '../utils/constants'
 import {Table, message, Spin, Button} from 'antd'
 import '../App.css'
 
@@ -50,7 +50,7 @@ class Course extends Component {
         const {dispatch, userState} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo && userState.userInfo.userToken,
-            'bizTargetType': biz_Target_Type.COURSE,
+            'bizTargetType': Biz_Target_Type.COURSE,
             'knowledgeTreeId': this.knowledgeTreeId,
             'searchKey': this.searchKey,
             'bizTargetStatus': this.verified,

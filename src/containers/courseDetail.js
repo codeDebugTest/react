@@ -8,7 +8,7 @@ import {mapTagIdsToNames} from '../utils/util'
 import {Button, Icon, Input, message, Radio, Tooltip} from 'antd'
 import {doCreateLivePlayer, doReleaseLivePlayer} from '../actions/livePlayer.action'
 import {doAuditResource} from '../actions/auditResource.action'
-import {biz_Target_Type, CourseItemType} from '../utils/constants'
+import {Biz_Target_Type, CourseItemType} from '../utils/constants'
 import '../App.css'
 const RadioGroup = Radio.Group;
 
@@ -71,7 +71,7 @@ class CourseDetail extends Component {
         const requestInfo = {
             auditComment: textArea.value,
             auditPassed: this.state.passed,
-            bizTargetType: biz_Target_Type.COURSE,
+            bizTargetType: Biz_Target_Type.COURSE,
             targetId: detail.course.id,
             userToken: userState.userInfo.userToken
         };

@@ -14,7 +14,7 @@ EXERCISE_TYPE[SUBJECT_EXERCISE.value] = SUBJECT_EXERCISE;
 
 const TABLE_PAGE_SIZE = 20;
 
-const biz_Target_Status = {
+const Biz_Target_Status = {
     UN_SUBMIT: 1,   // 未上架
     SUBMITTED: 2,   //上架审核中
     RELEASED: 3,    //已上架发布
@@ -22,7 +22,7 @@ const biz_Target_Status = {
     UN_PASSED: 5,    //未通过
 };
 
-const biz_Target_Type = {
+const Biz_Target_Type = {
     TEACHER: 1,     // 教师
     COURSE: 2,      //课程
     EXERCISE: 3,    //习题
@@ -43,5 +43,5 @@ const CourseItemType = {
 const GENDER_MALE = '1';        //男
 const GENDER_FEMALE = '2';      //女
 
-export {EXERCISE_TYPE, TABLE_PAGE_SIZE, biz_Target_Status, biz_Target_Type, SINGLE_SELECT_EXERCISE,
+export {EXERCISE_TYPE, TABLE_PAGE_SIZE, Biz_Target_Status, Biz_Target_Type, SINGLE_SELECT_EXERCISE,
     FILL_EXERCISE, JUDGE_EXERCISE, MULTI_SELECT_EXERCISE, SUBJECT_EXERCISE, CourseItemType, GENDER_MALE, GENDER_FEMALE}

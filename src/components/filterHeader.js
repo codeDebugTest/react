@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {biz_Target_Status} from '../utils/constants'
+import {Biz_Target_Status} from '../utils/constants'
 import {Row, Input, Select} from 'antd'
 import '../App.css'
 
@@ -11,7 +11,8 @@ class FilterHeader extends Component {
         super(props);
         this.state = {
             subjects: [],
-            selectedSubject: "",
+            selectedGrade: 'all',
+            selectedSubject: "all",
             ...this.knowledgeToMap()
         };
 
@@ -43,17 +44,18 @@ class FilterHeader extends Component {
     onGradeChange(value) {
         console.log(`grade selected: ${value}`);
         this.setState({
-            subjects: this.state.gradMap[value].children || [],
-            selectedSubject: ''
+            subjects: value === 'all' ? [] : (this.state.gradMap[value].children || []),
+            selectedSubject: 'all',
+            selectedGrade: value === 'all' ? null : value
         });
-        this.searchCondition.knowledgeTreeId = value;
+        this.searchCondition.knowledgeTreeId = value === 'all' ? null : value;
         this.onConditionChange();
     }
 
     onSubjectChange(value) {
         console.log(`subject selected: ${value}`);
         this.setState({selectedSubject: value});
-        this.searchCondition.knowledgeTreeId = value;
+        this.searchCondition.knowledgeTreeId = value === 'all' ? this.state.selectedGrade : value;
         this.onConditionChange();
     }
 
@@ -65,12 +67,12 @@ class FilterHeader extends Component {
 
     getVerifiedStatus(value) {
         switch (value) {
-            case biz_Target_Status.SUBMITTED.toString():
-                return biz_Target_Status.SUBMITTED;
-            case biz_Target_Status.RELEASED.toString():
-                return biz_Target_Status.RELEASED;
-            case biz_Target_Status.UN_PASSED.toString():
-                return biz_Target_Status.UN_PASSED;
+            case Biz_Target_Status.SUBMITTED.toString():
+                return Biz_Target_Status.SUBMITTED;
+            case Biz_Target_Status.RELEASED.toString():
+                return Biz_Target_Status.RELEASED;
+            case Biz_Target_Status.UN_PASSED.toString():
+                return Biz_Target_Status.UN_PASSED;
             default:
                 return null;
         }
@@ -82,21 +84,28 @@ class FilterHeader extends Component {
     }
 
     getGradeOptions() {
-        return this.state.grades.map(
+        const options = this.state.grades.map(
             (item, index) => (<Option key={item.id}>{item.display}</Option>)
-        )
+        );
+        options.unshift(<Option key='all'>全部</Option>);
+        return options;
     }
 
     getSubjectOptions() {
-        return this.state.subjects.map(
+        const options = this.state.subjects.map(
             (item, index) => (<Option key={item.id}>{item.display}</Option>)
-        )
+        );
+
+        options.unshift(<Option key='all'>全部</Option>);
+        return options;
     }
 
     render() {
         const searchLabel = this.props.searchLabel || '课程名称:';
         const gradeLabel ='年级:';
         const subjectLabel ='科目:';
+
+        const gradeOptions = this.getGradeOptions();
 
         return (
             <Row className="filter-header">
@@ -110,15 +119,16 @@ class FilterHeader extends Component {
 
                 <div className="item-warp margin-right-30">
                     <label>{gradeLabel}</label>
-                    <Select className="select-style" showSearch
+                    <Select className="select-style" showSearch defaultValue="all"
                             onChange={this.onGradeChange.bind(this)}>
-                        {this.getGradeOptions()}
+                        {gradeOptions}
                     </Select>
                 </div>
 
                 <div className="item-warp margin-right-30">
                     <label>{subjectLabel}</label>
-                    <Select className="select-style" showSearch value={this.state.selectedSubject}
+                    <Select className="select-style" showSearch defaultValue="all"
+                            value={this.state.selectedSubject}
                             onChange={this.onSubjectChange.bind(this)}>
                         {this.getSubjectOptions()}
                     </Select>
@@ -128,10 +138,10 @@ class FilterHeader extends Component {
                     <label>审核状态:</label>
                     <Select className="select-style" showSearch defaultValue="-1"
                             onChange={this.onVerifiedStatusChange.bind(this)}>
-                        <Option value="-1">不限 </Option>
-                        <Option value={biz_Target_Status.SUBMITTED.toString()}>未审核</Option>
-                        <Option value={biz_Target_Status.RELEASED.toString()}>审核已通过</Option>
-                        <Option value={biz_Target_Status.UN_PASSED.toString()}>审核未通过</Option>
+                        <Option value="-1">全部 </Option>
+                        <Option value={Biz_Target_Status.SUBMITTED.toString()}>未审核</Option>
+                        <Option value={Biz_Target_Status.RELEASED.toString()}>审核已通过</Option>
+                        <Option value={Biz_Target_Status.UN_PASSED.toString()}>审核未通过</Option>
                     </Select>
                 </div>
             </Row>
