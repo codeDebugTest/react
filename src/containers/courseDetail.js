@@ -112,7 +112,9 @@ class CourseDetail extends Component {
     }
 
     componentWillUnmount() {
-        doReleaseLivePlayer();
+        if (this.props.liveObj.livePlayer) {
+            this.props.liveObj.livePlayer.release();
+        }
     }
 
     LivePlayerRender() {
@@ -146,7 +148,7 @@ class CourseDetail extends Component {
                 <div className="row-form">
                     <label className='control-label'>课程名称：</label>
                     <div className="margin-left-20">
-                        <label className="info-label"> {course.courseTitle}</label>
+                        <label className="info-label"> {course.title}</label>
                     </div>
                 </div>
                 <div className="row-form">

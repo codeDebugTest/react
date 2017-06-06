@@ -8,7 +8,7 @@ const getCourseColumns = (knowledgeTree, editRecord, deleteRecord) => {
     return [
         {
             title: '名称',
-            dataIndex: 'courseTitle',
+            dataIndex: 'title',
         }, {
             title: '年级',
             width: 100,

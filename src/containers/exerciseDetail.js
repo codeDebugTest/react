@@ -89,7 +89,7 @@ class ExerciseDetail extends Component {
                 {  exercise.type !== FILL_EXERCISE.value && exercise.type !== SUBJECT_EXERCISE.value && varNotEmpty(exercise.choiceItems)
                     ? exercise.choiceItems.map((item, index) => (
                         <div className="exercise-line clearfixed" key={index}>
-                            <label className="exercise-label"> {'选项 ' + item.title + '： '}</label>
+                            <label className="exercise-label"> {'选项 ' + item.id + '： '}</label>
                             {varNotEmpty(item.content)
                                 ? <p className="exercise-content"><ExerciseContent text={item.content}/></p>
                                 : ''
