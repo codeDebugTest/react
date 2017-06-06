@@ -8,7 +8,8 @@ const _courseListUrl = config.realHost +  '/app/search';
 // const _examListUrl = config.realHost +  '/teacher/exercise_item/list';
 const _examListUrl = _courseListUrl;
 const _teacherListUrl = _courseListUrl;
-const _liveListUrl = config.realHost +  '/student/live_course/list';
+// const _liveListUrl = config.realHost +  '/student/live_course/list';
+const _liveListUrl = _courseListUrl;
 const _schoolListUrl = config.realHost +  '/login/register/do/search_school';
 const _verifyUrl = config.realHost +  '/admin/audit';
 

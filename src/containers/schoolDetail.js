@@ -38,13 +38,14 @@ class SchoolDetail extends Component {
             console.log(textArea.value);
         }
 
-        const {userState} = this.props;
+        const {userState, detail} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo.userToken,
             'bizTargetType': Biz_Target_Type.SCHOOL,
             'auditPassed': this.state.passed,
+            'targetId': detail.school.schoolId,
             'auditComment': this.state.passed ?  '' : textArea.value
-        };
+        };\
 
         doAuditResource(requestInfo, this.closePage.bind(this), (msg)=> {message.error(msg)});
     }

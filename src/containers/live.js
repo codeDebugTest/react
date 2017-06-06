@@ -4,7 +4,7 @@ import {browserHistory} from 'react-router'
 import FilterHeader from '../components/filterHeader'
 import {doFetchLiveList, doDeleteLive, doShowDetail} from '../actions/live.action'
 import {getLiveColumns} from '../utils/tableColumnsDef'
-import {TABLE_PAGE_SIZE} from '../utils/constants'
+import {TABLE_PAGE_SIZE, Biz_Target_Type} from '../utils/constants'
 import {Table, message, Spin, Button} from 'antd'
 import '../App.css'
 
@@ -50,12 +50,14 @@ class Live extends Component {
         const {dispatch, userState} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo && userState.userInfo.userToken,
+            'regionId': userState.userInfo && userState.userInfo.regionId,
+            'bizTargetType': Biz_Target_Type.LIVE,
             'knowledgeTreeId': this.knowledgeTreeId,
             'searchKey': this.searchKey,
             'bizTargetStatus': this.verified,
-            'regionId': userState.userInfo && userState.userInfo.regionId,
             'offset': this.offset,
-            'limit': this.limit
+            'limit': this.limit,
+            'fromAdmin': !this.verified || null
         };
 
         doFetchLiveList(requestInfo,  null, (msg)=> {message.error(msg)})(dispatch);

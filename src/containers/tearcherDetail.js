@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
 import {mapGradeIdToName, mapSubjectIdToName} from '../utils/TreeToo'
-import {GENDER_FEMALE, GENDER_MALE} from '../utils/constants'
+import {doAuditResource} from '../actions/auditResource.action'
+import {GENDER_FEMALE, GENDER_MALE, Biz_Target_Type} from '../utils/constants'
 import {Button, Input, Tabs, Radio, message, Popover} from 'antd'
 import '../App.css'
 const RadioGroup = Radio.Group;
@@ -28,15 +29,34 @@ class TeacherDetail extends Component {
     onCheckStatusChange(e) {
         this.setState({passed: e.target.value})
     }
+
+    closePage() {
+        browserHistory.goBack();
+    }
+
+    auditFailed() {
+        message.error('审批失败！');
+    }
+
     onConfirmBtnClick() {
-        if (this.state.passed) {
-            const textArea = document.getElementById('comment');
+        const textArea = document.getElementById('comment');
+        if (!this.state.passed) {
             if (textArea.value === '') {
                 message.warning('请输入未通过原因');
                 return;
             }
         }
-        browserHistory.goBack()
+
+        const {detail, userState} = this.props;
+        const requestInfo = {
+            auditComment: textArea.value,
+            auditPassed: this.state.passed,
+            bizTargetType: Biz_Target_Type.TEACHER,
+            targetId: detail.teacher.userId,
+            userToken: userState.userInfo.userToken
+        };
+
+        doAuditResource(requestInfo, this.closePage, this.auditFailed);
     }
 
     certificateRender() {

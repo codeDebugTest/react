@@ -4,7 +4,8 @@ import {browserHistory} from 'react-router'
 import KnowledgeTreeItem from '../components/knowledgeTreeItem'
 import {ID_ALL} from '../utils/TreeToo'
 import {varEmpty, varNotEmpty} from '../utils/util'
-import {EXERCISE_TYPE, FILL_EXERCISE, SUBJECT_EXERCISE} from '../utils/constants'
+import {doAuditResource} from '../actions/auditResource.action'
+import {EXERCISE_TYPE, FILL_EXERCISE, SUBJECT_EXERCISE, Biz_Target_Type} from '../utils/constants'
 import ExerciseContent from '../components/ExerciseConent'
 import {Button, Input, message, Radio, Rate, Tooltip, Icon} from 'antd'
 import '../App.css'
@@ -25,15 +26,33 @@ class ExerciseDetail extends Component {
         this.setState({passed: e.target.value})
     }
 
+    closePage() {
+        browserHistory.goBack();
+    }
+
+    auditFailed() {
+        message.error('审批失败！');
+    }
+
     onConfirmBtnClick() {
-        if (this.state.passed) {
-            const textArea = document.getElementById('comment');
+        const textArea = document.getElementById('comment');
+        if (!this.state.passed) {
             if (textArea.value === '') {
                 message.warning('请输入未通过原因');
                 return;
             }
         }
-        browserHistory.goBack()
+
+        const {detail, userState} = this.props;
+        const requestInfo = {
+            auditComment: textArea.value,
+            auditPassed: this.state.passed,
+            bizTargetType: Biz_Target_Type.EXERCISE,
+            targetId: detail.exercise.exerciseItemId,
+            userToken: userState.userInfo.userToken
+        };
+
+        doAuditResource(requestInfo, this.closePage, this.auditFailed);
     }
 
     addKnowledgeTree() {
@@ -67,7 +86,6 @@ class ExerciseDetail extends Component {
 
     render() {
         const {exercise} = this.props.detail;
-        const {dictionary} = this.props.dictionary;
 
         return (
             <div className="detail-warp">

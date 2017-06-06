@@ -6,7 +6,7 @@ export function liveReducer(state = {}, action){
         case FETCH_LIVE_LIST:
             return Object.assign({}, state, {loading: true, liveList: []});
         case FETCH_LIVE_SUCCESS:
-            return Object.assign({}, state, {loading: false, liveList: action.response.content.liveCourseList});
+            return Object.assign({}, state, {loading: false, liveList: action.response.content});
         case FETCH_LIVE_FAILED:
             return Object.assign({}, state, {loading: false, liveList: []});
         case SHOW_LIVE_DETAIL:

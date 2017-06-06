@@ -5,6 +5,8 @@ import KnowledgeTreeItem from '../components/knowledgeTreeItem'
 import {ID_ALL} from '../utils/TreeToo'
 import {varEmpty} from '../utils/util'
 import {doCreateLivePlayer, doReleaseLivePlayer} from '../actions/livePlayer.action'
+import {doAuditResource} from '../actions/auditResource.action'
+import {Biz_Target_Type} from '../utils/constants'
 import {Button, Icon, Input, message, Radio, Tooltip} from 'antd'
 import '../App.css'
 const RadioGroup = Radio.Group;
@@ -47,15 +49,33 @@ class LiveDetail extends Component {
         this.setState({startPlay: true});
     }
 
+    closePage() {
+        browserHistory.goBack();
+    }
+
+    auditFailed() {
+        message.error('审批失败！');
+    }
+
     onConfirmBtnClick() {
-        if (this.state.passed) {
-            const textArea = document.getElementById('comment');
+        const textArea = document.getElementById('comment');
+        if (!this.state.passed) {
             if (textArea.value === '') {
                 message.warning('请输入未通过原因');
                 return;
             }
         }
-        browserHistory.goBack()
+
+        const {detail, userState} = this.props;
+        const requestInfo = {
+            auditComment: textArea.value,
+            auditPassed: this.state.passed,
+            bizTargetType: Biz_Target_Type.LIVE,
+            targetId: detail.live.liveId,
+            userToken: userState.userInfo.userToken
+        };
+
+        doAuditResource(requestInfo, this.closePage, this.auditFailed);
     }
 
     addKnowledgeTree() {
@@ -91,7 +111,9 @@ class LiveDetail extends Component {
     }
 
     componentWillUnmount() {
-        doReleaseLivePlayer();
+        if (this.props.liveObj.livePlayer) {
+            this.props.liveObj.livePlayer.release();
+        }
     }
 
     LivePlayerRender() {
@@ -117,7 +139,6 @@ class LiveDetail extends Component {
 
     render() {
         const {live} = this.props.detail;
-        const {dictionary} = this.props.dictionary;
 
         return (
             <div className="detail-warp">

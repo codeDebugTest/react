@@ -60,7 +60,7 @@ class CourseDetail extends Component {
     onConfirmBtnClick() {
         console.log(this.knowledgeTreeIdList);
         const textArea = document.getElementById('comment');
-        if (this.state.passed) {
+        if (!this.state.passed) {
             if (textArea.value === '') {
                 message.warning('请输入未通过原因');
                 return;
