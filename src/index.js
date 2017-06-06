@@ -15,6 +15,7 @@ import Teacher from './containers/teacher'
 import TeacherDetail from './containers/tearcherDetail'
 import Live from './containers/live'
 import LiveDetail from './containers/liveDetail'
+import SchoolDetail from './containers/schoolDetail'
 import School from './containers/school'
 import LoginForm from './containers/login'
 import appReducer from './reducers/index'
@@ -40,6 +41,7 @@ ReactDOM.render(
                     <Route path="live" component={Live}/>
                     <Route path="live/:id" component={LiveDetail}/>
                     <Route path="school" component={School}/>
+                    <Route path="school/:id" component={SchoolDetail}/>
                 </Route>
             </Route>
         </Router>

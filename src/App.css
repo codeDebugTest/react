@@ -269,3 +269,10 @@
   font-size: 14px;
   float: left;
 }
+
+.edit-pen-style {
+  color: #0c06f3;
+}
+.edit-pen-style:hover{
+  cursor: pointer;
+}

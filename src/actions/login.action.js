@@ -14,7 +14,6 @@ const loginSuccess = (response) => {
     return {
         type: LOGIN_SUCCESS,
         response: response,
-        // successFunc: successFunc
     }
 };
 
@@ -22,7 +21,6 @@ const loginFailed = (response) => {
     return {
         type: LOGIN_FAILED,
         response: response,
-        // failedFuc: failedFuc
     }
 };
 

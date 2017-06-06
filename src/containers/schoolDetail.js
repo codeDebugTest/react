@@ -3,13 +3,14 @@ import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
 import {Biz_Target_Type} from '../utils/constants'
 import {doAuditResource} from '../actions/auditResource.action'
-import {Button, Icon, Input, message} from 'antd'
+import {Button, Icon, Input, message, Radio} from 'antd'
 import '../App.css'
+const RadioGroup = Radio.Group;
+
 
 class SchoolDetail extends Component {
     constructor(props) {
         super(props);
-        const {school} = props.detail;
         this.state = {
             edit: false,
             passed: true
@@ -43,9 +44,9 @@ class SchoolDetail extends Component {
             'userToken': userState.userInfo.userToken,
             'bizTargetType': Biz_Target_Type.SCHOOL,
             'auditPassed': this.state.passed,
-            'targetId': detail.school.schoolId,
+            'targetId': detail.school.id,
             'auditComment': this.state.passed ?  '' : textArea.value
-        };\
+        };
 
         doAuditResource(requestInfo, this.closePage.bind(this), (msg)=> {message.error(msg)});
     }
@@ -54,7 +55,7 @@ class SchoolDetail extends Component {
         if(this.state.edit) {
             const address = document.getElementById('address');
             const {school} = this.props.detail;
-            if (school.address != address) {
+            if (school.address !== address) {
                 return;
             }
         }
@@ -71,12 +72,12 @@ class SchoolDetail extends Component {
                     <div className="margin-left-20">
                         <label className="info-label"> {school.name}</label>
                     </div>
-                </div> coverImageUrl
+                </div>
                 <div className="row-form">
                     <label className='control-label'>地址：</label>
                     <div style={{display: this.state.edit ? 'none' : ''}}>
                         <label className="margin-left-20 info-label"> {school.address}</label>
-                        <span onClick={this.onEditAddress.bind(this)}><Icon type="edit"/></span>
+                        <span className="edit-pen-style" onClick={this.onEditAddress.bind(this)}><Icon type="edit"/></span>
                     </div>
                     <div style={{display: this.state.edit ? '' : 'none'}}>
                         <Input id="address" defaultValue={school.address} />

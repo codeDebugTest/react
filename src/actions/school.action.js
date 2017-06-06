@@ -1,4 +1,4 @@
-import {fetchTeacherList} from '../utils/httpReqApi'
+import {fetchSchoolList} from '../utils/httpReqApi'
 
 export const FETCH_SCHOOL_LIST = 'fetch_school_list';
 export const FETCH_SCHOOL_SUCCESS = 'fetch_school_success';
@@ -51,7 +51,7 @@ export function doFetchSchoolList(data, successFunc, failedFuc) {
     return dispatch => {
         dispatch(doFetch(data));
 
-        return fetchTeacherList(data).then(
+        return fetchSchoolList(data).then(
             response => {
                 if (response.code === undefined) {
                     alert(`No code in result of post: fetch course list`);

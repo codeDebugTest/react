@@ -1,25 +1,32 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {browserHistory} from 'react-router'
 import {getSchoolColumns} from '../utils/tableColumnsDef'
-import InfiniteScrollCtrl from '../components/InfiniteScrollCtrl'
 import {doFetchSchoolList, doDeleteSchool} from '../actions/school.action'
 import SearchBox from '../components/SearchBox'
+import {doShowDetail} from '../actions/school.action'
 import {TABLE_PAGE_SIZE, Biz_Target_Status} from '../utils/constants'
-import {Table, message, Spin, Row, Select, Button} from 'antd'
+import {Table, message, Spin, Row, Select} from 'antd'
 import '../App.css'
 
 
 class School extends Component {
     constructor(props) {
         super(props);
-        this.offset= 0;
-        this.limit= TABLE_PAGE_SIZE;
         this.searchKey = null;
         this.verified = null;
     }
 
-    editRecord(record) {
-        console.log('edit course record: ' + record)
+    editRecord(index) {
+        console.log('edit course record: ' + index)
+        doShowDetail(index);
+        const {schoolList} = this.props.school;
+        const {dispatch} = this.props;
+
+        doShowDetail(schoolList[index])(dispatch);
+        browserHistory.push({
+            pathname: `/management/school/${schoolList[index].userId}`
+        })
     }
     deleteRecord(index) {
         const { dispatch } = this.props;
@@ -31,14 +38,12 @@ class School extends Component {
     searchFunc(value) {
         console.log('searching school: ' + value);
         this.searchKey = value;
-        this.offset = 0;
         this.loadData();
     }
 
     onVerifiedStatusChange(value) {
         console.log(`check status change to: ${value}`)
-        this.verified = value === '0' ? Biz_Target_Status.SUBMITTED : value === '1' ? Biz_Target_Status.RELEASED : null;
-        this.offset = 0;
+        this.verified = value === '0' ? false : value === '1' ? true : null;
         this.loadData();
     }
 
@@ -46,26 +51,15 @@ class School extends Component {
         const {dispatch, userState} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo.userToken,
-            'provinceId': userState.userInfo.regionId,
+            'provinceId': userState.userInfo.provinceId,
             'searchKey': this.searchKey,
-            'bizTargetStatus': this.verified,
-            'offset': this.offset,
-            'limit': this.limit
+            'verified': this.verified,
         };
-        // doFetchSchoolList(requestInfo,  null, (msg)=> {message.error(msg)})(dispatch);
-    }
 
-    prevPage() {
-        this.offset -= this.limit;
-        this.loadData();
-    }
-    nextPage() {
-        this.offset += this.limit;
-        this.loadData();
+        doFetchSchoolList(requestInfo,  null, (msg)=> {message.error(msg)})(dispatch);
     }
     
     componentDidMount() {
-        this.offset = 0;
         this.loadData();
     }
 
@@ -95,16 +89,12 @@ class School extends Component {
                                 <Spin tip="Loading..."/>
                             </div>
                         ) : (
-                            <Table dataSource={[]} rowKey={record => record.schoolId}
+                            <Table dataSource={schoolList} rowKey={record => record.id}
                                    pagination={false}
                                    columns={getSchoolColumns(this.editRecord.bind(this), this.deleteRecord.bind(this))}
                             />
                         )
                     }
-                    <div className="pagination">
-                        <Button disabled={this.offset <= 0} onClick={this.prevPage.bind(this)}>上一页</Button>
-                        <Button disabled={!schoolList || schoolList.length < this.limit} onClick={this.nextPage.bind(this)}>下一页</Button>
-                    </div>
                 </div>
             </div>
         )

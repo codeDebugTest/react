@@ -89,8 +89,7 @@ class Teacher extends Component {
                         ) : (
                             <Table dataSource={teacherList} rowKey={record => record.userId}
                                    pagination={false}
-                                   columns={getTeacherColumns(dictionary,
-                                       this.editRecord.bind(this),
+                                   columns={getTeacherColumns(dictionary, this.editRecord.bind(this),
                                        this.deleteRecord.bind(this))
                                    }
                             />
