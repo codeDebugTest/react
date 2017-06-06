@@ -66,7 +66,7 @@ class TreeNode extends Component {
         const style = this.state.unfold ? null: {display: "none"};
         const labelClass = this.getLiStyleClass();
         return (
-            <li className="clearfixed">
+            <li className={"clearfixed" + (this.props.level !== 1 ? ' li-border-line' : '')}>
                 <div className="node">
                     <label className={labelClass + (this.state.disabled ? ' disabled-node' : '')}
                            onClick={this.toggleSpread.bind(this)}>{this.props.node.display}</label>

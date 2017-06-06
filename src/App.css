@@ -69,27 +69,29 @@
 }
 
 .tree-ul {
-  padding: 20px 20px 0;
+  padding: 20px 30px 0;
   display: block;
 }
 .tree-ul li {
-  padding: 15px 7px 0;
+  padding: 15px 0 0;
 }
-.tree-ul li .un-togglable::before,
+.tree-ul .li-border-line {
+  border-left: 1px dashed #000000;
+  margin-top: 5px;
+}
 .tree-ul .togglable-down::before,
 .tree-ul .togglable-up::before {
-  font-size: 12px;
-  margin-left: 0.5em;
-  padding-right: 5px;
-}
-.tree-ul li .un-togglable::before {
-  content: ".";
+  padding-right: 8px;
 }
 .tree-ul .togglable-down::before {
   content: "▼";
+  font-size: 18px;
+  margin-left: -8px;
 }
 .tree-ul .togglable-up::before {
   content: "▶";
+  font-size: 16px;
+  margin-left: -3px;
 }
 .tree-ul li .node {
   float: left;

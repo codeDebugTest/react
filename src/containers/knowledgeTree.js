@@ -33,7 +33,7 @@ class KnowledgeTree extends Component {
     render() {
         const {knowledgeTree, loading} = this.props.dictionary;
         return (
-            <div style={{position: 'relative'}}>{
+            <div style={{position: 'relative', marginLeft: '15px'}}>{
                 loading ? (
                     <div className="center-point">
                         <Spin tip="Loading..."/>
