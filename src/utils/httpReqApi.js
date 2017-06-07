@@ -22,6 +22,10 @@ export function fetchKnowledgeTree(requestInfo, callback) {
     return ajaxPost(_knowledgeTreeUrl, {}, requestInfo, callback)
 }
 
+export function updateKnowledgeTree(requestInfo, callback) {
+    return ajaxPost(_knowledgeTreeUrl + '/update', {}, requestInfo, callback)
+}
+
 export function fetchDictionary(regionId, callback) {
     return ajaxPost(_dictionaryUrl, {}, {regionId}, callback)
 }

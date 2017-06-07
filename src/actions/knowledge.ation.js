@@ -1,4 +1,4 @@
-import {fetchDictionary, fetchKnowledgeTree} from '../utils/httpReqApi'
+import {fetchDictionary, fetchKnowledgeTree, updateKnowledgeTree} from '../utils/httpReqApi'
 
 export const FETCH_DICTIONARY = 'fetch_dictionary';
 export const FETCH_DICTIONARY_SUCCESS = 'fetch_dictionary_success';
@@ -72,5 +72,22 @@ export function doFetchDictionary (regionId, successFunc, failedFuc){
             }
         );
     }
+}
+
+export function doUpdateKnowledgeTree(requestInfo, successFunc, failedFunc) {
+   return updateKnowledgeTree(requestInfo).then(
+            response => {
+                if (response.code === undefined) {
+                    alert(`更新知识树失败！`);
+                    return;
+                }
+
+                if (response.code === 0) {
+                    successFunc()
+                } else {
+                    failedFunc(response.message);
+                }
+            }
+        )
 }
 

@@ -77,6 +77,44 @@ const getPathNameById = (id, node, currentPathName) => {
     }
     return "";
 }
+
+const findNodePathById = (nodePath, id) => {
+    if (varEmpty(nodePath)) {
+        return false;
+    }
+    let node = nodePath[nodePath.length -1];
+
+    if (node.id === id) {
+        return true;
+    } else if (varEmpty(node.children) || !isArray(node.children)) {
+        return false;
+    } else {
+        const length = node.children.length;
+        for (let i=0; i < length; i ++) {
+            nodePath.push(node.children[i]);
+            const result = findNodePathById(nodePath, id);
+            if (result) {
+                return true;
+            }
+            nodePath.pop();
+        }
+    }
+}
+
+const getFatherNodePathByKtId = (nodes, id) => {
+    if (varEmpty(nodes)) {
+        return [];
+    }
+
+    for (let i=0; i < nodes.length; i++) {
+        let nodePath = [];
+        const result = nodePath.push(nodes[i]);
+        if (result) {
+            return nodePath;
+        }
+    }
+};
+
 //nodes,从context里面拿到知识树 this.context.dictionary.knowledgeTree
 //id, 从数据库等地方拿到 3-2(高中数学)
 //返回 高中-数学, 需要手动把-去掉,变为 高中数学.
@@ -254,5 +292,5 @@ export {
     findTreeNodeFromPath, ID_ALL, NODE_ALL, getNodeAll, getValidTreeIdFromPath, getValidTreeIdFromPathStr,
     getFullPathNameByKtId, getNameByKtId, treeIdsToNames, treeIdToTreeArray,validateKtTree,
     getGradeSubjectNodes, getRecordTreeNames, getRecordTreeSubject, getRecordTreeGrad, mapSubjectIdToName,
-    mapGradeIdToName, getKnowledgeTreePath
+    mapGradeIdToName, getKnowledgeTreePath, getFatherNodePathByKtId
 };
