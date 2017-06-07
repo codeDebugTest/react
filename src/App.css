@@ -95,6 +95,7 @@
 }
 .tree-ul li .node {
   float: left;
+  line-height: 30px;
 }
 
 .tree-ul li .node > label {
@@ -186,11 +187,24 @@
   text-align: right;
   width: 120px;
   font-size: 14px;
+  line-height: 30px;
 }
+
+.row-form .modal-control-label {
+  text-align: right;
+  width: 80px;
+  font-size: 14px;
+  line-height: 30px;
+}
+.row-form .modal-input {
+  width: 220px;
+}
+
 .row-form .ant-radio-group label,
 .row-form .info-label {
   font-weight: bold;
   font-size: 14px;
+  line-height: 30px;
 }
 .row-form .player-btn {
   font-size: 22px;
@@ -264,7 +278,6 @@
 .exercise-content {
   margin-left: 20px;
   text-align: left;
-  max-width: 800px;
   font-weight: bold;
   font-size: 14px;
   float: left;

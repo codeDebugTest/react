@@ -99,7 +99,7 @@ class ExerciseDetail extends Component {
                     <label className="exercise-label">题干： </label>
 
                     {varNotEmpty(exercise.content)
-                        ? <p className="exercise-content"><ExerciseContent text={exercise.content}/></p>
+                        ? <p className="exercise-content" style={{maxHeight: '400px', maxWidth: '700px'}}><ExerciseContent text={exercise.content}/></p>
                         : ''
                     }
                 </div>

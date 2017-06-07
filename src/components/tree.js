@@ -12,7 +12,7 @@ class TreeNode extends Component {
         this.state = {
             unfold: false,
             isTreeNode: !isLeafNode(this.props.node),
-            disabled: false
+            disabled: !!props.node.visible
         };
     }
 
@@ -38,7 +38,7 @@ class TreeNode extends Component {
 
     onCloseNode(disabled) {
         this.setState({disabled: disabled});
-        // this.props.closeNodeHandler(this.props.node);
+        this.props.closeNodeHandler(this.props.node, disabled);
     }
 
     getChildrenNodes() {
@@ -48,6 +48,7 @@ class TreeNode extends Component {
                     return (<TreeNode node={child} key={index}
                                       addNodeHandler={this.props.addNodeHandler}
                                       deleteNodeHandler={this.props.deleteNodeHandler}
+                                      closeNodeHandler={this.props.closeNodeHandler}
                                       level={this.props.level + 1}
                     />)
                 })
@@ -71,7 +72,7 @@ class TreeNode extends Component {
                     <label className={labelClass + (this.state.disabled ? ' disabled-node' : '')}
                            onClick={this.toggleSpread.bind(this)}>{this.props.node.display}</label>
 
-                    {!this.state.disabled && this.props.level !== 1 && this.props.level !== 2
+                    {!this.state.disabled && this.props.level !== 1
                         ? (
                             <Popconfirm placement="topRight" title={addMsg} okText="是" cancelText="否"
                                         onConfirm={this.onAddNode.bind(this)} >
@@ -138,6 +139,7 @@ class Tree extends Component{
                             <TreeNode node={root} key={index}
                                       addNodeHandler={this.props.addTreeNode}
                                       deleteNodeHandler={this.props.deleteTreeNode}
+                                      closeNodeHandler={this.props.closeNodeHandler}
                                       level={1}
                             />
                         )
@@ -151,6 +153,7 @@ class Tree extends Component{
                     <TreeNode node={this.props.tree}
                               addNodeHandler={this.props.addTreeNode}
                               deleteNodeHandler={this.props.deleteTreeNode}
+                              closeNodeHandler={this.props.closeNodeHandler}
                               level={1}
                     />
                 </ul>

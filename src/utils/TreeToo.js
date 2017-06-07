@@ -107,8 +107,8 @@ const getFatherNodePathByKtId = (nodes, id) => {
     }
 
     for (let i=0; i < nodes.length; i++) {
-        let nodePath = [];
-        const result = nodePath.push(nodes[i]);
+        let nodePath = [nodes[i]];
+        const result = findNodePathById(nodePath, id);
         if (result) {
             return nodePath;
         }

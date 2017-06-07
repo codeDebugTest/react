@@ -1,19 +1,32 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {message, Spin} from 'antd'
 import Tree from '../components/tree'
 import {doFetchDictionary, doFetchKnowledgeTree, doUpdateKnowledgeTree} from '../actions/knowledge.ation'
 import {getFatherNodePathByKtId} from '../utils/TreeToo'
+import {message, Spin, Modal, Input} from 'antd'
+
 
 class KnowledgeTree extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            modalVisible: false,
+            newNode: {
+                code: '',
+                display: '',
+                visible: true
+            }
+        };
+        this.actionNode = null;
+    }
 
     updateKnowledgeTree(subjectId) {
-        const { userInfo } = this.props.userState;
+        const { userState, dictionary} = this.props;
         const requestInfo = {
-            regionId: userInfo.regionId,
-            userToken: userInfo.userToken,
+            regionId: userState.userInfo.regionId,
+            userToken: userState.userInfo.userToken,
             subjectId: subjectId,
-            tree: this.props.dictionary.knowledgeTree
+            tree: dictionary.knowledgeTree
         };
 
         doUpdateKnowledgeTree(requestInfo, this.getKnowledgeTree.bind(this), (msg)=> {message.error(msg)})
@@ -33,16 +46,41 @@ class KnowledgeTree extends Component {
         this.updateKnowledgeTree(nodePath[1].id);
     }
 
-    addTreeNode(node) {
+    addTreeNode(node, newNode) {
         console.log('add tree node: ' + node);
+        const nodePath = getFatherNodePathByKtId(this.props.dictionary.knowledgeTree, node.id);
+        if (!node.children) {
+            node.children = [];
+        }
+        node.children.push(newNode);
+        this.updateKnowledgeTree(nodePath[1].id);
+    }
+
+    closeTreeNode(node, visible) {
+        node.visible = visible;
         const nodePath = getFatherNodePathByKtId(this.props.dictionary.knowledgeTree, node.id);
         this.updateKnowledgeTree(nodePath[1].id);
     }
 
-    showHideNode(node) {
-        node.visible = !node.visible;
-        const nodePath = getFatherNodePathByKtId(this.props.dictionary.knowledgeTree, node.id);
-        this.updateKnowledgeTree(nodePath[1].id);
+    showAddNodeModal(node) {
+        this.actionNode = node;
+        this.setState({modalVisible: true,});
+    }
+
+    modalCancelHandler = () => {
+        this.setState({modalVisible: false});
+    }
+
+    modalOkHandler = () => {
+        const code = document.getElementById('nodeCode').value;
+        const display = document.getElementById('nodeDisplay').value;
+        if (!code || !display) {
+            message.warn('code或名称不能为空！');
+            return;
+        }
+
+        this.addTreeNode(this.actionNode, {code: code, display: display, visible: true});
+        this.modalCancelHandler();
     }
 
     getKnowledgeTree() {
@@ -64,18 +102,36 @@ class KnowledgeTree extends Component {
 
     render() {
         const {knowledgeTree, loading} = this.props.dictionary;
+        const {modalVisible, newNode} = this.state
         return (
-            <div style={{position: 'relative', marginLeft: '15px'}}>{
-                loading ? (
-                    <div className="center-point">
-                        <Spin tip="Loading..."/>
+            <div style={{position: 'relative', marginLeft: '15px'}}>
+                {
+                    loading ? (
+                        <div className="center-point">
+                            <Spin tip="Loading..."/>
+                        </div>
+                    ) : (
+                        <Tree tree={knowledgeTree}
+                               addTreeNode={this.showAddNodeModal.bind(this)}
+                               deleteTreeNode={this.deleteTreeNode.bind(this)}
+                               closeNodeHandler={this.closeTreeNode.bind(this)}
+                        />
+                    )
+                }
+                <Modal visible={modalVisible} title="添加知识树节点" width="400"
+                       onOk={this.modalOkHandler.bind(this)} onCancel={this.modalCancelHandler.bind(this)}
+                       okText="确定" cancelText="取消">
+                    <div className="row-form">
+                        <label className='modal-control-label'>code：</label>
+                        <Input className="margin-left-20 modal-input" id="nodeCode"/>
                     </div>
-                ) : (
-                    <Tree tree={knowledgeTree}
-                           addTreeNode={this.addTreeNode.bind(this)}
-                           deleteTreeNode={this.deleteTreeNode.bind(this)}/>
-                )
-            }</div>
+
+                    <div className="row-form">
+                        <label className='modal-control-label'>名称：</label>
+                        <Input className="margin-left-20 modal-input" id="nodeDisplay"/>
+                    </div>
+                </Modal>
+            </div>
         )
     }
 }
