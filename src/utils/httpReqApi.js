@@ -11,6 +11,7 @@ const _teacherListUrl = _courseListUrl;
 // const _liveListUrl = config.realHost +  '/student/live_course/list';
 const _liveListUrl = _courseListUrl;
 const _schoolListUrl = config.realHost +  '/login/register/do/search_school';
+const _updateSchoolUrl = config.realHost + '/admin/school/update';
 const _register_step_Url = config.realHost +  '/login/register/do/pre_update_step1';
 const _verifyUrl = config.realHost +  '/admin/audit';
 
@@ -48,6 +49,10 @@ export function fetchLiveList(requestInfo, callback) {
 
 export function fetchSchoolList(requestInfo, callback) {
     return ajaxPost(_schoolListUrl, {}, requestInfo, callback)
+}
+
+export function updateSchool(requestInfo, callback) {
+    return ajaxPost(_updateSchoolUrl, {}, requestInfo, callback)
 }
 
 export function priUpdateStep(requestInfo, callback) {

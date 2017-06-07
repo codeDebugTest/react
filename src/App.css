@@ -285,6 +285,7 @@
 
 .edit-pen-style {
   color: #0c06f3;
+  margin-left: 30px;
 }
 .edit-pen-style:hover{
   cursor: pointer;

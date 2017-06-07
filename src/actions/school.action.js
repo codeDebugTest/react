@@ -1,4 +1,4 @@
-import {fetchSchoolList} from '../utils/httpReqApi'
+import {fetchSchoolList, updateSchool} from '../utils/httpReqApi'
 
 export const FETCH_SCHOOL_LIST = 'fetch_school_list';
 export const FETCH_SCHOOL_SUCCESS = 'fetch_school_success';
@@ -80,4 +80,21 @@ export function doShowDetail(data) {
     return dispatch => {
         dispatch(showDetail(data))
     }
+}
+
+export function doUpdateSchool(data, successFunc, failedFunc) {
+    return updateSchool(data).then(
+        response => {
+            if (response.code === undefined) {
+                alert(`更新学校失败！`);
+                return;
+            }
+
+            if (response.code === 0) {
+                successFunc()
+            } else {
+                failedFunc(response.message);
+            }
+        }
+    )
 }

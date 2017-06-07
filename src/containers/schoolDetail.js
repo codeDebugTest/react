@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
 import {Biz_Target_Type} from '../utils/constants'
 import {doAuditResource} from '../actions/auditResource.action'
+import {doUpdateSchool} from '../actions/school.action'
 import {Button, Icon, Input, message, Radio} from 'antd'
 import '../App.css'
 const RadioGroup = Radio.Group;
@@ -53,10 +54,17 @@ class SchoolDetail extends Component {
 
     onConfirmBtnClick() {
         if(this.state.edit) {
-            const address = document.getElementById('address');
+            const schoolName = document.getElementById('schoolName').value;
             const {school} = this.props.detail;
-            if (school.address !== address) {
-                return;
+            if (school.name !== schoolName) {
+                const { userInfo} = this.props.userState;
+
+                doUpdateSchool({
+                    regionId: userInfo.regionId,
+                    userToken: userInfo.userToken,
+                    id: school.id,
+                    name: schoolName,
+                }, this.verifySchool.bind(this), (msg) => {message.error(msg)})
             }
         }
         this.verifySchool();
@@ -70,17 +78,19 @@ class SchoolDetail extends Component {
                 <div className="row-form">
                     <label className='control-label'>名称：</label>
                     <div className="margin-left-20">
-                        <label className="info-label"> {school.name}</label>
+                        {this.state.edit
+                            ? <Input className="modal-input" defaultValue={school.name} id="schoolName"/>
+                            : <div>
+                                <label className="info-label"> {school.name}</label>
+                                <span className="edit-pen-style" onClick={this.onEditAddress.bind(this)}><Icon type="edit"/></span>
+                            </div>
+                        }
                     </div>
                 </div>
                 <div className="row-form">
                     <label className='control-label'>地址：</label>
-                    <div style={{display: this.state.edit ? 'none' : ''}}>
+                    <div >
                         <label className="margin-left-20 info-label"> {school.address}</label>
-                        <span className="edit-pen-style" onClick={this.onEditAddress.bind(this)}><Icon type="edit"/></span>
-                    </div>
-                    <div style={{display: this.state.edit ? '' : 'none'}}>
-                        <Input id="address" defaultValue={school.address} />
                     </div>
                 </div>
 
