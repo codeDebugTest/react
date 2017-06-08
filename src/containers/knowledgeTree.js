@@ -20,13 +20,13 @@ class KnowledgeTree extends Component {
         this.actionNode = null;
     }
 
-    updateKnowledgeTree(subjectId) {
+    updateKnowledgeTree(subjectNode) {
         const { userState, dictionary} = this.props;
         const requestInfo = {
             regionId: userState.userInfo.regionId,
             userToken: userState.userInfo.userToken,
-            subjectId: subjectId,
-            tree: dictionary.knowledgeTree
+            subjectId: subjectNode.id,
+            tree: subjectNode.children
         };
 
         doUpdateKnowledgeTree(requestInfo, this.getKnowledgeTree.bind(this), (msg)=> {message.error(msg)})
@@ -43,7 +43,7 @@ class KnowledgeTree extends Component {
                 break;
             }
         }
-        this.updateKnowledgeTree(nodePath[1].id);
+        this.updateKnowledgeTree(nodePath[1]);
     }
 
     addTreeNode(node, newNode) {
@@ -53,13 +53,13 @@ class KnowledgeTree extends Component {
             node.children = [];
         }
         node.children.push(newNode);
-        this.updateKnowledgeTree(nodePath[1].id);
+        this.updateKnowledgeTree(nodePath[1]);
     }
 
     closeTreeNode(node, visible) {
         node.visible = visible;
         const nodePath = getFatherNodePathByKtId(this.props.dictionary.knowledgeTree, node.id);
-        this.updateKnowledgeTree(nodePath[1].id);
+        this.updateKnowledgeTree(nodePath[1]);
     }
 
     showAddNodeModal(node) {
@@ -102,7 +102,7 @@ class KnowledgeTree extends Component {
 
     render() {
         const {knowledgeTree, loading} = this.props.dictionary;
-        const {modalVisible, newNode} = this.state
+        const {modalVisible} = this.state
         return (
             <div style={{position: 'relative', marginLeft: '15px'}}>
                 {

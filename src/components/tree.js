@@ -12,11 +12,14 @@ class TreeNode extends Component {
         this.state = {
             unfold: false,
             isTreeNode: !isLeafNode(this.props.node),
-            disabled: !!props.node.visible
         };
     }
 
     toggleSpread() {
+        if (this.props.node.visible === false) {
+            return;
+        }
+
         if (this.state.isTreeNode) {
             this.setState({unfold: !this.state.unfold});
         }
@@ -28,6 +31,7 @@ class TreeNode extends Component {
         }
         return this.state.unfold ? 'togglable-down' : 'togglable-up';
     }
+
     onDeleteNode() {
         this.props.deleteNodeHandler(this.props.node);
     }
@@ -36,9 +40,13 @@ class TreeNode extends Component {
         this.props.addNodeHandler(this.props.node);
     }
 
-    onCloseNode(disabled) {
-        this.setState({disabled: disabled});
-        this.props.closeNodeHandler(this.props.node, disabled);
+    onCloseNode(visible) {
+        // this.setState({hide: hide});
+        if (!visible && this.state.isTreeNode && this.state.unfold) {
+            this.setState({unfold: !this.state.unfold});
+        }
+
+        this.props.closeNodeHandler(this.props.node, visible);
     }
 
     getChildrenNodes() {
@@ -58,10 +66,11 @@ class TreeNode extends Component {
 
     render() {
         const display = this.props.node.display;
+        const {node} = this.props;
 
         const deleteMsg = '确定要删除此节点: ' + display + ' ?';
         const addMsg = '确定要为此节点添加子节点: ' + display + '?';
-        const closeAction = this.state.disabled ? '恢复' : '禁用';
+        const closeAction = node.visible === false ? '显示' : '不可见';
         const closeMsg = '确定要' + closeAction + '此节点: ' + display + '?';
 
         const style = this.state.unfold ? null: {display: "none"};
@@ -69,10 +78,10 @@ class TreeNode extends Component {
         return (
             <li className={"clearfixed" + (this.props.level !== 1 ? ' li-border-line' : '')}>
                 <div className="node">
-                    <label className={labelClass + (this.state.disabled ? ' disabled-node' : '')}
+                    <label className={labelClass + (node.visible === false  ? ' disabled-node' : '')}
                            onClick={this.toggleSpread.bind(this)}>{this.props.node.display}</label>
 
-                    {!this.state.disabled && this.props.level !== 1
+                    {node.visible !== false && this.props.level !== 1
                         ? (
                             <Popconfirm placement="topRight" title={addMsg} okText="是" cancelText="否"
                                         onConfirm={this.onAddNode.bind(this)} >
@@ -84,7 +93,7 @@ class TreeNode extends Component {
                         : ''
                     }
 
-                    {!this.state.disabled && this.props.level !== 1 && this.props.level !== 2
+                    {node.visible !== false && this.props.level !== 1 && this.props.level !== 2
                         ? (
                             <Popconfirm placement="topRight" title={deleteMsg} okText="是" cancelText="否"
                                         onConfirm={this.onDeleteNode.bind(this)}>
@@ -96,19 +105,19 @@ class TreeNode extends Component {
                         : ''
                     }
 
-                    {!this.state.disabled
+                    { this.props.level === 1 || this.props.level === 2 ? '' : node.visible !== false
                         ? (
                             <Popconfirm placement="topRight" title={closeMsg} okText="是" cancelText="否"
-                                        onConfirm={() => this.onCloseNode(true)}>
-                                <Tooltip title={"禁用节点" } placement="right">
+                                        onConfirm={() => this.onCloseNode(false)}>
+                                <Tooltip title={"不可见节点" } placement="right">
                                     <span className="close-icon" ><Icon type="close-circle-o" /></span>
                                 </Tooltip>
                             </Popconfirm>
                         )
                         : (
                             <Popconfirm placement="topRight" title={closeMsg} okText="是" cancelText="否"
-                                        onConfirm={() => this.onCloseNode(false)}>
-                                <Tooltip title={"恢复节点"} placement="right">
+                                        onConfirm={() => this.onCloseNode(true)}>
+                                <Tooltip title={"显示节点"} placement="right">
                                     <span className="open-icon" ><Icon type="smile-o" /></span>
                                 </Tooltip>
                             </Popconfirm>
@@ -116,7 +125,7 @@ class TreeNode extends Component {
                     }
                 </div>
 
-                {!this.state.disabled
+                {!this.state.hide
                     ?
                         <div style={style}>
                             {this.state.isTreeNode ? this.getChildrenNodes() : null}

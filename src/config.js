@@ -10,6 +10,20 @@ const userList = {
     'liuye': true,
     'sunjian11': true,
     'tony': true,
+    'sunjian': true,
+    'zhanzushun': true,
+    'chenchunbin': true,
+    'zhangpengfei': true,
+    'liwenshuai': true,
+    'test': true,
+    'shezhidian': true,
+    'xielei': true,
+    'wangzhiwei': true,
+    'wanglin': true,
+    'CC': true,
+    'binson': true,
+    'yuqikai': true,
+    'sky': true,
 }
 
 export {config, userList}
