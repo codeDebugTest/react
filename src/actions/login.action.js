@@ -30,7 +30,7 @@ export function fetchLogin(data, successFunc, failedFuc) {
 
         return userLogin(data).then(
             response => {
-                if (response.code === undefined) {
+                if (!response || response.code === undefined) {
                     alert(`No code in result of post: login`);
                     return;
                 }

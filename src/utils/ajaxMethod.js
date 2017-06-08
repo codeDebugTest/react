@@ -6,12 +6,22 @@ const ajaxPost = (url, header, params, callback) => {
         'Content-Type': 'application/json',
         ...header
     });
+    console.log('------>>>> ' + url);
+
+    const requestBody = JSON.stringify(params);
+    console.log(' ------ body ' + requestBody);
     return fetch(url, {
         method: 'POST',
         headers: headers,
-        body: JSON.stringify(params)
+        body: requestBody
     }).then(
         response => {return response.json() }
+    ).then(
+        json => {
+            console.dir(json);
+            console.log('<<<<----- ');
+            return json
+        }
     ).catch(
         error => console.log(error)
     );

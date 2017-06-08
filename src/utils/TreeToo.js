@@ -35,7 +35,6 @@ const findTreeNodeFromPath = (treeRootNodes, selectedIdsPath, level) => {
 }
 
 const getValidTreeIdFromPath = (pathArray) => {
-
     if (varEmpty(pathArray))
         return '';
 
@@ -43,7 +42,7 @@ const getValidTreeIdFromPath = (pathArray) => {
         return pathArray[pathArray.length - 1];
 
     if (pathArray.length === 1)
-        return '';
+        return pathArray[0];
 
     return pathArray[pathArray.length - 2];
 }

@@ -8,7 +8,7 @@ import {doShowDetail} from '../actions/school.action'
 import {TABLE_PAGE_SIZE, Biz_Target_Status} from '../utils/constants'
 import {Table, message, Spin, Row, Select} from 'antd'
 import '../App.css'
-
+const Option = Select.Option;
 
 class School extends Component {
     constructor(props) {
