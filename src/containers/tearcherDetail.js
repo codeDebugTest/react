@@ -157,7 +157,8 @@ class TeacherDetail extends Component {
 const mapStateToProps = (state) => {
     return {
         dictionary: state.dictionary,
-        detail: state.teacher
+        detail: state.teacher,
+        userState: state.login,
     }
 };
 export default connect(mapStateToProps)(TeacherDetail)
