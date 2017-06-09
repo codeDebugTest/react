@@ -51,7 +51,7 @@ class Teacher extends Component {
             'bizTargetType': Biz_Target_Type.TEACHER,
             'knowledgeTreeId': this.knowledgeTreeId,
             'bizTargetStatus': this.verified,
-            'regionId': userState.userInfo && userState.userInfo.regionId,
+            'commonTeacherRegionId': userState.userInfo && userState.userInfo.regionId,
             'offset': this.offset,
             'limit': this.limit,
             'fromAdmin': !this.verified || null

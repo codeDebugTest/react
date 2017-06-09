@@ -4,6 +4,11 @@ import {getRecordTreeGrad, getRecordTreeNames, getRecordTreeSubject,
     mapGradeIdToName, mapSubjectIdToName} from '../utils/TreeToo'
 import {EXERCISE_TYPE, Biz_Target_Status, GENDER_MALE, GENDER_FEMALE} from '../utils/constants'
 
+
+const _isVerified = (status) => {
+    return status === Biz_Target_Status.UN_PASSED || status === Biz_Target_Status.RELEASED
+};
+
 const getCourseColumns = (knowledgeTree, editRecord, deleteRecord) => {
     return [
         {
@@ -30,8 +35,7 @@ const getCourseColumns = (knowledgeTree, editRecord, deleteRecord) => {
             title: '审核状态',
             width: 120,
             render: (text, record) => {
-                if(record.bizTargetStatus === Biz_Target_Status.UN_PASSED ||
-                    record.bizTargetStatus === Biz_Target_Status.RELEASED) {
+                if(_isVerified(record.bizTargetStatus)) {
                     return '已审核';
                 } else {
                     return '未审核';
@@ -89,8 +93,7 @@ const getExamColumns = (knowledgeTree, editRecord, deleteRecord) => {
             title: '审核状态',
             width: 100,
             render: (text, record) => {
-                if(record.bizTargetStatus === Biz_Target_Status.UN_PASSED ||
-                    record.bizTargetStatus === Biz_Target_Status.RELEASED) {
+                if(_isVerified(record.bizTargetStatus)) {
                     return '已审核';
                 } else {
                     return '未审核';
@@ -132,41 +135,41 @@ const getTeacherColumns = (dictionary, editRecord, deleteRecord) => {
                 return '';
             }
         }, {
-        title: '年级',
-        render: (text, record) => {
-            return mapGradeIdToName(dictionary.knowledgeTree, record.gradeId);
-        }
-    }, {
-        title: '科目',
-        render: (text, record) => {
-            return mapSubjectIdToName(dictionary.subjectList, record.subjectId);
-        }
-    }, {
-        title: '审核状态',
-        render: (text, record) => {
-            if(record.verified) {
-                return '已审核';
-            } else {
-                return '未审核';
+            title: '年级',
+            render: (text, record) => {
+                return mapGradeIdToName(dictionary.knowledgeTree, record.gradeId);
+            }
+        }, {
+            title: '科目',
+            render: (text, record) => {
+                return mapSubjectIdToName(dictionary.subjectList, record.subjectId);
+            }
+        }, {
+            title: '审核状态',
+            render: (text, record) => {
+                if(record.verified) {
+                    return '已审核';
+                } else {
+                    return '未审核';
+                }
+            }
+        }, {
+            title: 'Action',
+            width: 80,
+            render: (text, record, index) => {
+                const deleteMsg = 'Are you sure delete this record';
+                return (
+                    <div>
+                        <span className="add-icon" onClick={()=>editRecord(index)}><Icon type="edit"/></span>
+
+    {/*                    <Popconfirm  placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
+                                     onConfirm={()=>deleteRecord(index)}>
+                            <span className="delete-icon"><Icon type="delete" /></span>
+                        </Popconfirm>*/}
+                    </div>
+                )
             }
         }
-    }, {
-        title: 'Action',
-        width: 80,
-        render: (text, record, index) => {
-            const deleteMsg = 'Are you sure delete this record';
-            return (
-                <div>
-                    <span className="add-icon" onClick={()=>editRecord(index)}><Icon type="edit"/></span>
-
-{/*                    <Popconfirm  placement="topRight" title={deleteMsg} okText="Yes" cancelText="No"
-                                 onConfirm={()=>deleteRecord(index)}>
-                        <span className="delete-icon"><Icon type="delete" /></span>
-                    </Popconfirm>*/}
-                </div>
-            )
-        }
-    }
     ];
 };
 
@@ -191,7 +194,7 @@ const getLiveColumns = (knowledgeTree, editRecord, deleteRecord) => {
             title: '审核状态',
             width: 120,
             render: (text, record) => {
-                if(record.verified) {
+                if(_isVerified(record.auditStatus)) {
                     return '已审核';
                 } else {
                     return '未审核';

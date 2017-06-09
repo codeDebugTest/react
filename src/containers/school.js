@@ -51,7 +51,7 @@ class School extends Component {
         const {dispatch, userState} = this.props;
         const requestInfo = {
             'userToken': userState.userInfo.userToken,
-            'provinceId': userState.userInfo.provinceId,
+            'provinceId': userState.userInfo.regionId,
             'searchKey': this.searchKey,
             'verified': this.verified,
         };
