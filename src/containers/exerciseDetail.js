@@ -3,9 +3,9 @@ import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
 import KnowledgeTreeItem from '../components/knowledgeTreeItem'
 import {ID_ALL} from '../utils/TreeToo'
-import {varEmpty, varNotEmpty} from '../utils/util'
+import {varEmpty, varNotEmpty, isVerified} from '../utils/util'
 import {doAuditResource} from '../actions/auditResource.action'
-import {EXERCISE_TYPE, FILL_EXERCISE, SUBJECT_EXERCISE, Biz_Target_Type} from '../utils/constants'
+import {EXERCISE_TYPE, FILL_EXERCISE, SUBJECT_EXERCISE, Biz_Target_Type, Biz_Target_Status} from '../utils/constants'
 import ExerciseContent from '../components/ExerciseConent'
 import {Button, Input, message, Radio, Rate, Tooltip, Icon} from 'antd'
 import '../App.css'
@@ -35,6 +35,11 @@ class ExerciseDetail extends Component {
     }
 
     onConfirmBtnClick() {
+        if (this.isVerified) {
+            this.closePage();
+            return;
+        }
+
         const textArea = document.getElementById('comment');
         if (!this.state.passed) {
             if (textArea.value === '') {
@@ -82,6 +87,9 @@ class ExerciseDetail extends Component {
 
     componentWillMount() {
         this.knowledgeTreeIdList = this.state.knowledgeTreeIds.split(',');
+
+        const {exercise} = this.props.detail;
+        this.isVerified = isVerified(exercise.bizTargetStatus);
     }
 
     render() {
@@ -140,21 +148,25 @@ class ExerciseDetail extends Component {
 
                 <KnowledgeTreeItem knowledgeTreeIds={this.knowledgeTreeIdList}/>
 
-                <div className="row-form">
-                    <label className='control-label'>知识树：</label>
-                    <div className="margin-left-20 info-label">
-                        <Tooltip title="添加知识树" placement="top" >
+                {!this.isVerified ?
+                    <div className="row-form">
+                        <label className='control-label'>知识树：</label>
+                        <div className="margin-left-20 info-label">
+                            <Tooltip title="添加知识树" placement="top" >
                             <span className="add-tree" onClick={() => this.addKnowledgeTree()}>
                                 <Icon type="plus-circle-o" />
                             </span>
-                        </Tooltip>
-                        <Tooltip title="删除知识树" placement="top" >
+                            </Tooltip>
+                            <Tooltip title="删除知识树" placement="top" >
                             <span className="remove-tree" onClick={() => this.removeKnowledgeTree()}>
                                 <Icon type="minus-circle-o" />
                             </span>
-                        </Tooltip>
+                            </Tooltip>
+                        </div>
                     </div>
-                </div>
+                    : ''
+                }
+
 
                 { varNotEmpty(exercise.difficultyDegree)
                     ? exercise.difficultyDegree.map((item, index) => (
@@ -177,19 +189,28 @@ class ExerciseDetail extends Component {
 
                 <div className="row-form">
                     <label className='control-label'>审核：</label>
-                    <div className="margin-left-20">
-                        <RadioGroup onChange={e => this.onCheckStatusChange(e)} value={this.state.passed}>
-                            <Radio value={true}>通过</Radio>
-                            <Radio value={false}>否决</Radio>
-                        </RadioGroup>
+                    {!this.isVerified ?
+                        <div className="margin-left-20">
+                            <RadioGroup onChange={e => this.onCheckStatusChange(e)} value={this.state.passed}>
+                                <Radio value={true}>通过</Radio>
+                                <Radio value={false}>否决</Radio>
+                            </RadioGroup>
+                        </div>
+                        : <label className="margin-left-20 info-label">
+                            {exercise.bizTargetStatus === Biz_Target_Status.UN_PASSED ? '未通过' : '已通过'}
+                          </label>
+                    }
+                </div>
+
+                {!this.isVerified ?
+                    <div className={'row-form textarea-height ' + (this.state.passed ? 'item-hide' : '')}>
+                        <label className='control-label'>备注：</label>
+
+                        <Input id="comment" type="textarea" className="margin-left-20" placeholder="请输入否决原因" />
                     </div>
-                </div>
+                    : ''
+                }
 
-                <div className={'row-form textarea-height ' + (this.state.passed ? 'item-hide' : '')}>
-                    <label className='control-label'>备注：</label>
-
-                    <Input id="comment" type="textarea" className="margin-left-20" placeholder="请输入否决原因" />
-                </div>
 
                 <div className="confirm-box">
                     <Button type="primary" onClick={()=> this.onConfirmBtnClick()}>确定</Button>

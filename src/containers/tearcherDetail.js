@@ -39,6 +39,12 @@ class TeacherDetail extends Component {
     }
 
     onConfirmBtnClick() {
+        const {teacher} = this.props.detail;
+        if (teacher.verified) {
+            this.closePage();
+            return;
+        }
+
         const textArea = document.getElementById('comment');
         if (!this.state.passed) {
             if (textArea.value === '') {
@@ -132,19 +138,27 @@ class TeacherDetail extends Component {
 
                 <div className="row-form">
                     <label className='control-label'>审核：</label>
-                    <div className="margin-left-20">
-                        <RadioGroup onChange={e => this.onCheckStatusChange(e)} value={this.state.passed}>
-                            <Radio value={true}>通过</Radio>
-                            <Radio value={false}>否决</Radio>
-                        </RadioGroup>
+                    {!teacher.verified ?
+                        <div className="margin-left-20">
+                            <RadioGroup onChange={e => this.onCheckStatusChange(e)} value={this.state.passed}>
+                                <Radio value={true}>通过</Radio>
+                                <Radio value={false}>否决</Radio>
+                            </RadioGroup>
+                        </div>
+                        : <label className="info-label">已审核</label>
+                    }
+
+                </div>
+
+                {!teacher.verified ?
+                    <div className={'row-form textarea-height ' + (this.state.passed ? 'item-hide' : '')}>
+                        <label className='control-label'>备注：</label>
+
+                        <Input id="comment" type="textarea" className="margin-left-20" placeholder="请输入否决原因" />
                     </div>
-                </div>
+                    : ''
+                }
 
-                <div className={'row-form textarea-height ' + (this.state.passed ? 'item-hide' : '')}>
-                    <label className='control-label'>备注：</label>
-
-                    <Input id="comment" type="textarea" className="margin-left-20" placeholder="请输入否决原因" />
-                </div>
 
                 <div className="confirm-box">
                     <Button type="primary" onClick={()=> this.onConfirmBtnClick()}>确定</Button>

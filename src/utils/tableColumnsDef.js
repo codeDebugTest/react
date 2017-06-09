@@ -2,12 +2,9 @@ import React from 'react'
 import {Popconfirm, Icon} from 'antd'
 import {getRecordTreeGrad, getRecordTreeNames, getRecordTreeSubject,
     mapGradeIdToName, mapSubjectIdToName} from '../utils/TreeToo'
-import {EXERCISE_TYPE, Biz_Target_Status, GENDER_MALE, GENDER_FEMALE} from '../utils/constants'
+import {EXERCISE_TYPE, Biz_Target_Status, GENDER_MALE, GENDER_FEMALE} from './constants'
+import {isVerified} from './util'
 
-
-const _isVerified = (status) => {
-    return status === Biz_Target_Status.UN_PASSED || status === Biz_Target_Status.RELEASED
-};
 
 const getCourseColumns = (knowledgeTree, editRecord, deleteRecord) => {
     return [
@@ -35,7 +32,7 @@ const getCourseColumns = (knowledgeTree, editRecord, deleteRecord) => {
             title: '审核状态',
             width: 120,
             render: (text, record) => {
-                if(_isVerified(record.bizTargetStatus)) {
+                if(isVerified(record.bizTargetStatus)) {
                     return '已审核';
                 } else {
                     return '未审核';
@@ -93,7 +90,7 @@ const getExamColumns = (knowledgeTree, editRecord, deleteRecord) => {
             title: '审核状态',
             width: 100,
             render: (text, record) => {
-                if(_isVerified(record.bizTargetStatus)) {
+                if(isVerified(record.bizTargetStatus)) {
                     return '已审核';
                 } else {
                     return '未审核';
@@ -194,7 +191,7 @@ const getLiveColumns = (knowledgeTree, editRecord, deleteRecord) => {
             title: '审核状态',
             width: 120,
             render: (text, record) => {
-                if(_isVerified(record.auditStatus)) {
+                if(isVerified(record.auditStatus)) {
                     return '已审核';
                 } else {
                     return '未审核';

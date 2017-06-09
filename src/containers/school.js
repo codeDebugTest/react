@@ -14,11 +14,11 @@ class School extends Component {
     constructor(props) {
         super(props);
         this.searchKey = null;
-        this.verified = null;
+        this.verified = false;
     }
 
     editRecord(index) {
-        console.log('edit course record: ' + index)
+        console.log('edit course record: ' + index);
         doShowDetail(index);
         const {schoolList} = this.props.school;
         const {dispatch} = this.props;
@@ -73,9 +73,8 @@ class School extends Component {
 
                     <div className="item-warp margin-left-30">
                         <label>审核状态:</label>
-                        <Select className="select-style" showSearch defaultValue="2"
+                        <Select className="select-style" showSearch defaultValue="0"
                                 onChange={this.onVerifiedStatusChange.bind(this)}>
-                            <Option value="2">不限 </Option>
                             <Option value="0">未审核</Option>
                             <Option value="1">已审核</Option>
                         </Select>

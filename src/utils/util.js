@@ -1,3 +1,5 @@
+import {Biz_Target_Status} from '../utils/constants'
+
 const isArray = (arg) => {
     // support ie 8
     if (!Array.isArray) {
@@ -63,4 +65,9 @@ const strFindIgnoreCase = (str, subStr) => {
     return str.search(new RegExp(subStr, "i"));
 };
 
-export {isArray, isObject, varEmpty, keyNotEmpty, varNotEmpty, keyEmpty, mapTagIdsToNames, getOrDefault, strFindIgnoreCase}
+const isVerified = (status) => {
+    return status === Biz_Target_Status.UN_PASSED || status === Biz_Target_Status.RELEASED
+};
+
+export {isArray, isObject, varEmpty, keyNotEmpty, varNotEmpty, keyEmpty, mapTagIdsToNames, getOrDefault, isVerified,
+    strFindIgnoreCase}

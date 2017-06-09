@@ -3,12 +3,11 @@ import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
 import KnowledgeTreeItem from '../components/knowledgeTreeItem'
 import {ID_ALL} from '../utils/TreeToo'
-import {varEmpty} from '../utils/util'
-import {mapTagIdsToNames} from '../utils/util'
+import {varEmpty, isVerified, mapTagIdsToNames} from '../utils/util'
 import {Button, Icon, Input, message, Radio, Tooltip} from 'antd'
 import {doCreateLivePlayer, doReleaseLivePlayer} from '../actions/livePlayer.action'
 import {doAuditResource} from '../actions/auditResource.action'
-import {Biz_Target_Type, CourseItemType} from '../utils/constants'
+import {Biz_Target_Type, CourseItemType, Biz_Target_Status} from '../utils/constants'
 import '../App.css'
 const RadioGroup = Radio.Group;
 
@@ -58,7 +57,11 @@ class CourseDetail extends Component {
         message.error('审批失败！');
     }
     onConfirmBtnClick() {
-        console.log(this.knowledgeTreeIdList);
+        if (this.isVerified) {
+            this.closePage();
+            return;
+        }
+
         const textArea = document.getElementById('comment');
         if (!this.state.passed) {
             if (textArea.value === '') {
@@ -98,6 +101,9 @@ class CourseDetail extends Component {
         this.learningCase = this.getFileInfo(this.getCourseItemByType(CourseItemType.LEARNING_CASE));
 
         this.knowledgeTreeIdList = this.state.knowledgeTreeIds.split(',');
+
+        const {course} = this.props.detail;
+        this.isVerified = isVerified(course.bizTargetStatus);
     }
 
     componentDidUpdate() {
@@ -164,21 +170,25 @@ class CourseDetail extends Component {
 
                 <KnowledgeTreeItem knowledgeTreeIds={this.knowledgeTreeIdList}/>
 
-                <div className="row-form">
-                    <label className='control-label'>知识树：</label>
-                    <div className="margin-left-20 info-label">
-                        <Tooltip title="添加知识树" placement="top" >
+                {!this.isVerified ?
+                    <div className="row-form">
+                        <label className='control-label'>知识树：</label>
+                        <div className="margin-left-20 info-label">
+                            <Tooltip title="添加知识树" placement="top" >
                             <span className="add-tree" onClick={() => this.addKnowledgeTree()}>
                                 <Icon type="plus-circle-o" />
                             </span>
-                        </Tooltip>
-                        <Tooltip title="删除知识树" placement="top" >
+                            </Tooltip>
+                            <Tooltip title="删除知识树" placement="top" >
                             <span className="remove-tree" onClick={() => this.removeKnowledgeTree()}>
                                 <Icon type="minus-circle-o" />
                             </span>
-                        </Tooltip>
+                            </Tooltip>
+                        </div>
                     </div>
-                </div>
+                    : ''
+                }
+
 
                 <div className="row-form">
                     <label className='control-label'>课件：</label>
@@ -199,19 +209,28 @@ class CourseDetail extends Component {
 
                 <div className="row-form">
                     <label className='control-label'>审核：</label>
-                    <div className="margin-left-20">
-                        <RadioGroup onChange={e => this.onCheckStatusChange(e)} value={this.state.passed}>
-                            <Radio value={true}>通过</Radio>
-                            <Radio value={false}>否决</Radio>
-                        </RadioGroup>
+                    {!this.isVerified ?
+                        <div className="margin-left-20">
+                            <RadioGroup onChange={e => this.onCheckStatusChange(e)} value={this.state.passed}>
+                                <Radio value={true}>通过</Radio>
+                                <Radio value={false}>否决</Radio>
+                            </RadioGroup>
+                        </div>
+                        : <label className="margin-left-20 info-label">
+                            {course.bizTargetStatus === Biz_Target_Status.UN_PASSED ? '未通过' : '已通过'}
+                          </label>
+                    }
+
+                </div>
+
+                {!this.isVerified ?
+                    <div className={'row-form textarea-height ' + (this.state.passed ? 'item-hide' : '')}>
+                        <label className='control-label'>备注：</label>
+
+                        <Input id="comment" type="textarea" className="margin-left-20" placeholder="请输入否决原因"/>
                     </div>
-                </div>
-
-                <div className={'row-form textarea-height ' + (this.state.passed ? 'item-hide' : '')}>
-                    <label className='control-label'>备注：</label>
-
-                    <Input id="comment" type="textarea" className="margin-left-20" placeholder="请输入否决原因"/>
-                </div>
+                    : ''
+                }
 
                 <div className="confirm-box">
                     <Button type="primary" onClick={() => this.onConfirmBtnClick()}>确定</Button>
