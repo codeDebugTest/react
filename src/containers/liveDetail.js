@@ -98,12 +98,17 @@ class LiveDetail extends Component {
 
 
     componentWillMount() {
+        const {live} = this.props.detail;
+
         this.courseCase = this.getFileInfo(this.getLiveItemByType(2));
         this.liveVideo = this.getFileInfo(this.getLiveItemByType(1));
 
-        this.knowledgeTreeIdList = this.state.knowledgeTreeIds.split(',');
+        if (this.state.knowledgeTreeIds === '-1') {
+            this.knowledgeTreeIdList = live.knowledgeTreeId ? live.knowledgeTreeId : ['-1'];
+        } else {
+            this.knowledgeTreeIdList = this.state.knowledgeTreeIds.split(',');
+        }
 
-        const {live} = this.props.detail;
         this.isVerified = isVerified(live.auditStatus);
     }
 

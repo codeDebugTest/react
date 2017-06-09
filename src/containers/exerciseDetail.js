@@ -167,7 +167,6 @@ class ExerciseDetail extends Component {
                     : ''
                 }
 
-
                 { varNotEmpty(exercise.difficultyDegree)
                     ? exercise.difficultyDegree.map((item, index) => (
                         <div className="row-form" key={index}>

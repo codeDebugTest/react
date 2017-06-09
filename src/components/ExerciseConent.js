@@ -6,7 +6,6 @@ class ExerciseContent extends Component {
     render() { // props: text
         const { text} = this.props;
         const imgSuffixes = ['.jpg', '.gif', '.png', '.bmp'];
-        const imgUrlDir = config.imgUrlDir;
 
         if (varEmpty(text))
             return <span/>;
@@ -23,11 +22,11 @@ class ExerciseContent extends Component {
                                 if (pos > 0 && item.indexOf(']') === pos + imgSuffix.length) {
                                     let imgUrl = item.substring(0, pos + imgSuffix.length);
                                     const pathNames = imgUrl.split('/');
-                                    let imgName = pathNames[pathNames.length - 1]
+                                    let imgName = pathNames[pathNames.length - 1];
                                     findImg = true;
                                     return (
-                                        <span key={index}>
-                                            <img alt={imgName} src={imgUrl} style={{maxWidth: '660px'}}/>
+                                        <span key={index} style={{display: 'block'}}>
+                                            <img alt={imgName} src={config.imgUrlDir + '/' + imgUrl} style={{maxWidth: '660px'}}/>
                                             <span>{item.substring(pos + imgSuffix.length + 1, item.length)}</span>
                                         </span>
                                     );

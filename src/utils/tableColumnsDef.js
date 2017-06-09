@@ -175,6 +175,9 @@ const getLiveColumns = (knowledgeTree, editRecord, deleteRecord) => {
         {
             title: '标题',
             dataIndex: 'title',
+        },{
+            title: '发布教师',
+            dataIndex: 'teacherName',
         }, {
             title: '年级',
             width: 100,
