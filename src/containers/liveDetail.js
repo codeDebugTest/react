@@ -240,10 +240,15 @@ class LiveDetail extends Component {
                     : ''
                 }
 
-                <div className="confirm-box">
-                    <Button type="primary" onClick={()=> this.onConfirmBtnClick()}>确定</Button>
-                    <Button type="default" onClick={browserHistory.goBack}>取消</Button>
-                </div>
+                {this.isVerified
+                    ? <div className="confirm-box">
+                        <Button type="primary" onClick={this.closePage}>返回</Button>
+                      </div>
+                    : <div className="confirm-box">
+                        <Button type="primary" onClick={()=> this.onConfirmBtnClick()}>确定</Button>
+                        <Button type="default" onClick={this.closePage}>取消</Button>
+                      </div>
+                }
             </div>
         )
     }
