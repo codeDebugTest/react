@@ -283,6 +283,11 @@
   float: left;
 }
 
+.exercise-content-span {
+  float: left;
+  width: 600px;
+}
+
 .edit-pen-style {
   color: #0c06f3;
   margin-left: 30px;

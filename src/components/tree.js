@@ -79,7 +79,12 @@ class TreeNode extends Component {
             <li className={"clearfixed" + (this.props.level !== 1 ? ' li-border-line' : '')}>
                 <div className="node">
                     <label className={labelClass + (node.visible === false  ? ' disabled-node' : '')}
-                           onClick={this.toggleSpread.bind(this)}>{this.props.node.display}</label>
+                           onClick={this.toggleSpread.bind(this)}>
+                        {this.props.level === 1 || this.props.level === 2 ?
+                            this.props.node.display
+                            : this.props.node.code + ' ' + this.props.node.display
+                        }
+                    </label>
 
                     {node.visible !== false && this.props.level !== 1
                         ? (

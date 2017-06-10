@@ -14,7 +14,7 @@ class ExerciseContent extends Component {
                 {
                     text.split("[!").map((item, index) => {
                         if (index === 0)
-                            return <span key={index} >{item}</span>;
+                            return <span key={index} className="exercise-content-span">{item}</span>;
                         else {
                             let findImg = false;
                             let results = imgSuffixes.map((imgSuffix, j) => {
@@ -38,7 +38,7 @@ class ExerciseContent extends Component {
                                 return results;
 
                             return (
-                                <span key={index}>
+                                <span key={index} className="exercise-content-span">
                                     {item}
                                 </span>
                             );
