@@ -162,6 +162,10 @@ class CourseDetail extends Component {
                     <label className="margin-left-20 info-label"> {course.description}</label>
                 </div>
                 <div className="row-form">
+                    <label className='control-label'>发布教师：</label>
+                    <label className="margin-left-20 info-label"> {course.teacherName}</label>
+                </div>
+                <div className="row-form">
                     <label className='control-label'>标签：</label>
                     <label className="margin-left-20 info-label">
                         {mapTagIdsToNames(dictionary.courseTagList, course.tags)}

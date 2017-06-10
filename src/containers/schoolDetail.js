@@ -108,7 +108,7 @@ class SchoolDetail extends Component {
                                 <Radio value={false}>否决</Radio>
                             </RadioGroup>
                         </div>
-                        : <label className="margin-left-20 info-label">已审核</label>
+                        : <label className="margin-left-20 info-label info-color">已审核</label>
                     }
 
                 </div>

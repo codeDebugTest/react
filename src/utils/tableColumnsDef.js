@@ -12,6 +12,9 @@ const getCourseColumns = (knowledgeTree, editRecord, deleteRecord) => {
             title: '名称',
             dataIndex: 'title',
         }, {
+            title: '发布教师',
+            dataIndex: 'teacherName'
+        },{
             title: '年级',
             width: 100,
             render: (text, record, index) => {

@@ -290,3 +290,11 @@
 .edit-pen-style:hover{
   cursor: pointer;
 }
+
+.warn-color {
+  color: red;
+}
+
+.info-color {
+  color: #56bb56;
+}
