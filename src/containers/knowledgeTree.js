@@ -75,7 +75,7 @@ class KnowledgeTree extends Component {
         const code = document.getElementById('nodeCode').value;
         const display = document.getElementById('nodeDisplay').value;
         if (!code || !display) {
-            message.warn('code或名称不能为空！');
+            message.warn('标题或名称不能为空！');
             return;
         }
 
@@ -122,7 +122,7 @@ class KnowledgeTree extends Component {
                        onOk={this.modalOkHandler.bind(this)} onCancel={this.modalCancelHandler.bind(this)}
                        okText="确定" cancelText="取消">
                     <div className="row-form">
-                        <label className='modal-control-label'>code：</label>
+                        <label className='modal-control-label'>标题：</label>
                         <Input className="margin-left-20 modal-input" id="nodeCode"/>
                     </div>
 

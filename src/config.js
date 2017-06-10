@@ -24,6 +24,15 @@ const userList = {
     'binson': true,
     'yuqikai': true,
     'sky': true,
+    '陈霆': true,
+    '杜力耘': true,
+    '田万国': true,
+    '金老师': true,
+    '李春阳': true,
+    '薛小智': true,
+    '郑老师': true,
+    '张老师': true,
+    '詹祖顺': true,
 }
 
 export {config, userList}

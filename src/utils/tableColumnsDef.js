@@ -123,7 +123,7 @@ const getTeacherColumns = (dictionary, editRecord, deleteRecord) => {
     return [
         {
             title: '姓名',
-            dataIndex: 'userName',
+            dataIndex: 'userNameFull',
         },{
             title: '性别',
             render: (text, record) => {
