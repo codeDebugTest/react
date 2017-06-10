@@ -54,11 +54,14 @@ class KnowledgeTreeItem extends Component {
                                     treeNodeSelectedCallback={this.handleKnowledgeTreeChange.bind(this)}
                                 />
                             </label>
-                            <Tooltip title="删除知识树" placement="top">
+                            {!this.props.disabled ?
+                                <Tooltip title="删除知识树" placement="top">
                                 <span className="remove-tree" onClick={() => this.removeKnowledgeTree(index)}>
                                     <Icon type="minus-circle-o"/>
                                 </span>
-                            </Tooltip>
+                                </Tooltip>
+                                : ''
+                            }
                         </div>
                     )
                 )}

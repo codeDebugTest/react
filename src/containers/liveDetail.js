@@ -188,7 +188,7 @@ class LiveDetail extends Component {
                     <label className="margin-left-20 info-label">{live.endTime.split(' ')[1]}</label>
                 </div>
 
-                <KnowledgeTreeItem knowledgeTreeIds={this.knowledgeTreeIdList}/>
+                <KnowledgeTreeItem knowledgeTreeIds={this.knowledgeTreeIdList} disabled={this.isVerified}/>
 
                 {!this.isVerified ?
                     <div className="row-form">
@@ -239,7 +239,6 @@ class LiveDetail extends Component {
                     </div>
                     : ''
                 }
-
 
                 <div className="confirm-box">
                     <Button type="primary" onClick={()=> this.onConfirmBtnClick()}>确定</Button>

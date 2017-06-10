@@ -192,7 +192,7 @@ class CourseDetail extends Component {
                     </label>
                 </div>
 
-                <KnowledgeTreeItem knowledgeTreeIds={this.knowledgeTreeIdList}/>
+                <KnowledgeTreeItem knowledgeTreeIds={this.knowledgeTreeIdList} disabled={this.isVerified}/>
 
                 {!this.isVerified ?
                     <div className="row-form">
