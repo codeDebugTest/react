@@ -14,7 +14,7 @@ class SchoolDetail extends Component {
         super(props);
         this.state = {
             edit: false,
-            passed: true
+            passed: false
         }
     }
 

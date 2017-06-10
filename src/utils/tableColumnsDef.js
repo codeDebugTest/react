@@ -101,7 +101,7 @@ const getExamColumns = (knowledgeTree, editRecord, deleteRecord) => {
             }
         }, {
             title: 'Action',
-            width: 60,
+            width: 80,
             render: (text, record,index) => {
                 const deleteMsg = 'Are you sure delete this record';
                 return (

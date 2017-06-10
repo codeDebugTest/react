@@ -25,7 +25,7 @@ class School extends Component {
 
         doShowDetail(schoolList[index])(dispatch);
         browserHistory.push({
-            pathname: `/management/school/${schoolList[index].userId}`
+            pathname: `/management/school/${schoolList[index].id}`
         })
     }
     deleteRecord(index) {

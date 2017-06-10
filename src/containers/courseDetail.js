@@ -19,7 +19,7 @@ class CourseDetail extends Component {
             startPlay: false,
             knowledgeTreePaths: [],
             knowledgeTreeIds: varEmpty(course.knowledgeTreeIds) ? ID_ALL : '' + course.knowledgeTreeIds,
-            passed: true,
+            passed: false,
         };
     }
 

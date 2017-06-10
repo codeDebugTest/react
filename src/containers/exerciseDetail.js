@@ -17,7 +17,7 @@ class ExerciseDetail extends Component {
         super(props);
         const {exercise} = this.props.detail;
         this.state = {
-            passed: true,
+            passed: false,
             knowledgeTreeIds: varEmpty(exercise.knowledgeTreeIds) ? ID_ALL : '' + exercise.knowledgeTreeIds,
         }
     }

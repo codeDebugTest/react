@@ -17,7 +17,7 @@ class LiveDetail extends Component {
         const {live} = this.props.detail;
         this.state = {
             startPlay: false,
-            passed: true,
+            passed: false,
             knowledgeTreeIds: varEmpty(live.knowledgeTreeIds) ? ID_ALL : '' + live.knowledgeTreeIds,
         };
     }
