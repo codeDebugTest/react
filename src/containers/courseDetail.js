@@ -220,7 +220,7 @@ class CourseDetail extends Component {
                                 <Radio value={false}>否决</Radio>
                             </RadioGroup>
                         </div>
-                        : <label className="margin-left-20 info-label">
+                        : <label className={"margin-left-20 info-label " + (course.bizTargetStatus === Biz_Target_Status.UN_PASSED ? 'warn-color' : 'info-color')}>
                             {course.bizTargetStatus === Biz_Target_Status.UN_PASSED ? '未通过' : '已通过'}
                           </label>
                     }

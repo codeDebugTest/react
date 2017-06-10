@@ -25,7 +25,7 @@ class Course extends Component {
 
         doShowDetail(courseList[index])(dispatch);
         browserHistory.push({
-            pathname: `/management/course/${courseList[index].courseId}`
+            pathname: `/management/course/${courseList[index].id}`
         })
     }
 

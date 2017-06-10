@@ -26,7 +26,7 @@ class Live extends Component {
 
         doShowDetail(liveList[index])(dispatch);
         browserHistory.push({
-            pathname: `/management/live/${liveList[index].courseId}`
+            pathname: `/management/live/${liveList[index].liveId}`
         })
     }
     deleteRecord(index) {
