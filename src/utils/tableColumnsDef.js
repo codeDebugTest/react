@@ -1,7 +1,7 @@
 import React from 'react'
 import {Popconfirm, Icon} from 'antd'
 import {getRecordTreeGrad, getRecordTreeNames, getRecordTreeSubject,
-    mapGradeIdToName, mapSubjectIdToName} from '../utils/TreeToo'
+    mapGradeIdToName, mapSubjectIdToName, getGradNameByKtId, getSubjectByKtId} from '../utils/TreeToo'
 import {EXERCISE_TYPE, Biz_Target_Status, GENDER_MALE, GENDER_FEMALE} from './constants'
 import {isVerified} from './util'
 
@@ -189,13 +189,15 @@ const getLiveColumns = (knowledgeTree, editRecord, deleteRecord) => {
             title: '年级',
             width: 100,
             render: (text, record, index) => {
-                return getRecordTreeGrad(knowledgeTree, record);
+                // return getRecordTreeGrad(knowledgeTree, record);
+                return getGradNameByKtId(knowledgeTree, record.knowledgeTreeId[0]);
             }
         }, {
             title: '科目',
             width: 100,
             render: (text, record) => {
-                return getRecordTreeSubject(knowledgeTree, record);
+                // return getRecordTreeSubject(knowledgeTree, record);
+                return getSubjectByKtId(knowledgeTree, record.knowledgeTreeId[0]);
             }
         }, {
             title: '审核状态',

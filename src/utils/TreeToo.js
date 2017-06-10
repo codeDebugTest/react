@@ -212,7 +212,8 @@ const getRecordTreeGrad = (knowledgeTree, record) => {
     if (varEmpty(arr))
         return '';
     const validNames = arr.map(id => (getGradNameByKtId(knowledgeTree, id))).filter(name => varNotEmpty(name));
-    return validNames.join(',');
+    // return validNames.join(',');
+    return validNames[0];
 };
 
 const getRecordTreeSubject = (knowledgeTree, record) => {
@@ -223,7 +224,8 @@ const getRecordTreeSubject = (knowledgeTree, record) => {
     if (varEmpty(arr))
         return '';
     const validNames = arr.map(id => (getSubjectByKtId(knowledgeTree, id))).filter(name => varNotEmpty(name));
-    return validNames.join(',');
+    // return validNames.join(',');
+    return validNames[0];
 };
 
 const getRecordTreeNames = (knowledgeTree, record) => {
@@ -234,7 +236,7 @@ const getRecordTreeNames = (knowledgeTree, record) => {
     if (varEmpty(arr))
         return '';
     const validNames = arr.map(id => (getNameByKtId(knowledgeTree, id))).filter(name => varNotEmpty(name));
-    return validNames.join(',');
+    return validNames.join(', ');
 }
 
 const mapSubjectIdToName = (subjectList, subjectId) => {
@@ -291,5 +293,5 @@ export {
     findTreeNodeFromPath, ID_ALL, NODE_ALL, getNodeAll, getValidTreeIdFromPath, getValidTreeIdFromPathStr,
     getFullPathNameByKtId, getNameByKtId, treeIdsToNames, treeIdToTreeArray,validateKtTree,
     getGradeSubjectNodes, getRecordTreeNames, getRecordTreeSubject, getRecordTreeGrad, mapSubjectIdToName,
-    mapGradeIdToName, getKnowledgeTreePath, getFatherNodePathByKtId
+    mapGradeIdToName, getKnowledgeTreePath, getFatherNodePathByKtId, getGradNameByKtId, getSubjectByKtId
 };
