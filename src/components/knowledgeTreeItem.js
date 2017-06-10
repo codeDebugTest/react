@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getKnowledgeTreePath} from '../utils/TreeToo'
 import KnowledgeTreeLinePrivate from './knowledgeTreeLine'
+import {Icon, Tooltip} from 'antd'
 
 class KnowledgeTreeItem extends Component {
     constructor(props) {
@@ -22,6 +23,11 @@ class KnowledgeTreeItem extends Component {
 
     handleKnowledgeTreeChange(knowledgeTreeId, index) {
         this.props.knowledgeTreeIds[index] = knowledgeTreeId;
+        this.setKnowledgeTreePaths(this.props.knowledgeTreeIds);
+    }
+
+    removeKnowledgeTree(index) {
+        this.props.knowledgeTreeIds.splice(index, 1);
         this.setKnowledgeTreePaths(this.props.knowledgeTreeIds);
     }
 
@@ -48,6 +54,11 @@ class KnowledgeTreeItem extends Component {
                                     treeNodeSelectedCallback={this.handleKnowledgeTreeChange.bind(this)}
                                 />
                             </label>
+                            <Tooltip title="删除知识树" placement="top">
+                                <span className="remove-tree" onClick={() => this.removeKnowledgeTree(index)}>
+                                    <Icon type="minus-circle-o"/>
+                                </span>
+                            </Tooltip>
                         </div>
                     )
                 )}

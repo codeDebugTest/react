@@ -4,7 +4,7 @@ import {browserHistory} from 'react-router'
 import KnowledgeTreeItem from '../components/knowledgeTreeItem'
 import {ID_ALL} from '../utils/TreeToo'
 import {varEmpty, isVerified} from '../utils/util'
-import {doCreateLivePlayer, doReleaseLivePlayer} from '../actions/livePlayer.action'
+import {doCreateLivePlayer} from '../actions/livePlayer.action'
 import {doAuditResource} from '../actions/auditResource.action'
 import {Biz_Target_Type, Biz_Target_Status} from '../utils/constants'
 import {Button, Icon, Input, message, Radio, Tooltip} from 'antd'
@@ -195,15 +195,11 @@ class LiveDetail extends Component {
                         <label className='control-label'>知识树：</label>
                         <div className="margin-left-20 info-label">
                             <Tooltip title="添加知识树" placement="top">
-                            <span className="add-tree" onClick={() => this.addKnowledgeTree()}>
-                                <Icon type="plus-circle-o"/>
-                            </span>
+                                <span className="add-tree" onClick={() => this.addKnowledgeTree()}>
+                                    <Icon type="plus-circle-o"/>
+                                </span>
                             </Tooltip>
-                            <Tooltip title="删除知识树" placement="top">
-                            <span className="remove-tree" onClick={() => this.removeKnowledgeTree()}>
-                                <Icon type="minus-circle-o"/>
-                            </span>
-                            </Tooltip>
+
                         </div>
                     </div>
                     : ''

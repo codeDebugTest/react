@@ -153,14 +153,9 @@ class ExerciseDetail extends Component {
                         <label className='control-label'>知识树：</label>
                         <div className="margin-left-20 info-label">
                             <Tooltip title="添加知识树" placement="top" >
-                            <span className="add-tree" onClick={() => this.addKnowledgeTree()}>
-                                <Icon type="plus-circle-o" />
-                            </span>
-                            </Tooltip>
-                            <Tooltip title="删除知识树" placement="top" >
-                            <span className="remove-tree" onClick={() => this.removeKnowledgeTree()}>
-                                <Icon type="minus-circle-o" />
-                            </span>
+                                <span className="add-tree" onClick={() => this.addKnowledgeTree()}>
+                                    <Icon type="plus-circle-o" />
+                                </span>
                             </Tooltip>
                         </div>
                     </div>

@@ -5,7 +5,7 @@ import KnowledgeTreeItem from '../components/knowledgeTreeItem'
 import {ID_ALL} from '../utils/TreeToo'
 import {varEmpty, isVerified, mapTagIdsToNames} from '../utils/util'
 import {Button, Icon, Input, message, Radio, Tooltip} from 'antd'
-import {doCreateLivePlayer, doReleaseLivePlayer} from '../actions/livePlayer.action'
+import {doCreateLivePlayer} from '../actions/livePlayer.action'
 import {doAuditResource} from '../actions/auditResource.action'
 import {Biz_Target_Type, CourseItemType, Biz_Target_Status} from '../utils/constants'
 import '../App.css'
@@ -179,14 +179,9 @@ class CourseDetail extends Component {
                         <label className='control-label'>知识树：</label>
                         <div className="margin-left-20 info-label">
                             <Tooltip title="添加知识树" placement="top" >
-                            <span className="add-tree" onClick={() => this.addKnowledgeTree()}>
-                                <Icon type="plus-circle-o" />
-                            </span>
-                            </Tooltip>
-                            <Tooltip title="删除知识树" placement="top" >
-                            <span className="remove-tree" onClick={() => this.removeKnowledgeTree()}>
-                                <Icon type="minus-circle-o" />
-                            </span>
+                                <span className="add-tree" onClick={() => this.addKnowledgeTree()}>
+                                    <Icon type="plus-circle-o" />
+                                </span>
                             </Tooltip>
                         </div>
                     </div>
@@ -197,18 +192,22 @@ class CourseDetail extends Component {
                 <div className="row-form">
                     <label className='control-label'>课件：</label>
 
-                    <Icon type="file-text margin-left-20 file-icon"
-                          style={{display: this.courseCase.fileName ? '' : 'none'}}/>
-                    <a href={this.courseCase.fileUrl} target="new">{this.courseCase.fileName}</a>
+                    <div className="margin-left-20">
+                        <Icon type="file-text file-icon"
+                              style={{display: this.courseCase.fileName ? '' : 'none'}}/>
+                        <a href={this.courseCase.fileUrl} target="new">{this.courseCase.fileName}</a>
+                    </div>
                 </div>
 
                 {this.LivePlayerRender()}
 
                 <div className="row-form">
                     <label className='control-label'>学案：</label>
-                    <Icon type="file-text margin-left-20 file-icon"
-                          style={{display: this.learningCase.fileName ? '' : 'none'}}/>
-                    <a href={this.learningCase.fileUrl} target="new">{this.learningCase.fileName}</a>
+                    <div className="margin-left-20">
+                        <Icon type="file-text file-icon"
+                              style={{display: this.learningCase.fileName ? '' : 'none'}}/>
+                        <a href={this.learningCase.fileUrl} target="new">{this.learningCase.fileName}</a>
+                    </div>
                 </div>
 
                 <div className="row-form">
