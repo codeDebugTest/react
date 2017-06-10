@@ -12,7 +12,7 @@ const _schoolListUrl = config.realHost +  '/login/register/do/search_school';
 const _updateSchoolUrl = config.realHost + '/admin/school/update';
 const _register_step_Url = config.realHost +  '/login/register/do/pre_update_step1';
 const _verifyUrl = config.realHost +  '/admin/audit';
-const _updateCourseKnowledgeTreeUrl = config.realHost +  '/teacher/course/do/batch_update_knowledge_tree_nodes';
+const _updateResourceKnowledgeTreeUrl = config.realHost +  '/admin/knowledgeTree/update';
 
 export function userLogin (data, callback){
     return ajaxPost(_loginUrl, {}, data, callback)
@@ -62,6 +62,6 @@ export function auditResource(requestInfo, callback) {
     return ajaxPost(_verifyUrl, {}, requestInfo, callback)
 }
 
-export function udpateCourseKnowledgeTree(requestInfo) {
-    return ajaxPost(_updateCourseKnowledgeTreeUrl, {}, requestInfo, null);
+export function udpateResourceKnowledgeTree(requestInfo) {
+    return ajaxPost(_updateResourceKnowledgeTreeUrl, {}, requestInfo, null);
 }

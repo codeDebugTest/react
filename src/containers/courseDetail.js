@@ -6,7 +6,7 @@ import {ID_ALL} from '../utils/TreeToo'
 import {varEmpty, isVerified, mapTagIdsToNames} from '../utils/util'
 import {Button, Icon, Input, message, Radio, Tooltip} from 'antd'
 import {doCreateLivePlayer} from '../actions/livePlayer.action'
-import {doAuditResource} from '../actions/auditResource.action'
+import {doAuditResource, doUpdateKnowledgeTree} from '../actions/auditResource.action'
 import {Biz_Target_Type, CourseItemType, Biz_Target_Status} from '../utils/constants'
 import '../App.css'
 const RadioGroup = Radio.Group;
@@ -56,12 +56,8 @@ class CourseDetail extends Component {
     auditFailed() {
         message.error('审批失败！');
     }
-    onConfirmBtnClick() {
-        if (this.isVerified) {
-            this.closePage();
-            return;
-        }
 
+    auditCourse() {
         const textArea = document.getElementById('comment');
         if (!this.state.passed) {
             if (textArea.value === '') {
@@ -82,15 +78,39 @@ class CourseDetail extends Component {
         doAuditResource(requestInfo, this.closePage, this.auditFailed);
     }
 
-    addKnowledgeTree() {
-        this.knowledgeTreeIdList = this.knowledgeTreeIdList.concat([ID_ALL]);
-
-        this.setState({knowledgeTreeIds: this.knowledgeTreeIdList.join(',')});
+    updateKnowledgeTree(updatedKnowledgeIds) {
+        const {detail, userState} = this.props;
+        doUpdateKnowledgeTree(
+            {
+                "bizTargetType": Biz_Target_Type.COURSE,
+                "targetId": detail.course.id,
+                "userToken": userState.userInfo.userToken,
+                "knowledgeTreeIds": updatedKnowledgeIds
+            },
+            this.auditCourse.bind(this),
+            (msg) => {message.error(msg)}
+        )
     }
 
-    removeKnowledgeTree() {
-        this.knowledgeTreeIdList.pop();
-        this.knowledgeTreeIdList = this.knowledgeTreeIdList.concat([]);
+    onConfirmBtnClick() {
+        if (this.isVerified) {
+            this.closePage();
+            return;
+        }
+
+        const {detail} = this.props;
+        const validTrees = this.knowledgeTreeIdList.filter(tree => tree !== ID_ALL);
+        const currentKnowledgeIds = validTrees.join(',');
+
+        if (detail.course.knowledgeTreeIds !== currentKnowledgeIds) {
+            this.updateKnowledgeTree(currentKnowledgeIds);
+        } else {
+            this.auditCourse();
+        }
+    }
+
+    addKnowledgeTree() {
+        this.knowledgeTreeIdList = this.knowledgeTreeIdList.concat([ID_ALL]);
 
         this.setState({knowledgeTreeIds: this.knowledgeTreeIdList.join(',')});
     }

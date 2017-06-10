@@ -1,4 +1,4 @@
-import {fetchTeacherList, udpateCourseKnowledgeTree} from '../utils/httpReqApi'
+import {fetchTeacherList} from '../utils/httpReqApi'
 
 export const FETCH_TEACHER_LIST = 'fetch_teacher_list';
 export const FETCH_TEACHER_SUCCESS = 'fetch_teacher_success';
@@ -80,21 +80,4 @@ export function doShowDetail(data) {
     return dispatch => {
         dispatch(showDetail(data))
     }
-}
-
-export function doUpdateCourseKnowledgeTree(data, successFunc, failedFunc) {
-    return udpateCourseKnowledgeTree(data).then(
-        response => {
-            if (!response || response.code === undefined) {
-                alert(`更新课程知识树失败！`);
-                return;
-            }
-
-            if(response.code === 0 && response.content) {
-                successFunc(response);
-            } else {
-                failedFunc(response.message);
-            }
-        }
-    )
 }

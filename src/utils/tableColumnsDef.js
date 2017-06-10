@@ -13,6 +13,7 @@ const getCourseColumns = (knowledgeTree, editRecord, deleteRecord) => {
             dataIndex: 'title',
         }, {
             title: '发布教师',
+            width: 100,
             dataIndex: 'teacherName'
         },{
             title: '年级',
@@ -28,12 +29,13 @@ const getCourseColumns = (knowledgeTree, editRecord, deleteRecord) => {
             }
         }, {
             title: '知识树',
+            width: 250,
             render: (text, record) => {
                 return getRecordTreeNames(knowledgeTree, record);
             }
         }, {
             title: '审核状态',
-            width: 120,
+            width: 100,
             render: (text, record) => {
                 if(isVerified(record.bizTargetStatus)) {
                     return record.bizTargetStatus === Biz_Target_Status.RELEASED? '审核已通过' : '审核未通过';
@@ -86,6 +88,7 @@ const getExamColumns = (knowledgeTree, editRecord, deleteRecord) => {
             }
         }, {
             title: '知识树',
+            width: 250,
             render: (text, record) => {
                 return getRecordTreeNames(knowledgeTree, record);
             }
@@ -180,6 +183,7 @@ const getLiveColumns = (knowledgeTree, editRecord, deleteRecord) => {
             dataIndex: 'title',
         },{
             title: '发布教师',
+            width: 100,
             dataIndex: 'teacherName',
         }, {
             title: '年级',
@@ -195,7 +199,7 @@ const getLiveColumns = (knowledgeTree, editRecord, deleteRecord) => {
             }
         }, {
             title: '审核状态',
-            width: 120,
+            width: 100,
             render: (text, record) => {
                 if(isVerified(record.auditStatus)) {
                     return record.auditStatus === Biz_Target_Status.RELEASED? '审核已通过' : '审核未通过';
