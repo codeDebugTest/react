@@ -5,7 +5,7 @@ import KnowledgeTreeItem from '../components/knowledgeTreeItem'
 import {ID_ALL} from '../utils/TreeToo'
 import {varEmpty, isVerified} from '../utils/util'
 import {doCreateLivePlayer} from '../actions/livePlayer.action'
-import {doAuditResource} from '../actions/auditResource.action'
+import {doAuditResource, doUpdateKnowledgeTree} from '../actions/auditResource.action'
 import {Biz_Target_Type, Biz_Target_Status} from '../utils/constants'
 import {Button, Icon, Input, message, Radio, Tooltip} from 'antd'
 import '../App.css'
@@ -57,12 +57,7 @@ class LiveDetail extends Component {
         message.error('审批失败！');
     }
 
-    onConfirmBtnClick() {
-        if (this.isVerified) {
-            this.closePage();
-            return;
-        }
-
+    auditLive() {
         const textArea = document.getElementById('comment');
         if (!this.state.passed) {
             if (textArea.value === '') {
@@ -83,19 +78,42 @@ class LiveDetail extends Component {
         doAuditResource(requestInfo, this.closePage, this.auditFailed);
     }
 
+    updateKnowledgeTree(updatedKnowledgeIds) {
+        const {detail, userState} = this.props;
+        doUpdateKnowledgeTree(
+            {
+                "bizTargetType": Biz_Target_Type.LIVE,
+                "targetId": detail.live.liveId,
+                "userToken": userState.userInfo.userToken,
+                "knowledgeTreeIds": updatedKnowledgeIds
+            },
+            this.auditLive.bind(this),
+            (msg) => {message.error(msg)}
+        )
+    }
+
+    onConfirmBtnClick() {
+        if (this.isVerified) {
+            this.closePage();
+            return;
+        }
+
+        const {detail} = this.props;
+        const validTrees = this.knowledgeTreeIdList.filter(tree => tree !== ID_ALL);
+        const currentKnowledgeIds = validTrees.join(',');
+
+        if (detail.live.knowledgeTreeIds !== currentKnowledgeIds) {
+            this.updateKnowledgeTree(currentKnowledgeIds);
+        } else {
+            this.auditLive();
+        }
+    }
+
     addKnowledgeTree() {
         this.knowledgeTreeIdList = this.knowledgeTreeIdList.concat([ID_ALL]);
 
         this.setState({knowledgeTreeIds: this.knowledgeTreeIdList.join(',')});
     }
-
-    removeKnowledgeTree() {
-        this.knowledgeTreeIdList.pop();
-        this.knowledgeTreeIdList = this.knowledgeTreeIdList.concat([]);
-
-        this.setState({knowledgeTreeIds: this.knowledgeTreeIdList.join(',')});
-    }
-
 
     componentWillMount() {
         const {live} = this.props.detail;

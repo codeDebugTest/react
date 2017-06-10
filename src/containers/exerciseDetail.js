@@ -4,7 +4,7 @@ import {browserHistory} from 'react-router'
 import KnowledgeTreeItem from '../components/knowledgeTreeItem'
 import {ID_ALL} from '../utils/TreeToo'
 import {varEmpty, varNotEmpty, isVerified} from '../utils/util'
-import {doAuditResource} from '../actions/auditResource.action'
+import {doAuditResource, doUpdateKnowledgeTree} from '../actions/auditResource.action'
 import {EXERCISE_TYPE, FILL_EXERCISE, SUBJECT_EXERCISE, Biz_Target_Type, Biz_Target_Status} from '../utils/constants'
 import ExerciseContent from '../components/ExerciseConent'
 import {Button, Input, message, Radio, Rate, Tooltip, Icon} from 'antd'
@@ -34,12 +34,7 @@ class ExerciseDetail extends Component {
         message.error('审批失败！');
     }
 
-    onConfirmBtnClick() {
-        if (this.isVerified) {
-            this.closePage();
-            return;
-        }
-
+    auditExercise() {
         const textArea = document.getElementById('comment');
         if (!this.state.passed) {
             if (textArea.value === '') {
@@ -60,15 +55,38 @@ class ExerciseDetail extends Component {
         doAuditResource(requestInfo, this.closePage, this.auditFailed);
     }
 
-    addKnowledgeTree() {
-        this.knowledgeTreeIdList = this.knowledgeTreeIdList.concat([ID_ALL]);
+    updateKnowledgeTree(updatedKnowledgeIds) {
+        const {detail, userState} = this.props;
+        doUpdateKnowledgeTree(
+            {
+                "bizTargetType": Biz_Target_Type.EXERCISE,
+                "targetId": detail.exercise.exerciseItemId,
+                "userToken": userState.userInfo.userToken,
+                "knowledgeTreeIds": updatedKnowledgeIds
+            },
+            this.auditExercise.bind(this),
+            (msg) => {message.error(msg)}
+        )
+    }
+    onConfirmBtnClick() {
+        if (this.isVerified) {
+            this.closePage();
+            return;
+        }
 
-        this.setState({knowledgeTreeIds: this.knowledgeTreeIdList.join(',')});
+        const {detail} = this.props;
+        const validTrees = this.knowledgeTreeIdList.filter(tree => tree !== ID_ALL);
+        const currentKnowledgeIds = validTrees.join(',');
+
+        if (detail.exercise.knowledgeTreeIds !== currentKnowledgeIds) {
+            this.updateKnowledgeTree(currentKnowledgeIds);
+        } else {
+            this.auditExercise();
+        }
     }
 
-    removeKnowledgeTree() {
-        this.knowledgeTreeIdList.pop();
-        this.knowledgeTreeIdList = this.knowledgeTreeIdList.concat([]);
+    addKnowledgeTree() {
+        this.knowledgeTreeIdList = this.knowledgeTreeIdList.concat([ID_ALL]);
 
         this.setState({knowledgeTreeIds: this.knowledgeTreeIdList.join(',')});
     }
