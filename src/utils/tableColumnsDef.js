@@ -36,7 +36,7 @@ const getCourseColumns = (knowledgeTree, editRecord, deleteRecord) => {
             width: 120,
             render: (text, record) => {
                 if(isVerified(record.bizTargetStatus)) {
-                    return '已审核';
+                    return record.bizTargetStatus === Biz_Target_Status.RELEASED? '审核已通过' : '审核未通过';
                 } else {
                     return '未审核';
                 }
@@ -94,7 +94,7 @@ const getExamColumns = (knowledgeTree, editRecord, deleteRecord) => {
             width: 100,
             render: (text, record) => {
                 if(isVerified(record.bizTargetStatus)) {
-                    return '已审核';
+                    return record.bizTargetStatus === Biz_Target_Status.RELEASED? '审核已通过' : '审核未通过';
                 } else {
                     return '未审核';
                 }
@@ -198,7 +198,7 @@ const getLiveColumns = (knowledgeTree, editRecord, deleteRecord) => {
             width: 120,
             render: (text, record) => {
                 if(isVerified(record.auditStatus)) {
-                    return '已审核';
+                    return record.auditStatus === Biz_Target_Status.RELEASED? '审核已通过' : '审核未通过';
                 } else {
                     return '未审核';
                 }
